@@ -17,6 +17,7 @@ namespace VikingSettlements.Npcs
         public const string Seer = "VS_Seer";
         public const string Trader = "VS_Trader";
         public const string Flatten = "VS_Flatten";
+        public const string Raider = "VS_Raider";
 
         private static bool _created;
 
@@ -32,6 +33,7 @@ namespace VikingSettlements.Npcs
             CreateSettler(Seer, new[] { "DvergerMageSupport", "DvergerMage", "Dverger" }, "$vs_seer");
             CreateTrader();
             CreateFlatten();
+            CreateRaider();
         }
 
         private static GameObject CloneFirstAvailable(string newName, IEnumerable<string> baseCandidates)
@@ -94,9 +96,62 @@ namespace VikingSettlements.Npcs
             clone.AddComponent<SettlerIdentity>();
             clone.AddComponent<SettlerChatter>();
             clone.AddComponent<SettlerHome>();
+            clone.AddComponent<SettlerRecruitable>();
+            clone.AddComponent<SettlerWork>();
 
             PrefabManager.Instance.AddPrefab(new CustomPrefab(clone, false));
             Jotunn.Logger.LogInfo($"Created settlement NPC prefab {name}");
+        }
+
+        /// <summary>
+        /// The rival-clan bandit used by raids: hostile to players and to
+        /// settlers alike, with a modest coin purse as loot.
+        /// </summary>
+        private static void CreateRaider()
+        {
+            var clone = CloneFirstAvailable(Raider, new[] { "Dverger", "DvergerMage" });
+            if (clone == null)
+            {
+                Jotunn.Logger.LogWarning("Could not create VS_Raider: no base prefab found");
+                return;
+            }
+
+            var humanoid = clone.GetComponent<Humanoid>();
+            if (humanoid != null)
+            {
+                humanoid.m_name = "$vs_raider";
+                humanoid.m_group = "vs_raiders";
+                humanoid.m_boss = false;
+                humanoid.m_faction = Character.Faction.Undead;
+            }
+
+            var characterDrop = clone.GetComponent<CharacterDrop>();
+            if (characterDrop != null)
+            {
+                characterDrop.m_drops.Clear();
+                var coins = PrefabManager.Instance.GetPrefab("Coins");
+                if (coins != null)
+                {
+                    characterDrop.m_drops.Add(new CharacterDrop.Drop
+                    {
+                        m_prefab = coins,
+                        m_amountMin = 5,
+                        m_amountMax = 20,
+                        m_chance = 1f,
+                    });
+                }
+            }
+
+            var npcTalk = clone.GetComponent<NpcTalk>();
+            if (npcTalk != null)
+            {
+                Object.DestroyImmediate(npcTalk);
+            }
+
+            clone.AddComponent<RaiderDespawn>();
+
+            PrefabManager.Instance.AddPrefab(new CustomPrefab(clone, false));
+            Jotunn.Logger.LogInfo("Created raider prefab VS_Raider");
         }
 
         private static void CreateTrader()

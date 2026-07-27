@@ -36,6 +36,35 @@ there is a console command (`devcommands` required):
 vs_spawn [village|outpost|steading]
 ```
 
+## Player settlements (v1.1)
+
+You can found your own settlement and staff it with NPCs recruited from the
+wild settlements:
+
+1. **Recruit** — press `E` on a settler in any wild settlement and pay the
+   coin cost (default 50). The settler switches to the player faction and
+   follows you. `Shift+E` dismisses a follower.
+2. **Found a settlement** — build the *Settlement Banner* (hammer → Misc,
+   near a workbench; wood, fine wood and coins). The banner defines a
+   settlement area (default 32 m radius) and shows its population on hover.
+3. **Assign** — with a follower inside the banner's area, press `E` to settle
+   them there. Press `E` again to cycle their job, `Shift+E` to unassign:
+   - **Lumberjack** — periodically deposits wood into your settlement chests
+   - **Farmer** — deposits carrots/turnips and the occasional honey
+   - **Builder** — repairs damaged build pieces in the settlement
+   - **Blacksmith** — smelts ore found in settlement chests (copper, tin,
+     iron scraps; converts wood to coal otherwise)
+   - **Guard** — sharper senses, holds position at the settlement
+4. **Defend** — the banner emits a player-base area, so Valheim's native
+   random event system can target your settlement: a custom raid event
+   ("The clanless are raiding!") is registered alongside the vanilla ones
+   (gated behind Eikthyr by default). Independently, rival clans roll a
+   nightly chance to assault your settlement with bandit war parties, which
+   your settlers — being on your faction — fight off natively.
+
+All settler state (recruiter, job, home) lives in the creature's ZDO, so it
+persists across sessions and syncs to every client.
+
 ## Building without a Valheim install
 
 The repository can be compiled headless (CI, containers) — no game copy
@@ -62,10 +91,19 @@ VikingSettlements/
 ├── VikingSettlements.cs        # plugin entry point, config + manager wiring
 ├── ModConfig.cs                # BepInEx config entries (server-synced)
 ├── Npcs/
-│   ├── SettlerPrefabs.cs       # clones vanilla humanoids into settler/trader prefabs
+│   ├── SettlerPrefabs.cs       # clones vanilla humanoids into settler/trader/raider prefabs
 │   ├── SettlerIdentity.cs      # deterministic personal names
 │   ├── SettlerChatter.cs       # proximity greetings
-│   └── SettlerHome.cs          # pins AI patrol point to the settlement
+│   ├── SettlerHome.cs          # pins AI patrol point to the settlement
+│   ├── SettlerRecruitable.cs   # recruit/follow/assign state machine + job cycling
+│   ├── SettlerWork.cs          # job effects (produce, smelt, repair)
+│   └── RaiderDespawn.cs        # cleans up unbeaten raiders
+├── Settlements/
+│   ├── PlayerSettlement.cs     # banner behavior: population, rival raid rolls
+│   └── SettlementPieces.cs     # buildable Settlement Banner piece
+├── Raids/
+│   ├── RaidEvents.cs           # native RandEventSystem integration
+│   └── RaidSpawner.cs          # rival clan war parties
 ├── World/
 │   ├── SettlementLayout.cs     # data-driven blueprint DSL
 │   ├── Layouts.cs              # the actual settlement blueprints

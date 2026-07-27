@@ -29,10 +29,23 @@ a trader with a small store of early-game supplies.
 - Named settler NPCs that stay in their village, chat with visiting players,
   and fight off raiding monsters.
 - A village trader with a small store.
+- **Build your own settlement**: craft the *Settlement Banner* (hammer →
+  Misc, needs a workbench) to found a settlement.
+- **Recruit settlers**: press E on a settler in a wild settlement to recruit
+  them for coins. They follow you; bring them home and press E near your
+  banner to assign them.
+- **Jobs**: press E on an assigned settler to cycle their job —
+  Villager, Lumberjack, Farmer, Builder, Blacksmith, Guard.
+  Lumberjacks and farmers deposit resources into your settlement's chests,
+  blacksmiths smelt ore they find in them, builders repair damaged
+  structures, guards get sharper senses. Shift+E unassigns/dismisses.
+- **Raids**: your settlement counts as a base for Valheim's native random
+  event system — a new "The clanless are raiding!" event sends bandits
+  against it. Rival clans may also assault your settlement at night.
 - Console command `vs_spawn [village|outpost|steading]` (requires
   `devcommands`) to place a settlement in already-explored terrain.
-- Configurable: settlement counts per world, settler faction behavior,
-  trader and chatter toggles — server-synced where it matters.
+- Configurable: settlement counts per world, recruit cost, settlement size,
+  work speed, raid chance — server-synced where it matters.
 
 ## Configuration
 
@@ -47,8 +60,24 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Settlers / EnableTrader | true | Meadows villages include a trader |
 | Settlers / Chatter | true | Settlers greet nearby players (client-side) |
 | Settlers / ChatterIntervalSeconds | 25 | Minimum time between chatter lines |
+| Recruiting / RecruitCostCoins | 50 | Coins to recruit a settler |
+| Settlement / MaxSettlers | 10 | Max settlers per settlement banner |
+| Settlement / SettlementRadius | 32 | Settlement area radius in meters |
+| Settlement / WorkIntervalSeconds | 60 | Seconds between settler work ticks |
+| Raids / EnableRaids | true | Enable bandit raid event and rival clan raids |
+| Raids / RaidsAfterFirstBoss | true | Raids only start once Eikthyr is dead |
+| Raids / RivalRaidChancePerDay | 0.15 | Nightly chance of a rival clan raid per settlement |
 
 ## Changelog
+
+### 1.1.0
+
+- Build your own settlement with the new Settlement Banner piece.
+- Recruit settlers from wild settlements with coins; they follow you and can
+  be assigned to your settlement.
+- Jobs for assigned settlers: Lumberjack, Farmer, Builder, Blacksmith, Guard.
+- Bandit raid event registered with Valheim's native random event system;
+  rival clans can raid your settlement at night.
 
 ### 1.0.0
 

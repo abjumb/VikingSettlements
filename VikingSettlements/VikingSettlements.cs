@@ -13,7 +13,7 @@ namespace VikingSettlements
     {
         public const string PluginGUID = "com.abjumb.vikingsettlements";
         public const string PluginName = "VikingSettlements";
-        public const string PluginVersion = "1.0.0";
+        public const string PluginVersion = "1.1.0";
 
         public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
@@ -32,12 +32,20 @@ namespace VikingSettlements
         private void CreatePrefabs()
         {
             Npcs.SettlerPrefabs.CreateAll();
+            Settlements.SettlementPieces.CreateAll();
             PrefabManager.OnVanillaPrefabsAvailable -= CreatePrefabs;
         }
 
         private void RegisterLocations()
         {
             World.SettlementLocations.RegisterAll();
+        }
+
+        private void Update()
+        {
+            // The random event system is recreated per game session; keep the
+            // bandit raid registered in it.
+            Raids.RaidEvents.EnsureRegistered();
         }
 
         private void AddLocalizations()
@@ -47,6 +55,30 @@ namespace VikingSettlements
                 { "vs_settler", "Settler" },
                 { "vs_seer", "Village Seer" },
                 { "vs_trader", "Sigvald the Trader" },
+                { "vs_raider", "Clanless Bandit" },
+                { "vs_banner", "Settlement Banner" },
+                { "vs_banner_desc", "Founds a settlement. Recruit settlers from wild villages and assign them here to work jobs. Beware: settlements attract raids." },
+                { "vs_settlers", "Settlers" },
+                { "vs_recruit", "Recruit" },
+                { "vs_assign", "Assign to settlement" },
+                { "vs_dismiss", "Dismiss" },
+                { "vs_changejob", "Change job" },
+                { "vs_unassign", "Unassign" },
+                { "vs_following", "Following" },
+                { "vs_joined", "joins you!" },
+                { "vs_dismissed", "stays behind" },
+                { "vs_assigned", "settles here!" },
+                { "vs_needcoins", "Not enough coins" },
+                { "vs_nosettlement", "No settlement banner nearby" },
+                { "vs_settlementfull", "This settlement is full" },
+                { "vs_job_villager", "Villager" },
+                { "vs_job_lumberjack", "Lumberjack" },
+                { "vs_job_farmer", "Farmer" },
+                { "vs_job_builder", "Builder" },
+                { "vs_job_blacksmith", "Blacksmith" },
+                { "vs_job_guard", "Guard" },
+                { "vs_raid_start", "The clanless are raiding!" },
+                { "vs_raid_end", "The clanless retreat" },
             });
         }
     }
