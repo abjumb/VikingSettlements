@@ -43,6 +43,11 @@ the same way; world and raid settings are admin-only and sync from the server.
 > will not add villages to areas you have already explored — start a new world,
 > sail somewhere new, or use `vs_spawn` (requires `devcommands`).
 
+## New player guide
+
+**[Building Your First Settlement](https://github.com/abjumb/VikingSettlements/blob/master/docs/first-settlement.md)**
+— step by step from finding your first village to defending your own.
+
 ## Features
 
 - Three settlement location types spawned by world generation
