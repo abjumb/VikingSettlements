@@ -19,6 +19,12 @@ namespace VikingSettlements
         public static ConfigEntry<bool> EnableRaids;
         public static ConfigEntry<bool> RaidsAfterFirstBoss;
         public static ConfigEntry<float> RivalRaidChancePerDay;
+        public static ConfigEntry<bool> FoodUpkeep;
+        public static ConfigEntry<float> MealIntervalSeconds;
+        public static ConfigEntry<bool> GrowthEnabled;
+        public static ConfigEntry<float> GrowthChancePerDay;
+        public static ConfigEntry<int> GrowthFoodCost;
+        public static ConfigEntry<bool> RequireWorkstations;
 
         public static void Init(ConfigFile config)
         {
@@ -108,6 +114,49 @@ namespace VikingSettlements
                     "Chance per in-game day that a rival clan raids a player settlement (rolled " +
                     "each night per settlement banner while its area is loaded).",
                     new AcceptableValueRange<float>(0f, 1f),
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            FoodUpkeep = config.Bind("Economy", "FoodUpkeep", true,
+                new ConfigDescription(
+                    "Assigned settlers periodically eat one food item from settlement chests, " +
+                    "cheapest first. A settler that finds no food goes hungry and stops working " +
+                    "until its next meal.",
+                    null,
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            MealIntervalSeconds = config.Bind("Economy", "MealIntervalSeconds", 1800f,
+                new ConfigDescription(
+                    "In-game seconds between meals of an assigned settler. The default of 1800 " +
+                    "is roughly one meal per in-game day.",
+                    new AcceptableValueRange<float>(120f, 7200f),
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            GrowthEnabled = config.Bind("Economy", "GrowthEnabled", true,
+                new ConfigDescription(
+                    "Settlements below their settler cap can attract a new settler: each night " +
+                    "there is a chance a newcomer arrives, provided the settlement has a spare " +
+                    "unclaimed bed and enough food in its chests.",
+                    null,
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            GrowthChancePerDay = config.Bind("Economy", "GrowthChancePerDay", 0.35f,
+                new ConfigDescription(
+                    "Nightly chance that a new settler arrives when the growth conditions are met.",
+                    new AcceptableValueRange<float>(0f, 1f),
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            GrowthFoodCost = config.Bind("Economy", "GrowthFoodCost", 3,
+                new ConfigDescription(
+                    "Food items consumed from settlement chests when a new settler arrives.",
+                    new AcceptableValueRange<int>(0, 20),
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            RequireWorkstations = config.Bind("Economy", "RequireWorkstations", true,
+                new ConfigDescription(
+                    "Jobs need their workstation inside the settlement: blacksmiths a forge, " +
+                    "builders a workbench, and farmers a beehive for honey. Disable to restore " +
+                    "the ungated 1.1 behavior.",
+                    null,
                     new ConfigurationManagerAttributes { IsAdminOnly = true }));
         }
     }
