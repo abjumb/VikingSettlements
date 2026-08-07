@@ -170,8 +170,8 @@ You need the [.NET SDK](https://dotnet.microsoft.com/download) (8.0 or newer).
 ### With Valheim installed
 
 ```sh
-git clone https://github.com/abjumb/JotunnModStub.git
-cd JotunnModStub
+git clone https://github.com/abjumb/VikingSettlements.git
+cd VikingSettlements
 dotnet build VikingSettlements.sln -c Debug
 ```
 
