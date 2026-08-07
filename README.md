@@ -108,6 +108,10 @@ vs_spawn [village|outpost|steading]
 
 ## Player settlements
 
+> New here? **[Building Your First Settlement](docs/first-settlement.md)** walks
+> through the whole thing step by step — what to bring, how to recruit, and the
+> two mistakes that make settlers look broken.
+
 You can found your own settlement and staff it with NPCs recruited from the
 wild settlements:
 
