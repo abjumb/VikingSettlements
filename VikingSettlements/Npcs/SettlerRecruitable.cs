@@ -307,18 +307,29 @@ namespace VikingSettlements.Npcs
             return true;
         }
 
-        private const int JobCount = 10;
+        internal const int JobCount = 10;
 
-        private bool CycleJob(Player player)
+        /// <summary>Assigns a job directly (used by interact cycling and the management panel).</summary>
+        internal void SetJob(SettlerJob job)
         {
-            var next = (SettlerJob)(((int)Job + 1) % JobCount);
-            Job = next;
+            if (_nview == null || !_nview.IsValid())
+            {
+                return;
+            }
+            _nview.ClaimOwnership();
+            Job = job;
             if (_ai != null)
             {
                 // Re-pin to the settlement so job changes never leave stale follow state.
                 _ai.SetFollowTarget(null);
                 _ai.SetPatrolPoint(Home);
             }
+        }
+
+        private bool CycleJob(Player player)
+        {
+            var next = (SettlerJob)(((int)Job + 1) % JobCount);
+            SetJob(next);
             player.Message(MessageHud.MessageType.TopLeft,
                 Localization.instance.Localize($"{GetHoverName()}: {JobToken(next)}"));
             return true;

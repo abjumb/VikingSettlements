@@ -56,7 +56,9 @@ the same way; world and raid settings are admin-only and sync from the server.
   and fight off raiding monsters.
 - A village trader with a small store.
 - **Build your own settlement**: craft the *Settlement Banner* (hammer →
-  Misc, needs a workbench) to found a settlement.
+  Misc, needs a workbench) to found a settlement. Name it (Shift+E on the
+  banner), and manage it from one screen: E opens a panel listing every
+  settler — name, rank, job, hunger — with job reassignment buttons.
 - **Recruit settlers**: press E on a settler in a wild settlement to recruit
   them for coins. They follow you; bring them home and press E near your
   banner to assign them.
@@ -120,6 +122,16 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Veterancy / XpPerStar | 20 | XP for the first star; second star costs three times as much |
 
 ## Changelog
+
+### 1.6.0
+
+- Settlement naming: Shift+E on the banner (or the panel's Rename button)
+  opens the sign-style text dialog. The name shows on the banner's hover,
+  in the panel header, and syncs to all players.
+- Management panel: E on the banner opens a woodpanel UI listing every
+  assigned settler with name, rank, job and hunger status, plus prev/next
+  buttons to reassign any settler's job without hunting them down. Closes
+  on Escape or when you walk away.
 
 ### 1.5.0
 
