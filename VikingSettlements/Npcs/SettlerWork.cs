@@ -17,12 +17,28 @@ namespace VikingSettlements.Npcs
         public const string HungryKey = "vs_hungry";
         private const string NextMealKey = "vs_nextmeal";
 
-        private static readonly (string From, string To)[] SmeltingRecipes =
+        private static readonly (string From, int Count, string To)[] SmeltingRecipes =
         {
-            ("CopperOre", "Copper"),
-            ("TinOre", "Tin"),
-            ("IronScrap", "Iron"),
-            ("Wood", "Coal"),
+            ("CopperOre", 1, "Copper"),
+            ("TinOre", 1, "Tin"),
+            ("IronScrap", 1, "Iron"),
+            ("Wood", 1, "Coal"),
+        };
+
+        private static readonly (string From, int Count, string To)[] CookingRecipes =
+        {
+            ("RawMeat", 1, "CookedMeat"),
+            ("DeerMeat", 1, "CookedDeerMeat"),
+            ("NeckTail", 1, "NeckTailGrilled"),
+            ("FishRaw", 1, "FishCooked"),
+            ("WolfMeat", 1, "CookedWolfMeat"),
+            ("LoxMeat", 1, "CookedLoxMeat"),
+        };
+
+        private static readonly (string From, int Count, string To)[] BrewingRecipes =
+        {
+            ("Honey", 2, "MeadHealthMinor"),
+            ("Barley", 2, "BarleyWine"),
         };
 
         private ZNetView _nview;
@@ -78,13 +94,43 @@ namespace VikingSettlements.Npcs
                 case SettlerJob.Blacksmith:
                     if (!gated || HasStation("$piece_forge"))
                     {
-                        Smelt();
+                        Convert(SmeltingRecipes);
                     }
                     break;
                 case SettlerJob.Builder:
                     if (!gated || HasStation("$piece_workbench"))
                     {
                         Repair();
+                    }
+                    break;
+                case SettlerJob.Cook:
+                    if (!gated || HasNearby<CookingStation>())
+                    {
+                        Convert(CookingRecipes);
+                    }
+                    break;
+                case SettlerJob.Miner:
+                    Produce("Stone", Random.Range(2, 5));
+                    if (Random.value < 0.15f)
+                    {
+                        Produce(Random.value < 0.5f ? "CopperOre" : "TinOre", 1);
+                    }
+                    break;
+                case SettlerJob.Hunter:
+                    Produce("RawMeat", Random.Range(1, 3));
+                    if (Random.value < 0.4f)
+                    {
+                        Produce("DeerHide", 1);
+                    }
+                    if (Random.value < 0.2f)
+                    {
+                        Produce("Feathers", 2);
+                    }
+                    break;
+                case SettlerJob.Brewer:
+                    if (!gated || HasNearby<Fermenter>())
+                    {
+                        Convert(BrewingRecipes);
                     }
                     break;
             }
@@ -212,11 +258,16 @@ namespace VikingSettlements.Npcs
 
         private bool HasBeehive()
         {
+            return HasNearby<Beehive>();
+        }
+
+        private bool HasNearby<T>() where T : Component
+        {
             var radius = ModConfig.SettlementRadius.Value;
             var home = _settler.Home;
-            foreach (var beehive in FindObjectsOfType<Beehive>())
+            foreach (var component in FindObjectsOfType<T>())
             {
-                if (Vector3.Distance(beehive.transform.position, home) <= radius)
+                if (Vector3.Distance(component.transform.position, home) <= radius)
                 {
                     return true;
                 }
@@ -241,9 +292,13 @@ namespace VikingSettlements.Npcs
             container.GetInventory().AddItem(item);
         }
 
-        private void Smelt()
+        /// <summary>
+        /// Runs one conversion per tick: the first recipe whose ingredients
+        /// and output space are found together in a settlement chest.
+        /// </summary>
+        private void Convert((string From, int Count, string To)[] recipes)
         {
-            foreach (var (from, to) in SmeltingRecipes)
+            foreach (var (from, needed, to) in recipes)
             {
                 var fromName = SharedName(from);
                 var product = MakeItem(to, 1);
@@ -252,12 +307,12 @@ namespace VikingSettlements.Npcs
                     continue;
                 }
                 var container = FindStorage(inventory =>
-                    inventory.CountItems(fromName) > 0 && inventory.CanAddItem(product));
+                    inventory.CountItems(fromName) >= needed && inventory.CanAddItem(product));
                 if (container == null)
                 {
                     continue;
                 }
-                container.GetInventory().RemoveItem(fromName, 1);
+                container.GetInventory().RemoveItem(fromName, needed);
                 container.GetInventory().AddItem(product);
                 return;
             }

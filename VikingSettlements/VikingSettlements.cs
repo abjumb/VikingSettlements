@@ -13,7 +13,7 @@ namespace VikingSettlements
     {
         public const string PluginGUID = "com.abjumb.vikingsettlements";
         public const string PluginName = "VikingSettlements";
-        public const string PluginVersion = "1.3.0";
+        public const string PluginVersion = "1.4.0";
 
         public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
@@ -78,6 +78,10 @@ namespace VikingSettlements
                 { "vs_job_builder", "Builder" },
                 { "vs_job_blacksmith", "Blacksmith" },
                 { "vs_job_guard", "Guard" },
+                { "vs_job_cook", "Cook" },
+                { "vs_job_miner", "Miner" },
+                { "vs_job_hunter", "Hunter" },
+                { "vs_job_brewer", "Brewer" },
                 { "vs_hungry", "Hungry" },
                 { "vs_raid_start", "The clanless are raiding!" },
                 { "vs_raid_end", "The clanless retreat" },

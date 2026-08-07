@@ -105,6 +105,27 @@ ICONS = {
         ("path", "M12 2.9l7.1 2.8v5c0 4.9-3 8.1-7.1 9.8-4.1-1.7-7.1-4.9-7.1-9.8v-5z"),
         ("path", "M12 8.2v6.4"),
     ],
+    "job_pot": [
+        ("path", "M4.4 10.4h15.2v2.2a7.6 7.6 0 0 1-7.6 7.6 7.6 7.6 0 0 1-7.6-7.6z"),
+        ("path", "M2.6 10.4h18.8"),
+        ("path", "M9 7.4c0-1.2 1-1.2 1-2.4M14 7.4c0-1.2 1-1.2 1-2.4"),
+    ],
+    "job_pick": [
+        ("path", "M5 20.4L15.4 10"),
+        ("path", "M8.6 5.4c3.6-2.4 8-2.4 11.2.8-1.2-.2-2.6 0-3.8.6"),
+        ("path", "M8.6 5.4c-.6 3.8.6 7.2 3.6 9.6-.2-1.2 0-2.6.6-3.8"),
+    ],
+    "job_bow": [
+        ("path", "M6 3.6c6 2 10.4 6.4 12.4 12.4"),
+        ("path", "M6 3.6L18.4 16"),
+        ("path", "M3.6 13.4l7 7"),
+        ("path", "M7.1 16.9L12.5 11.5"),
+    ],
+    "job_horn": [
+        ("path", "M5.2 4.6h7.2l-1 4.4c-.5 2.3-.5 4.7 0 7l1 4.4H5.2l1-4.4c.5-2.3.5-4.7 0-7z"),
+        ("path", "M6 9h5.6"),
+        ("path", "M15.4 8.4c2.4 0 4 1.6 4 4s-1.6 4-4 4"),
+    ],
 }
 
 COLUMNS = [
@@ -156,6 +177,10 @@ JOBS = [
     ("job_hammer", "Builder"),
     ("job_anvil", "Blacksmith"),
     ("job_shield", "Guard"),
+    ("job_pot", "Cook"),
+    ("job_pick", "Miner"),
+    ("job_bow", "Hunter"),
+    ("job_horn", "Brewer"),
 ]
 
 
@@ -250,7 +275,7 @@ def build():
     strip_y = 570
     s.append(f'<rect x="{margin}" y="{strip_y}" width="{W - margin * 2}" height="118" rx="8" '
              f'fill="{C["card"]}" stroke="{C["card_edge"]}" stroke-width="1"/>')
-    s.append(text(W / 2, strip_y + 27, "SIX SETTLER JOBS", 12.5, C["gold"], SANS, "700", "middle", "3"))
+    s.append(text(W / 2, strip_y + 27, "TEN SETTLER JOBS", 12.5, C["gold"], SANS, "700", "middle", "3"))
 
     slot = (W - margin * 2) / len(JOBS)
     for i, (icon_name, label) in enumerate(JOBS):

@@ -7,7 +7,7 @@ from raids**.
 
 <p align="center">
   <img src="docs/features.svg" width="900"
-       alt="Feature overview. Explore the wild: villages placed by world generation, named settlers, village traders. Build your own: recruit villagers, settlement banner, put them to work. Hold the gates: native raid events, rival clans, configurable raids. Six settler jobs: villager, lumberjack, farmer, builder, blacksmith, guard.">
+       alt="Feature overview. Explore the wild: villages placed by world generation, named settlers, village traders. Build your own: recruit villagers, settlement banner, put them to work. Hold the gates: native raid events, rival clans, configurable raids. Ten settler jobs: villager, lumberjack, farmer, builder, blacksmith, guard, cook, miner, hunter, brewer.">
 </p>
 
 ## Requirements
@@ -64,7 +64,7 @@ server-side; purely cosmetic client settings (chatter) stay local.
 Open `<Valheim>/BepInEx/LogOutput.log` and look for these lines:
 
 ```
-[Info   :VikingSettlements] VikingSettlements v1.3.0 loaded - settlements appear in newly generated world areas
+[Info   :VikingSettlements] VikingSettlements v1.4.0 loaded - settlements appear in newly generated world areas
 [Info   :VikingSettlements] Created settlement NPC prefab VS_Settler
 [Info   :VikingSettlements] Registered location VS_MeadowsVillage (... parts, quantity 60)
 [Info   :VikingSettlements] Registered bandit raid with the native random event system
@@ -140,6 +140,12 @@ wild settlements:
    - **Blacksmith** — smelts ore found in settlement chests (needs a forge;
      copper, tin, iron scraps, wood to coal otherwise)
    - **Guard** — sharper senses, holds position at the settlement
+   - **Cook** — cooks raw meat and fish from your chests (needs a cooking
+     station)
+   - **Miner** — deposits stone and the occasional copper or tin ore
+   - **Hunter** — deposits raw meat, deer hide, sometimes feathers
+   - **Brewer** — ferments honey into minor healing mead and barley into
+     barley wine (needs a fermenter)
 4. **Sustain** — settlers eat one food item from your chests roughly once
    per in-game day, cheapest food first. A settler that finds nothing goes
    hungry and stops working until its next meal. Keep the chests stocked and
