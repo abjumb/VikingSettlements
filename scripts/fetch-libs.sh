@@ -49,6 +49,16 @@ curl -sSL -o "$TMP/unity.nupkg" \
 unzip -qo "$TMP/unity.nupkg" 'lib/*' -d "$TMP/unity"
 find "$TMP/unity/lib" -name '*.dll' -exec cp {} "$MANAGED/" \;
 
+# UnityEngine.UI (uGUI) ships separately from the engine modules; the API
+# surface the mod uses (Button, onClick) is stable across Unity versions and
+# at runtime the game's own UnityEngine.UI.dll resolves by name.
+UGUI_VERSION="${UGUI_VERSION:-2020.3.21}"
+echo ">> Fetching Unity3D.UnityEngine.UI $UGUI_VERSION"
+curl -sSL -o "$TMP/ugui.nupkg" \
+  "https://api.nuget.org/v3-flatcontainer/unity3d.unityengine.ui/$UGUI_VERSION/unity3d.unityengine.ui.$UGUI_VERSION.nupkg"
+unzip -qo "$TMP/ugui.nupkg" 'lib/*' -d "$TMP/ugui"
+find "$TMP/ugui/lib" -name 'UnityEngine.UI.dll' -exec cp {} "$MANAGED/" \;
+
 echo ">> Fetching BepInEx $BEPINEX_VERSION"
 curl -sSL -o "$TMP/bepinex.zip" \
   "https://github.com/BepInEx/BepInEx/releases/download/v$BEPINEX_VERSION/BepInEx_linux_x64_$BEPINEX_VERSION.zip"

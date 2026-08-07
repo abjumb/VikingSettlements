@@ -64,7 +64,7 @@ server-side; purely cosmetic client settings (chatter) stay local.
 Open `<Valheim>/BepInEx/LogOutput.log` and look for these lines:
 
 ```
-[Info   :VikingSettlements] VikingSettlements v1.5.0 loaded - settlements appear in newly generated world areas
+[Info   :VikingSettlements] VikingSettlements v1.6.0 loaded - settlements appear in newly generated world areas
 [Info   :VikingSettlements] Created settlement NPC prefab VS_Settler
 [Info   :VikingSettlements] Registered location VS_MeadowsVillage (... parts, quantity 60)
 [Info   :VikingSettlements] Registered bandit raid with the native random event system
@@ -130,6 +130,10 @@ wild settlements:
 2. **Found a settlement** — build the *Settlement Banner* (hammer → Misc,
    near a workbench; wood, fine wood and coins). The banner defines a
    settlement area (default 32 m radius) and shows its population on hover.
+   Press `E` on the banner to open the **management panel** — every settler
+   listed with name, rank, job and hunger, with buttons to reassign jobs
+   from one screen. `Shift+E` (or the panel's Rename button) **names your
+   settlement** with the same text dialog signs use.
 3. **Assign** — with a follower inside the banner's area, press `E` to settle
    them there. Press `E` again to cycle their job, `Shift+E` to unassign:
    - **Lumberjack** — periodically deposits wood into your settlement chests

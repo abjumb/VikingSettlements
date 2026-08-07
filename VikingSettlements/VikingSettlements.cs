@@ -13,7 +13,7 @@ namespace VikingSettlements
     {
         public const string PluginGUID = "com.abjumb.vikingsettlements";
         public const string PluginName = "VikingSettlements";
-        public const string PluginVersion = "1.5.0";
+        public const string PluginVersion = "1.6.0";
 
         public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
@@ -86,6 +86,11 @@ namespace VikingSettlements
                 { "vs_veteran", "Veteran" },
                 { "vs_elite", "Elite" },
                 { "vs_levelup", "has grown stronger!" },
+                { "vs_manage", "Manage" },
+                { "vs_rename", "Rename" },
+                { "vs_rename_topic", "Name your settlement" },
+                { "vs_close", "Close" },
+                { "vs_nosettlers", "No settlers assigned yet" },
                 { "vs_raid_start", "The clanless are raiding!" },
                 { "vs_raid_end", "The clanless retreat" },
                 { "vs_camp_totem", "Clanless War Totem" },

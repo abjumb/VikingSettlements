@@ -66,6 +66,10 @@ banner is now part of it — that's roughly a 15-floor-tile radius, comfortably
 big enough for a starter base.
 
 Hover the banner any time to see who lives there and what they're doing.
+**Press `E` on the banner** to open the management panel — every settler with
+their rank, job and hunger, and `<` / `>` buttons to reassign jobs from one
+screen. **`Shift+E` names your settlement** (signs-style text box); the name
+shows on the banner and for everyone on your server.
 
 ## Step 4 — Move your settlers in
 
