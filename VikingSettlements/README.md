@@ -72,9 +72,14 @@ the same way; world and raid settings are admin-only and sync from the server.
   builders a workbench, and honey production a beehive.
 - **Raids**: your settlement counts as a base for Valheim's native random
   event system — a new "The clanless are raiding!" event sends bandits
-  against it. Rival clans may also assault your settlement at night.
-- Console command `vs_spawn [village|outpost|steading]` (requires
-  `devcommands`) to place a settlement in already-explored terrain.
+  against it. Rival clans may also assault your settlement at night, with war
+  parties that scale with your population and the bosses you've killed.
+- **Clanless camps**: the raiders have homes — bandit camps in world gen.
+  Destroy a camp's war totem to permanently weaken rival raids; break ten
+  and the native raid event goes silent.
+- Console command `vs_find [village|outpost|steading|camp]` marks the
+  nearest one on your map (no cheats needed); `vs_spawn` (requires
+  `devcommands`) places one in already-explored terrain.
 - Configurable: settlement counts per world, recruit cost, settlement size,
   work speed, raid chance — server-synced where it matters.
 
@@ -98,6 +103,9 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Raids / EnableRaids | true | Enable bandit raid event and rival clan raids |
 | Raids / RaidsAfterFirstBoss | true | Raids only start once Eikthyr is dead |
 | Raids / RivalRaidChancePerDay | 0.15 | Nightly chance of a rival clan raid per settlement |
+| Raids / ClanlessCamps | 60 | Bandit camp placement attempts in world gen (0 disables) |
+| Raids / ScaleRaids | true | War parties scale with population and boss progression |
+| Raids / CampClearRaidReduction | 0.05 | Rival raid chance reduction per cleared camp (max 10) |
 | Economy / FoodUpkeep | true | Settlers eat from settlement chests; hungry settlers stop working |
 | Economy / MealIntervalSeconds | 1800 | In-game seconds between settler meals (~1 per game day) |
 | Economy / GrowthEnabled | true | Settlements attract newcomers when beds and food allow |
@@ -106,6 +114,17 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Economy / RequireWorkstations | true | Blacksmith needs a forge, builder a workbench, honey a beehive |
 
 ## Changelog
+
+### 1.3.0
+
+- Clanless camps in world generation: bandit camps with shelters, loot and a
+  destructible war totem. Each cleared totem permanently reduces the rival
+  raid chance by 5%; clearing ten disables the native bandit raid event.
+- Raid scaling: rival war parties grow with the target settlement's
+  population (3–8 raiders) and gain star levels after The Elder and Bonemass.
+- New `vs_find [village|outpost|steading|camp]` command marks the nearest
+  settlement on your map with distance and direction — no cheats required.
+- `vs_spawn` gained a `camp` variant.
 
 ### 1.2.0
 

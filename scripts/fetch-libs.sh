@@ -55,27 +55,34 @@ curl -sSL -o "$TMP/bepinex.zip" \
 unzip -qo "$TMP/bepinex.zip" 'BepInEx/core/*' -d "$TMP/bepinex"
 cp "$TMP"/bepinex/BepInEx/core/*.dll "$CORE/"
 
-# SoftReferenceableAssets.dll is not part of ValheimGameLibs but appears in
-# signatures of some Jotunn/Valheim APIs, so the compiler needs the type
-# identities to exist. An empty stub with the right assembly name suffices -
-# the mod never calls those APIs.
-echo ">> Generating SoftReferenceableAssets reference stub"
-STUB="$TMP/stub"
-mkdir -p "$STUB"
-cat > "$STUB/SoftReferenceableAssets.csproj" <<'EOF'
+# SoftReferenceableAssets.dll and Splatform.dll are not part of
+# ValheimGameLibs but appear in signatures of some Jotunn/Valheim APIs
+# (e.g. Minimap.AddPin takes a Splatform.PlatformUserID), so the compiler
+# needs the type identities to exist. Empty stubs with the right assembly
+# names suffice - the mod never touches those types directly.
+build_stub() {
+  local name="$1" source="$2"
+  echo ">> Generating $name reference stub"
+  local stub="$TMP/stub-$name"
+  mkdir -p "$stub"
+  cat > "$stub/$name.csproj" <<EOF
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>SoftReferenceableAssets</AssemblyName>
-    <RootNamespace>SoftReferenceableAssets</RootNamespace>
+    <AssemblyName>$name</AssemblyName>
     <Version>0.0.0</Version>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <NoWarn>CS0169</NoWarn>
   </PropertyGroup>
 </Project>
 EOF
-cat > "$STUB/Stub.cs" <<'EOF'
-namespace SoftReferenceableAssets
+  printf '%s\n' "$source" > "$stub/Stub.cs"
+  dotnet build "$stub/$name.csproj" -c Release -v quiet --nologo
+  cp "$stub/bin/Release/netstandard2.0/$name.dll" "$MANAGED/$name.dll"
+  cp "$stub/bin/Release/netstandard2.0/$name.dll" "$PUB/${name}_publicized.dll"
+}
+
+build_stub SoftReferenceableAssets 'namespace SoftReferenceableAssets
 {
     public struct AssetID
     {
@@ -86,11 +93,15 @@ namespace SoftReferenceableAssets
     {
         private object _handle;
     }
-}
-EOF
-dotnet build "$STUB/SoftReferenceableAssets.csproj" -c Release -v quiet --nologo
-cp "$STUB/bin/Release/netstandard2.0/SoftReferenceableAssets.dll" "$MANAGED/SoftReferenceableAssets.dll"
-cp "$STUB/bin/Release/netstandard2.0/SoftReferenceableAssets.dll" "$PUB/SoftReferenceableAssets_publicized.dll"
+}'
+
+build_stub Splatform 'namespace Splatform
+{
+    public struct PlatformUserID
+    {
+        private ulong _id;
+    }
+}'
 
 echo ">> Writing Environment.props"
 cat > "$ROOT/Environment.props" <<EOF

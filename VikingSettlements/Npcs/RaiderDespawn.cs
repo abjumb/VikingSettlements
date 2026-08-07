@@ -3,11 +3,15 @@ using UnityEngine;
 namespace VikingSettlements.Npcs
 {
     /// <summary>
-    /// Cleans up rival-clan raiders that were never dealt with: after their
-    /// welcome runs out they despawn once no player is nearby to notice.
+    /// Cleans up rival-clan war parties that were never dealt with: after
+    /// their welcome runs out they despawn once no player is nearby to
+    /// notice. Only affects raiders flagged as a war party by the raid
+    /// spawner - camp residents are permanent.
     /// </summary>
     public class RaiderDespawn : MonoBehaviour
     {
+        public const string WarPartyKey = "vs_warparty";
+
         private const float LifetimeSeconds = 600f;
         private const float PlayerCheckRange = 40f;
 
@@ -24,6 +28,10 @@ namespace VikingSettlements.Npcs
         private void Update()
         {
             if (_nview == null || !_nview.IsValid() || !_nview.IsOwner())
+            {
+                return;
+            }
+            if (!_nview.GetZDO().GetBool(WarPartyKey))
             {
                 return;
             }

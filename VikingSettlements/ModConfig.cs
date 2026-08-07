@@ -19,6 +19,9 @@ namespace VikingSettlements
         public static ConfigEntry<bool> EnableRaids;
         public static ConfigEntry<bool> RaidsAfterFirstBoss;
         public static ConfigEntry<float> RivalRaidChancePerDay;
+        public static ConfigEntry<int> ClanlessCamps;
+        public static ConfigEntry<bool> ScaleRaids;
+        public static ConfigEntry<float> CampClearRaidReduction;
         public static ConfigEntry<bool> FoodUpkeep;
         public static ConfigEntry<float> MealIntervalSeconds;
         public static ConfigEntry<bool> GrowthEnabled;
@@ -114,6 +117,29 @@ namespace VikingSettlements
                     "Chance per in-game day that a rival clan raids a player settlement (rolled " +
                     "each night per settlement banner while its area is loaded).",
                     new AcceptableValueRange<float>(0f, 1f),
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            ClanlessCamps = config.Bind("Raids", "ClanlessCamps", 60,
+                new ConfigDescription(
+                    "How many clanless bandit camps the world generator attempts to place " +
+                    "(new worlds / unexplored areas only). Destroying a camp's war totem " +
+                    "permanently reduces rival raid chance. Set to 0 to disable.",
+                    new AcceptableValueRange<int>(0, 500),
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            ScaleRaids = config.Bind("Raids", "ScaleRaids", true,
+                new ConfigDescription(
+                    "Rival war parties grow with the target settlement's population and gain " +
+                    "star levels as bosses fall (1-star after The Elder, 2-star after Bonemass).",
+                    null,
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            CampClearRaidReduction = config.Bind("Raids", "CampClearRaidReduction", 0.05f,
+                new ConfigDescription(
+                    "Relative reduction of the rival raid chance per cleared clanless camp " +
+                    "(destroyed war totem), up to 10 camps. Clearing 10 camps also disables " +
+                    "the native bandit raid event.",
+                    new AcceptableValueRange<float>(0f, 0.1f),
                     new ConfigurationManagerAttributes { IsAdminOnly = true }));
 
             FoodUpkeep = config.Bind("Economy", "FoodUpkeep", true,

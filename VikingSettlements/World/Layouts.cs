@@ -286,6 +286,42 @@ namespace VikingSettlements.World
             return o;
         }
 
+        /// <summary>
+        /// A clanless bandit camp: crude shelters, loot, raiders, and the war
+        /// totem whose destruction clears the camp.
+        /// </summary>
+        public static SettlementLayout ClanlessCamp()
+        {
+            var c = new SettlementLayout(SettlementLocations.ClanlessCampLocation);
+            c.Add(SettlerPrefabs.Flatten, 0f, 0f, 0f);
+
+            c.Add("fire_pit", 0f, 0f, 0f);
+            c.Add(SettlerPrefabs.CampTotem, 2.5f, 0f, 0.5f);
+            c.Add("wood_stack", 3f, 0f, -2f);
+
+            // Two crude open shelters: poles carrying a flat roof.
+            foreach (var (sx, sz, rot) in new[] { (-4.5f, 3.5f, 30f), (4f, 4.5f, 300f) })
+            {
+                var shelter = new SettlementLayout("shelter");
+                shelter.Add("wood_pole2", -1.8f, 0f, -0.8f);
+                shelter.Add("wood_pole2", 1.8f, 0f, -0.8f);
+                shelter.Add("wood_pole2", -1.8f, 0f, 0.8f);
+                shelter.Add("wood_pole2", 1.8f, 0f, 0.8f);
+                shelter.Add("wood_floor", -1f, 2f, 0f);
+                shelter.Add("wood_floor", 1f, 2f, 0f);
+                c.Place(shelter, sx, sz, rot);
+            }
+
+            c.Add("TreasureChest_blackforest", -4.5f, 0f, 2.5f, 30f);
+            AddStakeRing(c, 9f, 10, 70f);
+
+            c.Add(SettlerPrefabs.Raider, 1.5f, 0f, 1.8f, 200f);
+            c.Add(SettlerPrefabs.Raider, -2f, 0f, -1.2f, 80f);
+            c.Add(SettlerPrefabs.Raider, -1f, 0f, 4f, 160f);
+            c.Add(SettlerPrefabs.Raider, 3.2f, 0f, -3.2f, 340f);
+            return c;
+        }
+
         /// <summary>A stone-walled plains steading with a barley farm.</summary>
         public static SettlementLayout PlainsSteading()
         {

@@ -13,7 +13,7 @@ namespace VikingSettlements.Commands
     {
         public override string Name => "vs_spawn";
 
-        public override string Help => "Spawns a viking settlement in front of the player. Usage: vs_spawn [village|outpost|steading]";
+        public override string Help => "Spawns a viking settlement in front of the player. Usage: vs_spawn [village|outpost|steading|camp]";
 
         public override bool IsCheat => true;
 
@@ -39,8 +39,11 @@ namespace VikingSettlements.Commands
                 case "steading":
                     layout = Layouts.PlainsSteading();
                     break;
+                case "camp":
+                    layout = Layouts.ClanlessCamp();
+                    break;
                 default:
-                    Console.instance.Print($"vs_spawn: unknown settlement '{variant}', options: village, outpost, steading");
+                    Console.instance.Print($"vs_spawn: unknown settlement '{variant}', options: village, outpost, steading, camp");
                     return;
             }
 
@@ -52,7 +55,7 @@ namespace VikingSettlements.Commands
 
         public override List<string> CommandOptionList()
         {
-            return new List<string> { "village", "outpost", "steading" };
+            return new List<string> { "village", "outpost", "steading", "camp" };
         }
     }
 }
