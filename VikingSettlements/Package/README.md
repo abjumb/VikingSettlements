@@ -15,12 +15,33 @@ against raiding monsters and turn hostile if you attack them. Villages contain
 loot chests, crops to pick, working crafting spots, and (in meadows villages)
 a trader with a small store of early-game supplies.
 
-## Installation (manual)
+## Requirements
 
-1. Install [BepInEx](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/)
-   and [Jötunn](https://thunderstore.io/c/valheim/p/ValheimModding/Jotunn/).
-2. Drop `VikingSettlements.dll` into `<Valheim>/BepInEx/plugins`.
-3. All players and the server need the mod installed.
+- Valheim 0.221.4 or compatible
+- [BepInExPack Valheim](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/) 5.4.2333+
+- [Jötunn](https://thunderstore.io/c/valheim/p/ValheimModding/Jotunn/) 2.29.2+
+
+## Installation
+
+**With a mod manager:** install BepInExPack Valheim and Jötunn into your
+profile, then install this mod. Launch through the manager.
+
+**Manually:**
+
+1. Extract BepInExPack Valheim into your Valheim folder so `winhttp.dll` sits
+   next to `valheim.exe`, launch the game once, then quit.
+2. Copy `Jotunn.dll` into `<Valheim>/BepInEx/plugins/`.
+3. Copy `VikingSettlements.dll` into `<Valheim>/BepInEx/plugins/`.
+4. Launch Valheim. The config is written to
+   `BepInEx/config/com.abjumb.vikingsettlements.cfg` on first run.
+
+**Multiplayer:** the server and every client need the mod at the same minor
+version, or clients are rejected at connect. Install it on dedicated servers
+the same way; world and raid settings are admin-only and sync from the server.
+
+> **Settlements only generate in new terrain.** Installing on an existing save
+> will not add villages to areas you have already explored — start a new world,
+> sail somewhere new, or use `vs_spawn` (requires `devcommands`).
 
 ## Features
 
