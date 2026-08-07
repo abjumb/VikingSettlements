@@ -6,6 +6,11 @@ settlers**, **found your own settlement**, **assign jobs**, and **defend it
 from raids**. Built from the
 [JötunnModStub](https://github.com/Valheim-Modding/JotunnModStub) template.
 
+<p align="center">
+  <img src="docs/features.svg" width="900"
+       alt="Feature overview. Explore the wild: villages placed by world generation, named settlers, village traders. Build your own: recruit villagers, settlement banner, put them to work. Hold the gates: native raid events, rival clans, configurable raids. Six settler jobs: villager, lumberjack, farmer, builder, blacksmith, guard.">
+</p>
+
 ## Requirements
 
 | Dependency | Version |

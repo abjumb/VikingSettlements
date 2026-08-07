@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="1200" height="780" role="img" aria-labelledby="vs-title vs-desc">
+<title id="vs-title">VikingSettlements feature overview</title>
+<desc id="vs-desc">Explore the wild: villages placed by world generation, named settlers, village traders. Build your own: recruit villagers, settlement banner, put them to work. Hold the gates: native raid events, rival clans, tunable config. Six settler jobs: villager, lumberjack, farmer, builder, blacksmith, guard.</desc>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#141d22"/><stop offset="1" stop-color="#0b1013"/></linearGradient>
+<radialGradient id="glow" cx="0.5" cy="0" r="0.75"><stop offset="0" stop-color="#e8a33d" stop-opacity="0.13"/><stop offset="1" stop-color="#e8a33d" stop-opacity="0"/></radialGradient>
+<linearGradient id="rule" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e8a33d" stop-opacity="0"/><stop offset="0.5" stop-color="#e8a33d" stop-opacity="0.85"/><stop offset="1" stop-color="#e8a33d" stop-opacity="0"/></linearGradient>
+</defs>
+<rect width="1200" height="780" fill="url(#bg)"/>
+<rect width="1200" height="780" fill="url(#glow)"/>
+<rect x="0.5" y="0.5" width="1199" height="779" fill="none" stroke="#27353e" stroke-width="1"/>
+<text x="600.0" y="74" font-family="Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif" font-size="46" font-weight="700" fill="#f0e8d8" text-anchor="middle" letter-spacing="5">VIKING SETTLEMENTS</text>
+<text x="600.0" y="106" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="15.5" font-weight="400" fill="#8fa0a8" text-anchor="middle">Living NPC villages for Valheim — explore them, recruit them, rule them</text>
+<rect x="340.0" y="127" width="520" height="1.4" fill="url(#rule)"/>
+<path d="M600.0 121.5l6 6.2-6 6.2-6-6.2z" fill="#e8a33d"/>
+<text x="42.0" y="196" font-family="Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif" font-size="15" font-weight="700" fill="#7fb5a4" text-anchor="start" letter-spacing="1">I</text>
+<text x="70.0" y="196" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="700" fill="#7fb5a4" text-anchor="start" letter-spacing="2.4">EXPLORE THE WILD</text>
+<rect x="40.0" y="208" width="357.3333333333333" height="1" fill="#7fb5a4" opacity="0.32"/>
+<rect x="40.0" y="224" width="357.3333333333333" height="96" rx="7" fill="#18232a" stroke="#27353e" stroke-width="1"/>
+<rect x="40.0" y="224" width="3" height="96" rx="1.5" fill="#7fb5a4" opacity="0.75"/>
+<circle cx="86.0" cy="272" r="20" fill="#7fb5a4" opacity="0.11"/>
+<g transform="translate(70.88,256.88) scale(1.26)" fill="none" stroke="#7fb5a4" stroke-width="1.43" stroke-linecap="round" stroke-linejoin="round"><path d="M1.6 10.8l5.9-4.9 5.9 4.9"/><path d="M3 10.4v10.1h9.8V10.4"/><path d="M6.2 20.5v-4.1h3.4v4.1"/><path d="M14.2 14.4l4.1-3.3 4.1 3.3"/><path d="M15.2 14v6.5h6.2V14"/></g>
+<text x="122.0" y="262" font-family="Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif" font-size="16.5" font-weight="700" fill="#f0e8d8" text-anchor="start">Villages in the Wild</text>
+<text x="122.0" y="284" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="400" fill="#ded5c4" text-anchor="start">Three settlement types placed by</text>
+<text x="122.0" y="302" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="400" fill="#8fa0a8" text-anchor="start">world generation across three biomes.</text>
+<rect x="40.0" y="336" width="357.3333333333333" height="96" rx="7" fill="#18232a" stroke="#27353e" stroke-width="1"/>
+<rect x="40.0" y="336" width="3" height="96" rx="1.5" fill="#7fb5a4" opacity="0.75"/>
+<circle cx="86.0" cy="384" r="20" fill="#7fb5a4" opacity="0.11"/>
+<g transform="translate(70.88,368.88) scale(1.26)" fill="none" stroke="#7fb5a4" stroke-width="1.43" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7.4" r="3.4"/><path d="M4.6 20.5v-1.1a7.4 7.4 0 0 1 14.8 0v1.1"/></g>
+<text x="122.0" y="374" font-family="Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif" font-size="16.5" font-weight="700" fill="#f0e8d8" text-anchor="start">Named Settlers</text>
+<text x="122.0" y="396" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="400" fill="#ded5c4" text-anchor="start">Villagers with lasting names who</text>
+<text x="122.0" y="414" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="400" fill="#8fa0a8" text-anchor="start">keep to their home and greet you.</text>
+<rect x="40.0" y="448" width="357.3333333333333" height="96" rx="7" fill="#18232a" stroke="#27353e" stroke-width="1"/>
+<rect x="40.0" y="448" width="3" height="96" rx="1.5" fill="#7fb5a4" opacity="0.75"/>
+<circle cx="86.0" cy="496" r="20" fill="#7fb5a4" opacity="0.11"/>
+<g transform="translate(70.88,480.88) scale(1.26)" fill="none" stroke="#7fb5a4" stroke-width="1.43" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.8" cy="12" r="6.7"/><path d="M13.5 6a6.7 6.7 0 0 1 0 12"/><path d="M9.8 9.1v5.8"/><path d="M7.8 10.7h4"/></g>
+<text x="122.0" y="486" font-family="Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif" font-size="16.5" font-weight="700" fill="#f0e8d8" text-anchor="start">Village Traders</text>
+<text x="122.0" y="508" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="400" fill="#ded5c4" text-anchor="start">Meadows villages hold a trader</text>
+<text x="122.0" y="526" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="400" fill="#8fa0a8" text-anchor="start">stocked with early-game supplies.</text>
+<text x="423.3333333333333" y="196" font-family="Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif" font-size="15" font-weight="700" fill="#e8a33d" text-anchor="start" letter-spacing="1">II</text>
+<text x="451.3333333333333" y="196" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="700" fill="#e8a33d" text-anchor="start" letter-spacing="2.4">BUILD YOUR OWN</text>
+<rect x="421.3333333333333" y="208" width="357.3333333333333" height="1" fill="#e8a33d" opacity="0.32"/>
+<rect x="421.3333333333333" y="224" width="357.3333333333333" height="96" rx="7" fill="#18232a" stroke="#27353e" stroke-width="1"/>
+<rect x="421.3333333333333" y="224" width="3" height="96" rx="1.5" fill="#e8a33d" opacity="0.75"/>
+<circle cx="467.3333333333333" cy="272" r="20" fill="#e8a33d" opacity="0.11"/>
+<g transform="translate(452.21,256.88) scale(1.26)" fill="none" stroke="#e8a33d" stroke-width="1.43" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.4" cy="7.4" r="3.2"/><path d="M2.6 20.5v-1a6.9 6.9 0 0 1 10.2-6.1"/><path d="M17.6 13.4v7.1M14 17h7.2"/></g>
+<text x="503.3333333333333" y="262" font-family="Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif" font-size="16.5" font-weight="700" fill="#f0e8d8" text-anchor="start">Recruit Villagers</text>
+<text x="503.3333333333333" y="284" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="400" fill="#ded5c4" text-anchor="start">Pay coins to hire settlers. They</text>
+<text x="503.3333333333333" y="302" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="400" fill="#8fa0a8" text-anchor="start">join your side and follow you home.</text>
+<rect x="421.3333333333333" y="336" width="357.3333333333333" height="96" rx="7" fill="#18232a" stroke="#27353e" stroke-width="1"/>
+<rect x="421.3333333333333" y="336" width="3" height="96" rx="1.5" fill="#e8a33d" opacity="0.75"/>
+<circle cx="467.3333333333333" cy="384" r="20" fill="#e8a33d" opacity="0.11"/>
+<g transform="translate(452.21,368.88) scale(1.26)" fill="none" stroke="#e8a33d" stroke-width="1.43" stroke-linecap="round" stroke-linejoin="round"><path d="M6.4 2.6v18.9"/><path d="M6.4 4.1h12.6l-3.2 4.2 3.2 4.2H6.4z"/></g>
+<text x="503.3333333333333" y="374" font-family="Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif" font-size="16.5" font-weight="700" fill="#f0e8d8" text-anchor="start">Settlement Banner</text>
+<text x="503.3333333333333" y="396" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="400" fill="#ded5c4" text-anchor="start">A buildable standard that founds</text>
+<text x="503.3333333333333" y="414" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="400" fill="#8fa0a8" text-anchor="start">your village and counts its people.</text>
+<rect x="421.3333333333333" y="448" width="357.3333333333333" height="96" rx="7" fill="#18232a" stroke="#27353e" stroke-width="1"/>
+<rect x="421.3333333333333" y="448" width="3" height="96" rx="1.5" fill="#e8a33d" opacity="0.75"/>
+<circle cx="467.3333333333333" cy="496" r="20" fill="#e8a33d" opacity="0.11"/>
+<g transform="translate(452.21,480.88) scale(1.26)" fill="none" stroke="#e8a33d" stroke-width="1.43" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 4.2h13v5.2h-13z"/><path d="M12 9.4v11.2"/></g>
+<text x="503.3333333333333" y="486" font-family="Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif" font-size="16.5" font-weight="700" fill="#f0e8d8" text-anchor="start">Put Them to Work</text>
+<text x="503.3333333333333" y="508" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="400" fill="#ded5c4" text-anchor="start">Assign a job to every settler and</text>
+<text x="503.3333333333333" y="526" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="400" fill="#8fa0a8" text-anchor="start">they fill your chests as you play.</text>
+<text x="804.6666666666666" y="196" font-family="Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif" font-size="15" font-weight="700" fill="#d8735a" text-anchor="start" letter-spacing="1">III</text>
+<text x="832.6666666666666" y="196" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="700" fill="#d8735a" text-anchor="start" letter-spacing="2.4">HOLD THE GATES</text>
+<rect x="802.6666666666666" y="208" width="357.3333333333333" height="1" fill="#d8735a" opacity="0.32"/>
+<rect x="802.6666666666666" y="224" width="357.3333333333333" height="96" rx="7" fill="#18232a" stroke="#27353e" stroke-width="1"/>
+<rect x="802.6666666666666" y="224" width="3" height="96" rx="1.5" fill="#d8735a" opacity="0.75"/>
+<circle cx="848.6666666666666" cy="272" r="20" fill="#d8735a" opacity="0.11"/>
+<g transform="translate(833.55,256.88) scale(1.26)" fill="none" stroke="#d8735a" stroke-width="1.43" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1.8c3.6 4.6 6 7 6 10.6a6 6 0 1 1-12 0C6 8.8 8.4 6.4 12 1.8z"/><path d="M12 12.6c1.6 2 2.4 3 2.4 4.3a2.4 2.4 0 1 1-4.8 0c0-1.3.8-2.3 2.4-4.3z"/></g>
+<text x="884.6666666666666" y="262" font-family="Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif" font-size="16.5" font-weight="700" fill="#f0e8d8" text-anchor="start">Native Raid Events</text>
+<text x="884.6666666666666" y="284" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="400" fill="#ded5c4" text-anchor="start">Your village counts as a base, so</text>
+<text x="884.6666666666666" y="302" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="400" fill="#8fa0a8" text-anchor="start">Valheim's raid system can target it.</text>
+<rect x="802.6666666666666" y="336" width="357.3333333333333" height="96" rx="7" fill="#18232a" stroke="#27353e" stroke-width="1"/>
+<rect x="802.6666666666666" y="336" width="3" height="96" rx="1.5" fill="#d8735a" opacity="0.75"/>
+<circle cx="848.6666666666666" cy="384" r="20" fill="#d8735a" opacity="0.11"/>
+<g transform="translate(833.55,368.88) scale(1.26)" fill="none" stroke="#d8735a" stroke-width="1.43" stroke-linecap="round" stroke-linejoin="round"><path d="M4.4 19.9L17.6 6.7"/><path d="M15.2 5.1l4.4-1.6-1.6 4.4"/><path d="M14.6 8.1l2 2"/><path d="M19.6 19.9L6.4 6.7"/><path d="M8.8 5.1L4.4 3.5l1.6 4.4"/><path d="M9.4 8.1l-2 2"/></g>
+<text x="884.6666666666666" y="374" font-family="Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif" font-size="16.5" font-weight="700" fill="#f0e8d8" text-anchor="start">Rival Clans</text>
+<text x="884.6666666666666" y="396" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="400" fill="#ded5c4" text-anchor="start">Bandit war parties strike by night.</text>
+<text x="884.6666666666666" y="414" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="400" fill="#8fa0a8" text-anchor="start">Your settlers fight them off.</text>
+<rect x="802.6666666666666" y="448" width="357.3333333333333" height="96" rx="7" fill="#18232a" stroke="#27353e" stroke-width="1"/>
+<rect x="802.6666666666666" y="448" width="3" height="96" rx="1.5" fill="#d8735a" opacity="0.75"/>
+<circle cx="848.6666666666666" cy="496" r="20" fill="#d8735a" opacity="0.11"/>
+<g transform="translate(833.55,480.88) scale(1.26)" fill="none" stroke="#d8735a" stroke-width="1.43" stroke-linecap="round" stroke-linejoin="round"><path d="M3.4 6.6h17.2M3.4 12h17.2M3.4 17.4h17.2"/><circle cx="8.6" cy="6.6" r="2.4"/><circle cx="15.4" cy="12" r="2.4"/><circle cx="7.4" cy="17.4" r="2.4"/></g>
+<text x="884.6666666666666" y="486" font-family="Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif" font-size="16.5" font-weight="700" fill="#f0e8d8" text-anchor="start">Raids on Your Terms</text>
+<text x="884.6666666666666" y="508" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="400" fill="#ded5c4" text-anchor="start">Gated behind Eikthyr by default —</text>
+<text x="884.6666666666666" y="526" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="400" fill="#8fa0a8" text-anchor="start">toggle or retune every raid setting.</text>
+<rect x="40" y="570" width="1120" height="118" rx="8" fill="#18232a" stroke="#27353e" stroke-width="1"/>
+<text x="600.0" y="597" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="700" fill="#e8a33d" text-anchor="middle" letter-spacing="3">SIX SETTLER JOBS</text>
+<circle cx="133.33333333333331" cy="632" r="17" fill="#e8a33d" opacity="0.09"/>
+<g transform="translate(120.37,619.04) scale(1.08)" fill="none" stroke="#f5cd82" stroke-width="1.53" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3"/><path d="M5.8 20v-.9a6.2 6.2 0 0 1 12.4 0v.9"/></g>
+<text x="133.33333333333331" y="670" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#ded5c4" text-anchor="middle">Villager</text>
+<circle cx="320.0" cy="632" r="17" fill="#e8a33d" opacity="0.09"/>
+<g transform="translate(307.04,619.04) scale(1.08)" fill="none" stroke="#f5cd82" stroke-width="1.53" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.4l4.6 6.2h-2.8l3.7 5h-3l3.1 4.6H6.4l3.1-4.6h-3l3.7-5H7.4z"/><path d="M12 18.2v3.2"/></g>
+<text x="320.0" y="670" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#ded5c4" text-anchor="middle">Lumberjack</text>
+<rect x="226.66666666666666" y="606" width="1" height="60" fill="#27353e"/>
+<circle cx="506.66666666666663" cy="632" r="17" fill="#e8a33d" opacity="0.09"/>
+<g transform="translate(493.71,619.04) scale(1.08)" fill="none" stroke="#f5cd82" stroke-width="1.53" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5V6"/><path d="M12 10.6c-2.8 0-4-1.8-4-4 2.2 0 4 1.2 4 4z"/><path d="M12 10.6c2.8 0 4-1.8 4-4-2.2 0-4 1.2-4 4z"/><path d="M12 15.4c-2.8 0-4-1.8-4-4 2.2 0 4 1.2 4 4z"/><path d="M12 15.4c2.8 0 4-1.8 4-4-2.2 0-4 1.2-4 4z"/></g>
+<text x="506.66666666666663" y="670" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#ded5c4" text-anchor="middle">Farmer</text>
+<rect x="413.3333333333333" y="606" width="1" height="60" fill="#27353e"/>
+<circle cx="693.3333333333333" cy="632" r="17" fill="#e8a33d" opacity="0.09"/>
+<g transform="translate(680.37,619.04) scale(1.08)" fill="none" stroke="#f5cd82" stroke-width="1.53" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 4.6h12.4v4.8H5.8z"/><path d="M12 9.4v11"/></g>
+<text x="693.3333333333333" y="670" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#ded5c4" text-anchor="middle">Builder</text>
+<rect x="600.0" y="606" width="1" height="60" fill="#27353e"/>
+<circle cx="880.0" cy="632" r="17" fill="#e8a33d" opacity="0.09"/>
+<g transform="translate(867.04,619.04) scale(1.08)" fill="none" stroke="#f5cd82" stroke-width="1.53" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 8.8h18.4c0 3.1-2.6 4.9-5.8 4.9h-1.3v2.4h3.8V19H6.1v-2.9h3.8v-2.4H8.6C5.2 13.7 2.8 11.9 2.8 8.8z" fill="#f5cd82" stroke="none"/></g>
+<text x="880.0" y="670" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#ded5c4" text-anchor="middle">Blacksmith</text>
+<rect x="786.6666666666666" y="606" width="1" height="60" fill="#27353e"/>
+<circle cx="1066.6666666666665" cy="632" r="17" fill="#e8a33d" opacity="0.09"/>
+<g transform="translate(1053.71,619.04) scale(1.08)" fill="none" stroke="#f5cd82" stroke-width="1.53" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.9l7.1 2.8v5c0 4.9-3 8.1-7.1 9.8-4.1-1.7-7.1-4.9-7.1-9.8v-5z"/><path d="M12 8.2v6.4"/></g>
+<text x="1066.6666666666665" y="670" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#ded5c4" text-anchor="middle">Guard</text>
+<rect x="973.3333333333333" y="606" width="1" height="60" fill="#27353e"/>
+<rect x="40" y="716" width="1120" height="1" fill="#27353e"/>
+<text x="600.0" y="742" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#8fa0a8" text-anchor="middle">Built with Jötunn  ·  No custom assets — assembled from vanilla pieces  ·  Server-synced config  ·  Multiplayer ready</text>
+</svg>
