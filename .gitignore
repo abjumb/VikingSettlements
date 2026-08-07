@@ -376,3 +376,6 @@ Environment.props
 # vendored reference assemblies (fetched by scripts/fetch-libs.sh)
 vendor/
 VikingSettlements/*.zip
+
+# LICENSE is copied into the package by the release build
+*/Package/LICENSE
