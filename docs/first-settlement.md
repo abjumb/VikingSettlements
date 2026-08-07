@@ -87,9 +87,17 @@ scroll through all six:
 | **Builder** | Repairs up to **3 damaged structures** in the settlement | A **workbench** in the radius |
 | **Blacksmith** | Smelts ore sitting in your chests | A **forge** in the radius |
 | **Guard** | No production — patrols with **60% wider awareness** for threats | — |
+| **Cook** | Cooks raw meat and fish found in your chests | A **cooking station** in the radius |
+| **Miner** | Drops **2–4 stone**, with a rare piece of copper or tin ore | — |
+| **Hunter** | Drops **1–2 raw meat**, often deer hide, sometimes feathers | — |
+| **Brewer** | Turns 2 honey into a minor healing mead, 2 barley into barley wine | A **fermenter** in the radius |
 
 They work roughly **once a minute**, whether or not you're watching, as long as
 the area is loaded.
+
+The jobs feed each other: a **hunter** fills chests with raw meat, a **cook**
+turns it into proper food, and that food is what keeps everyone fed (Step 7) —
+a two-settler food chain that makes the settlement self-sufficient.
 
 `Shift+E` on a settled villager pulls them back out to follow you again.
 
@@ -139,6 +147,12 @@ Your settlers fight back on your side automatically. A couple of **Guards**, a
 palisade, and a few workbench-repairable walls go a long way. Builders will
 patch up the damage afterwards — and a fed settlement regrows lost settlers
 over time.
+
+Settlers who stick around get better at this: a day of service earns 1 XP and
+every battle survived earns 2, promoting them to **Veteran** (1 star) at 20 XP
+and **Elite** (2 stars) at 60. Stars mean vanilla stat scaling — an Elite guard
+is a genuinely dangerous opponent for a war party. One more reason to keep
+your people alive and fed.
 
 Want to fight back at the source? The raiders live in **clanless camps**
 scattered through the world (`vs_find camp` points you at the nearest).

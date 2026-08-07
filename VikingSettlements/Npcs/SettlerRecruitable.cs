@@ -19,6 +19,10 @@ namespace VikingSettlements.Npcs
         Builder = 3,
         Blacksmith = 4,
         Guard = 5,
+        Cook = 6,
+        Miner = 7,
+        Hunter = 8,
+        Brewer = 9,
     }
 
     /// <summary>
@@ -160,7 +164,12 @@ namespace VikingSettlements.Npcs
 
         public string GetHoverName()
         {
-            return _character != null ? _character.m_name : "";
+            if (_character == null)
+            {
+                return "";
+            }
+            return Localization.instance.Localize(
+                _character.m_name + SettlerVeterancy.RankToken(_character));
         }
 
         public string GetHoverText()
@@ -298,9 +307,11 @@ namespace VikingSettlements.Npcs
             return true;
         }
 
+        private const int JobCount = 10;
+
         private bool CycleJob(Player player)
         {
-            var next = (SettlerJob)(((int)Job + 1) % 6);
+            var next = (SettlerJob)(((int)Job + 1) % JobCount);
             Job = next;
             if (_ai != null)
             {
@@ -322,6 +333,10 @@ namespace VikingSettlements.Npcs
                 case SettlerJob.Builder: return "$vs_job_builder";
                 case SettlerJob.Blacksmith: return "$vs_job_blacksmith";
                 case SettlerJob.Guard: return "$vs_job_guard";
+                case SettlerJob.Cook: return "$vs_job_cook";
+                case SettlerJob.Miner: return "$vs_job_miner";
+                case SettlerJob.Hunter: return "$vs_job_hunter";
+                case SettlerJob.Brewer: return "$vs_job_brewer";
                 default: return "$vs_job_villager";
             }
         }

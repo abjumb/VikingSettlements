@@ -60,14 +60,18 @@ the same way; world and raid settings are admin-only and sync from the server.
 - **Recruit settlers**: press E on a settler in a wild settlement to recruit
   them for coins. They follow you; bring them home and press E near your
   banner to assign them.
-- **Jobs**: press E on an assigned settler to cycle their job —
-  Villager, Lumberjack, Farmer, Builder, Blacksmith, Guard.
-  Lumberjacks and farmers deposit resources into your settlement's chests,
-  blacksmiths smelt ore they find in them, builders repair damaged
-  structures, guards get sharper senses. Shift+E unassigns/dismisses.
+- **Ten jobs**: press E on an assigned settler to cycle — Villager,
+  Lumberjack, Farmer, Builder, Blacksmith, Guard, Cook, Miner, Hunter,
+  Brewer. Producers fill your settlement's chests, cooks and brewers refine
+  what they find in them, builders repair damage, guards keep watch.
+  The jobs chain: hunters bring raw meat, cooks turn it into the food that
+  keeps the whole settlement fed. Shift+E unassigns/dismisses.
 - **Food & growth**: settlers eat from your chests (cheapest food first) about
   once per game day; a hungry settler stops working. A well-fed settlement
   below its cap, with a spare bed, attracts newcomers on its own.
+- **Veterancy**: settlers earn XP from days of service and battles survived,
+  rising to Veteran and Elite star levels with vanilla stat scaling — your
+  longest-serving villagers become your best defenders.
 - **Workstations matter**: blacksmiths need a forge in the settlement,
   builders a workbench, and honey production a beehive.
 - **Raids**: your settlement counts as a base for Valheim's native random
@@ -112,8 +116,26 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Economy / GrowthChancePerDay | 0.35 | Nightly chance of a newcomer when conditions are met |
 | Economy / GrowthFoodCost | 3 | Food consumed when a newcomer arrives |
 | Economy / RequireWorkstations | true | Blacksmith needs a forge, builder a workbench, honey a beehive |
+| Veterancy / VeterancyEnabled | true | Settlers earn XP and star levels from service and battles |
+| Veterancy / XpPerStar | 20 | XP for the first star; second star costs three times as much |
 
 ## Changelog
+
+### 1.5.0
+
+- Settler veterancy: settlers earn 1 XP per in-game day of assigned service
+  and 2 XP per battle survived. At 20 XP they become a 1-star **Veteran**, at
+  60 XP a 2-star **Elite**, with vanilla star stat scaling. Rank shows in
+  hover text; levels and XP persist in the world save. Wild villagers also
+  harden from combat, so old villages grow tougher over time.
+
+### 1.4.0
+
+- Four new jobs: **Cook** (cooks raw meat/fish from settlement chests, needs
+  a cooking station), **Miner** (stone plus the occasional copper/tin ore),
+  **Hunter** (raw meat, deer hide, feathers), and **Brewer** (2 honey → minor
+  healing mead, 2 barley → barley wine, needs a fermenter).
+- Hunters and cooks form a food chain with the settlement's meal upkeep.
 
 ### 1.3.0
 

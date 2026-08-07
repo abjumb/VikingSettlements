@@ -100,6 +100,7 @@ namespace VikingSettlements.Npcs
             clone.AddComponent<SettlerHome>();
             clone.AddComponent<SettlerRecruitable>();
             clone.AddComponent<SettlerWork>();
+            clone.AddComponent<SettlerVeterancy>();
 
             PrefabManager.Instance.AddPrefab(new CustomPrefab(clone, false));
             Jotunn.Logger.LogInfo($"Created settlement NPC prefab {name}");

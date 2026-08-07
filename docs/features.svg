@@ -86,30 +86,46 @@
 <text x="884.6666666666666" y="508" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="400" fill="#ded5c4" text-anchor="start">Gated behind Eikthyr by default —</text>
 <text x="884.6666666666666" y="526" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="400" fill="#8fa0a8" text-anchor="start">toggle or retune every raid setting.</text>
 <rect x="40" y="570" width="1120" height="118" rx="8" fill="#18232a" stroke="#27353e" stroke-width="1"/>
-<text x="600.0" y="597" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="700" fill="#e8a33d" text-anchor="middle" letter-spacing="3">SIX SETTLER JOBS</text>
-<circle cx="133.33333333333331" cy="632" r="17" fill="#e8a33d" opacity="0.09"/>
-<g transform="translate(120.37,619.04) scale(1.08)" fill="none" stroke="#f5cd82" stroke-width="1.53" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3"/><path d="M5.8 20v-.9a6.2 6.2 0 0 1 12.4 0v.9"/></g>
-<text x="133.33333333333331" y="670" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#ded5c4" text-anchor="middle">Villager</text>
+<text x="600.0" y="597" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="700" fill="#e8a33d" text-anchor="middle" letter-spacing="3">TEN SETTLER JOBS</text>
+<circle cx="96.0" cy="632" r="17" fill="#e8a33d" opacity="0.09"/>
+<g transform="translate(83.04,619.04) scale(1.08)" fill="none" stroke="#f5cd82" stroke-width="1.53" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3"/><path d="M5.8 20v-.9a6.2 6.2 0 0 1 12.4 0v.9"/></g>
+<text x="96.0" y="670" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#ded5c4" text-anchor="middle">Villager</text>
+<circle cx="208.0" cy="632" r="17" fill="#e8a33d" opacity="0.09"/>
+<g transform="translate(195.04,619.04) scale(1.08)" fill="none" stroke="#f5cd82" stroke-width="1.53" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.4l4.6 6.2h-2.8l3.7 5h-3l3.1 4.6H6.4l3.1-4.6h-3l3.7-5H7.4z"/><path d="M12 18.2v3.2"/></g>
+<text x="208.0" y="670" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#ded5c4" text-anchor="middle">Lumberjack</text>
+<rect x="152.0" y="606" width="1" height="60" fill="#27353e"/>
 <circle cx="320.0" cy="632" r="17" fill="#e8a33d" opacity="0.09"/>
-<g transform="translate(307.04,619.04) scale(1.08)" fill="none" stroke="#f5cd82" stroke-width="1.53" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.4l4.6 6.2h-2.8l3.7 5h-3l3.1 4.6H6.4l3.1-4.6h-3l3.7-5H7.4z"/><path d="M12 18.2v3.2"/></g>
-<text x="320.0" y="670" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#ded5c4" text-anchor="middle">Lumberjack</text>
-<rect x="226.66666666666666" y="606" width="1" height="60" fill="#27353e"/>
-<circle cx="506.66666666666663" cy="632" r="17" fill="#e8a33d" opacity="0.09"/>
-<g transform="translate(493.71,619.04) scale(1.08)" fill="none" stroke="#f5cd82" stroke-width="1.53" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5V6"/><path d="M12 10.6c-2.8 0-4-1.8-4-4 2.2 0 4 1.2 4 4z"/><path d="M12 10.6c2.8 0 4-1.8 4-4-2.2 0-4 1.2-4 4z"/><path d="M12 15.4c-2.8 0-4-1.8-4-4 2.2 0 4 1.2 4 4z"/><path d="M12 15.4c2.8 0 4-1.8 4-4-2.2 0-4 1.2-4 4z"/></g>
-<text x="506.66666666666663" y="670" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#ded5c4" text-anchor="middle">Farmer</text>
-<rect x="413.3333333333333" y="606" width="1" height="60" fill="#27353e"/>
-<circle cx="693.3333333333333" cy="632" r="17" fill="#e8a33d" opacity="0.09"/>
-<g transform="translate(680.37,619.04) scale(1.08)" fill="none" stroke="#f5cd82" stroke-width="1.53" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 4.6h12.4v4.8H5.8z"/><path d="M12 9.4v11"/></g>
-<text x="693.3333333333333" y="670" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#ded5c4" text-anchor="middle">Builder</text>
+<g transform="translate(307.04,619.04) scale(1.08)" fill="none" stroke="#f5cd82" stroke-width="1.53" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5V6"/><path d="M12 10.6c-2.8 0-4-1.8-4-4 2.2 0 4 1.2 4 4z"/><path d="M12 10.6c2.8 0 4-1.8 4-4-2.2 0-4 1.2-4 4z"/><path d="M12 15.4c-2.8 0-4-1.8-4-4 2.2 0 4 1.2 4 4z"/><path d="M12 15.4c2.8 0 4-1.8 4-4-2.2 0-4 1.2-4 4z"/></g>
+<text x="320.0" y="670" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#ded5c4" text-anchor="middle">Farmer</text>
+<rect x="264.0" y="606" width="1" height="60" fill="#27353e"/>
+<circle cx="432.0" cy="632" r="17" fill="#e8a33d" opacity="0.09"/>
+<g transform="translate(419.04,619.04) scale(1.08)" fill="none" stroke="#f5cd82" stroke-width="1.53" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 4.6h12.4v4.8H5.8z"/><path d="M12 9.4v11"/></g>
+<text x="432.0" y="670" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#ded5c4" text-anchor="middle">Builder</text>
+<rect x="376.0" y="606" width="1" height="60" fill="#27353e"/>
+<circle cx="544.0" cy="632" r="17" fill="#e8a33d" opacity="0.09"/>
+<g transform="translate(531.04,619.04) scale(1.08)" fill="none" stroke="#f5cd82" stroke-width="1.53" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 8.8h18.4c0 3.1-2.6 4.9-5.8 4.9h-1.3v2.4h3.8V19H6.1v-2.9h3.8v-2.4H8.6C5.2 13.7 2.8 11.9 2.8 8.8z" fill="#f5cd82" stroke="none"/></g>
+<text x="544.0" y="670" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#ded5c4" text-anchor="middle">Blacksmith</text>
+<rect x="488.0" y="606" width="1" height="60" fill="#27353e"/>
+<circle cx="656.0" cy="632" r="17" fill="#e8a33d" opacity="0.09"/>
+<g transform="translate(643.04,619.04) scale(1.08)" fill="none" stroke="#f5cd82" stroke-width="1.53" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.9l7.1 2.8v5c0 4.9-3 8.1-7.1 9.8-4.1-1.7-7.1-4.9-7.1-9.8v-5z"/><path d="M12 8.2v6.4"/></g>
+<text x="656.0" y="670" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#ded5c4" text-anchor="middle">Guard</text>
 <rect x="600.0" y="606" width="1" height="60" fill="#27353e"/>
+<circle cx="768.0" cy="632" r="17" fill="#e8a33d" opacity="0.09"/>
+<g transform="translate(755.04,619.04) scale(1.08)" fill="none" stroke="#f5cd82" stroke-width="1.53" stroke-linecap="round" stroke-linejoin="round"><path d="M4.4 10.4h15.2v2.2a7.6 7.6 0 0 1-7.6 7.6 7.6 7.6 0 0 1-7.6-7.6z"/><path d="M2.6 10.4h18.8"/><path d="M9 7.4c0-1.2 1-1.2 1-2.4M14 7.4c0-1.2 1-1.2 1-2.4"/></g>
+<text x="768.0" y="670" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#ded5c4" text-anchor="middle">Cook</text>
+<rect x="712.0" y="606" width="1" height="60" fill="#27353e"/>
 <circle cx="880.0" cy="632" r="17" fill="#e8a33d" opacity="0.09"/>
-<g transform="translate(867.04,619.04) scale(1.08)" fill="none" stroke="#f5cd82" stroke-width="1.53" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 8.8h18.4c0 3.1-2.6 4.9-5.8 4.9h-1.3v2.4h3.8V19H6.1v-2.9h3.8v-2.4H8.6C5.2 13.7 2.8 11.9 2.8 8.8z" fill="#f5cd82" stroke="none"/></g>
-<text x="880.0" y="670" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#ded5c4" text-anchor="middle">Blacksmith</text>
-<rect x="786.6666666666666" y="606" width="1" height="60" fill="#27353e"/>
-<circle cx="1066.6666666666665" cy="632" r="17" fill="#e8a33d" opacity="0.09"/>
-<g transform="translate(1053.71,619.04) scale(1.08)" fill="none" stroke="#f5cd82" stroke-width="1.53" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.9l7.1 2.8v5c0 4.9-3 8.1-7.1 9.8-4.1-1.7-7.1-4.9-7.1-9.8v-5z"/><path d="M12 8.2v6.4"/></g>
-<text x="1066.6666666666665" y="670" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#ded5c4" text-anchor="middle">Guard</text>
-<rect x="973.3333333333333" y="606" width="1" height="60" fill="#27353e"/>
+<g transform="translate(867.04,619.04) scale(1.08)" fill="none" stroke="#f5cd82" stroke-width="1.53" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20.4L15.4 10"/><path d="M8.6 5.4c3.6-2.4 8-2.4 11.2.8-1.2-.2-2.6 0-3.8.6"/><path d="M8.6 5.4c-.6 3.8.6 7.2 3.6 9.6-.2-1.2 0-2.6.6-3.8"/></g>
+<text x="880.0" y="670" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#ded5c4" text-anchor="middle">Miner</text>
+<rect x="824.0" y="606" width="1" height="60" fill="#27353e"/>
+<circle cx="992.0" cy="632" r="17" fill="#e8a33d" opacity="0.09"/>
+<g transform="translate(979.04,619.04) scale(1.08)" fill="none" stroke="#f5cd82" stroke-width="1.53" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.6c6 2 10.4 6.4 12.4 12.4"/><path d="M6 3.6L18.4 16"/><path d="M3.6 13.4l7 7"/><path d="M7.1 16.9L12.5 11.5"/></g>
+<text x="992.0" y="670" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#ded5c4" text-anchor="middle">Hunter</text>
+<rect x="936.0" y="606" width="1" height="60" fill="#27353e"/>
+<circle cx="1104.0" cy="632" r="17" fill="#e8a33d" opacity="0.09"/>
+<g transform="translate(1091.04,619.04) scale(1.08)" fill="none" stroke="#f5cd82" stroke-width="1.53" stroke-linecap="round" stroke-linejoin="round"><path d="M5.2 4.6h7.2l-1 4.4c-.5 2.3-.5 4.7 0 7l1 4.4H5.2l1-4.4c.5-2.3.5-4.7 0-7z"/><path d="M6 9h5.6"/><path d="M15.4 8.4c2.4 0 4 1.6 4 4s-1.6 4-4 4"/></g>
+<text x="1104.0" y="670" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#ded5c4" text-anchor="middle">Brewer</text>
+<rect x="1048.0" y="606" width="1" height="60" fill="#27353e"/>
 <rect x="40" y="716" width="1120" height="1" fill="#27353e"/>
 <text x="600.0" y="742" font-family="'Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="400" fill="#8fa0a8" text-anchor="middle">Built with Jötunn  ·  No custom assets — assembled from vanilla pieces  ·  Server-synced config  ·  Multiplayer ready</text>
 </svg>

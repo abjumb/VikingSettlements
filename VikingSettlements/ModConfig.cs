@@ -28,6 +28,8 @@ namespace VikingSettlements
         public static ConfigEntry<float> GrowthChancePerDay;
         public static ConfigEntry<int> GrowthFoodCost;
         public static ConfigEntry<bool> RequireWorkstations;
+        public static ConfigEntry<bool> VeterancyEnabled;
+        public static ConfigEntry<int> XpPerStar;
 
         public static void Init(ConfigFile config)
         {
@@ -183,6 +185,21 @@ namespace VikingSettlements
                     "builders a workbench, and farmers a beehive for honey. Disable to restore " +
                     "the ungated 1.1 behavior.",
                     null,
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            VeterancyEnabled = config.Bind("Veterancy", "VeterancyEnabled", true,
+                new ConfigDescription(
+                    "Settlers earn experience (1 XP per in-game day of assigned service, " +
+                    "2 XP per battle survived) and rise through star levels with vanilla " +
+                    "stat scaling.",
+                    null,
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            XpPerStar = config.Bind("Veterancy", "XpPerStar", 20,
+                new ConfigDescription(
+                    "Experience required for a settler's first star. The second star costs " +
+                    "three times as much.",
+                    new AcceptableValueRange<int>(5, 200),
                     new ConfigurationManagerAttributes { IsAdminOnly = true }));
         }
     }
