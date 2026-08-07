@@ -86,6 +86,9 @@ namespace VikingSettlements.Raids
                 randomEvent.m_requiredGlobalKeys ??= new List<string>();
                 randomEvent.m_requiredGlobalKeys.Add("defeated_eikthyr");
             }
+            // Clearing every counted clanless camp silences the native event.
+            randomEvent.m_notRequiredGlobalKeys ??= new List<string>();
+            randomEvent.m_notRequiredGlobalKeys.Add(CampTotem.AllCampsClearedKey);
 
             system.m_events.Add(randomEvent);
             _registered = true;

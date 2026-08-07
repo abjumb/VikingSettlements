@@ -106,7 +106,7 @@ namespace VikingSettlements.Settlements
             }
             _nview.GetZDO().Set(LastRaidDayKey, day);
 
-            if (ModConfig.EnableRaids.Value && Random.value < ModConfig.RivalRaidChancePerDay.Value)
+            if (ModConfig.EnableRaids.Value && Random.value < Raids.RaidSpawner.EffectiveRaidChance())
             {
                 Raids.RaidSpawner.SpawnRivalRaid(this);
             }

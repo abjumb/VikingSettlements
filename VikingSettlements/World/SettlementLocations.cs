@@ -14,6 +14,7 @@ namespace VikingSettlements.World
         public const string MeadowsVillageLocation = "VS_MeadowsVillage";
         public const string ForestOutpostLocation = "VS_ForestOutpost";
         public const string PlainsSteadingLocation = "VS_PlainsSteading";
+        public const string ClanlessCampLocation = "VS_ClanlessCamp";
 
         private static bool _registered;
 
@@ -68,6 +69,21 @@ namespace VikingSettlements.World
                 MinDistanceFromSimilar = 800f,
                 MaxTerrainDelta = 3f,
                 Group = "vs_settlements",
+            });
+
+            Register(Layouts.ClanlessCamp(), new LocationConfig
+            {
+                Biome = Heightmap.Biome.Meadows | Heightmap.Biome.BlackForest | Heightmap.Biome.Plains,
+                Quantity = ModConfig.ClanlessCamps.Value,
+                Priotized = false,
+                ExteriorRadius = 14f,
+                ClearArea = true,
+                RandomRotation = true,
+                MinAltitude = 2f,
+                MinDistance = 900f,
+                MinDistanceFromSimilar = 700f,
+                MaxTerrainDelta = 3f,
+                Group = "vs_camps",
             });
         }
 

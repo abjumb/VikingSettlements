@@ -13,7 +13,7 @@ namespace VikingSettlements
     {
         public const string PluginGUID = "com.abjumb.vikingsettlements";
         public const string PluginName = "VikingSettlements";
-        public const string PluginVersion = "1.2.0";
+        public const string PluginVersion = "1.3.0";
 
         public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
@@ -25,6 +25,7 @@ namespace VikingSettlements
             PrefabManager.OnVanillaPrefabsAvailable += CreatePrefabs;
             ZoneManager.OnVanillaLocationsAvailable += RegisterLocations;
             CommandManager.Instance.AddConsoleCommand(new Commands.SpawnSettlementCommand());
+            CommandManager.Instance.AddConsoleCommand(new Commands.FindSettlementCommand());
 
             Jotunn.Logger.LogInfo($"{PluginName} v{PluginVersion} loaded - settlements appear in newly generated world areas");
         }
@@ -80,6 +81,9 @@ namespace VikingSettlements
                 { "vs_hungry", "Hungry" },
                 { "vs_raid_start", "The clanless are raiding!" },
                 { "vs_raid_end", "The clanless retreat" },
+                { "vs_camp_totem", "Clanless War Totem" },
+                { "vs_camp_totem_hint", "Destroy it to weaken the clanless raids" },
+                { "vs_camp_cleared", "A clanless camp is broken! Their raids weaken" },
             });
         }
     }

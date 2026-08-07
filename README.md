@@ -64,7 +64,7 @@ server-side; purely cosmetic client settings (chatter) stay local.
 Open `<Valheim>/BepInEx/LogOutput.log` and look for these lines:
 
 ```
-[Info   :VikingSettlements] VikingSettlements v1.2.0 loaded - settlements appear in newly generated world areas
+[Info   :VikingSettlements] VikingSettlements v1.3.0 loaded - settlements appear in newly generated world areas
 [Info   :VikingSettlements] Created settlement NPC prefab VS_Settler
 [Info   :VikingSettlements] Registered location VS_MeadowsVillage (... parts, quantity 60)
 [Info   :VikingSettlements] Registered bandit raid with the native random event system
@@ -84,6 +84,7 @@ Three new location types are woven into Valheim's world generation:
 | `VS_MeadowsVillage` | Meadows | Longhouse, cabins, farm, maypole, watchtower, trader stall, fire plaza, 7 settlers + trader |
 | `VS_ForestOutpost` | Black Forest | Watchtower, cabin, stake ring, campfire, 3 settlers |
 | `VS_PlainsSteading` | Plains | Stone hall, barley/flax farm, watchtower, stake ring, 4 settlers |
+| `VS_ClanlessCamp` | Meadows, Black Forest, Plains | Bandit camp: shelters, loot chest, war totem, 4 raiders |
 
 Settlements are assembled procedurally from vanilla building pieces, so no
 custom assets or asset bundles are required. Settler NPCs are cloned from
@@ -103,7 +104,15 @@ For already-explored areas there is a console command (enable `devcommands`
 first):
 
 ```
-vs_spawn [village|outpost|steading]
+vs_spawn [village|outpost|steading|camp]
+```
+
+To locate the nearest generated settlement or camp, `vs_find` marks it on
+your map with distance and direction — no cheats required, in the spirit of
+Hugin's boss hints:
+
+```
+vs_find [village|outpost|steading|camp]
 ```
 
 ## Player settlements
@@ -141,7 +150,13 @@ wild settlements:
    ("The clanless are raiding!") is registered alongside the vanilla ones
    (gated behind Eikthyr by default). Independently, rival clans roll a
    nightly chance to assault your settlement with bandit war parties, which
-   your settlers — being on your faction — fight off natively.
+   your settlers — being on your faction — fight off natively. War parties
+   scale with your settlement's population, and gain star levels once The
+   Elder and Bonemass have fallen.
+6. **Strike back** — the raiders come from somewhere: *clanless camps* dot
+   the world. Destroy a camp's war totem and the rival raid chance drops
+   permanently (5% per camp); break ten camps and the native bandit raid
+   event stops firing altogether.
 
 Jobs need somewhere to put their output: place **chests inside the settlement
 radius** or lumberjacks, farmers and blacksmiths will have nothing to work
@@ -170,6 +185,9 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Raids / EnableRaids | true | Enable the bandit raid event and rival clan raids |
 | Raids / RaidsAfterFirstBoss | true | Raids only start once Eikthyr is dead |
 | Raids / RivalRaidChancePerDay | 0.15 | Nightly chance of a rival clan raid per settlement |
+| Raids / ClanlessCamps | 60 | Bandit camp placement attempts in world gen (0 disables) |
+| Raids / ScaleRaids | true | War parties scale with population and boss progression |
+| Raids / CampClearRaidReduction | 0.05 | Rival raid chance reduction per cleared camp (max 10) |
 | Economy / FoodUpkeep | true | Settlers eat from settlement chests; hungry settlers stop working |
 | Economy / MealIntervalSeconds | 1800 | In-game seconds between settler meals (~1 per game day) |
 | Economy / GrowthEnabled | true | Settlements attract newcomers when beds and food allow |

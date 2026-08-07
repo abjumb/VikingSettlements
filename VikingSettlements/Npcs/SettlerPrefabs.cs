@@ -18,6 +18,7 @@ namespace VikingSettlements.Npcs
         public const string Trader = "VS_Trader";
         public const string Flatten = "VS_Flatten";
         public const string Raider = "VS_Raider";
+        public const string CampTotem = "VS_CampTotem";
 
         private static bool _created;
 
@@ -34,6 +35,7 @@ namespace VikingSettlements.Npcs
             CreateTrader();
             CreateFlatten();
             CreateRaider();
+            CreateCampTotem();
         }
 
         private static GameObject CloneFirstAvailable(string newName, IEnumerable<string> baseCandidates)
@@ -152,6 +154,32 @@ namespace VikingSettlements.Npcs
 
             PrefabManager.Instance.AddPrefab(new CustomPrefab(clone, false));
             Jotunn.Logger.LogInfo("Created raider prefab VS_Raider");
+        }
+
+        /// <summary>
+        /// The destructible war totem of a clanless camp. Destroying it clears
+        /// the camp and weakens future raids (see CampTotem).
+        /// </summary>
+        private static void CreateCampTotem()
+        {
+            var clone = CloneFirstAvailable(CampTotem, new[] { "fuling_totempole", "guard_stone", "piece_maypole" });
+            if (clone == null)
+            {
+                Jotunn.Logger.LogWarning("Could not create VS_CampTotem: no base prefab found");
+                return;
+            }
+
+            // The ward base carries ward logic we don't want on a totem.
+            var privateArea = clone.GetComponent<PrivateArea>();
+            if (privateArea != null)
+            {
+                Object.DestroyImmediate(privateArea);
+            }
+
+            clone.AddComponent<Raids.CampTotem>();
+
+            PrefabManager.Instance.AddPrefab(new CustomPrefab(clone, false));
+            Jotunn.Logger.LogInfo("Created camp totem prefab VS_CampTotem");
         }
 
         private static void CreateTrader()

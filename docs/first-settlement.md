@@ -24,7 +24,9 @@ banner plus three settlers.
 
 ## Step 1 — Find a village
 
-Explore until you find one. There are three kinds:
+The quick way: open the console (F5) and type `vs_find village` — it marks the
+nearest village on your map with distance and direction, no cheats needed.
+Otherwise, explore until you find one. There are three kinds:
 
 - **Meadows village** — the big one. A longhouse, cabins, a farm, a trader, and
   seven villagers. This is the best place to recruit from.
@@ -137,6 +139,13 @@ Your settlers fight back on your side automatically. A couple of **Guards**, a
 palisade, and a few workbench-repairable walls go a long way. Builders will
 patch up the damage afterwards — and a fed settlement regrows lost settlers
 over time.
+
+Want to fight back at the source? The raiders live in **clanless camps**
+scattered through the world (`vs_find camp` points you at the nearest).
+Destroy the **war totem** at a camp's center and rival raids get permanently
+5% less likely — clear ten camps and the native raid event stops entirely.
+Raids also scale: bigger settlements draw bigger war parties, and raiders
+come starred once The Elder and Bonemass are dead.
 
 If raids aren't your thing, you can turn them off entirely in the config.
 
