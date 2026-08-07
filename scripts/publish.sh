@@ -60,6 +60,8 @@ if [ "$target" = "Release" ]; then
     mkdir -p "$packagePath/plugins"
     cp "$targetPath/$targetAssembly" "$packagePath/plugins/"
     cp "$projectPath/README.md" "$packagePath/"
+    # Ship the licence alongside the binary.
+    [ -e "$projectPath/../LICENSE" ] && cp "$projectPath/../LICENSE" "$packagePath/"
 
     if command -v zip > /dev/null; then
         [ -e "$name.zip" ] && rm "$name.zip"

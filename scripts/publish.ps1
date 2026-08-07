@@ -63,6 +63,10 @@ if($Target.Equals("Release")) {
     New-Item -Type Directory -Path "$PackagePath\plugins" -Force
     Copy-Item -Path "$TargetPath\$TargetAssembly" -Destination "$PackagePath\plugins\$TargetAssembly" -Force
     Copy-Item -Path "$ProjectPath\README.md" -Destination "$PackagePath\README.md" -Force
+    # Ship the licence alongside the binary.
+    if (Test-Path "$ProjectPath\..\LICENSE") {
+        Copy-Item -Path "$ProjectPath\..\LICENSE" -Destination "$PackagePath\LICENSE" -Force
+    }
     Compress-Archive -Path "$PackagePath\*" -DestinationPath "$TargetPath\$name.zip" -Force
 }
 
