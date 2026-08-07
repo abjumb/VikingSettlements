@@ -3,8 +3,7 @@
 A [Jötunn](https://github.com/Valheim-Modding/Jotunn)-based Valheim mod that
 adds **inhabited NPC settlements** to world generation, lets you **recruit
 settlers**, **found your own settlement**, **assign jobs**, and **defend it
-from raids**. Built from the
-[JötunnModStub](https://github.com/Valheim-Modding/JotunnModStub) template.
+from raids**.
 
 <p align="center">
   <img src="docs/features.svg" width="900"
@@ -279,3 +278,14 @@ loading.
 
 See the Wiki page [Debugging Plugins via IDE](https://github.com/Valheim-Modding/Wiki/wiki/Debugging-Plugins-via-IDE)
 for more information.
+
+## Credits
+
+Built on [Jötunn](https://github.com/Valheim-Modding/Jotunn), the Valheim
+modding library. The build tooling and Unity project scaffolding originally
+came from the [JötunnModStub](https://github.com/Valheim-Modding/JotunnModStub)
+template (MIT No Attribution) and have since been reworked for this project.
+
+## License
+
+Released under the [MIT License](LICENSE).

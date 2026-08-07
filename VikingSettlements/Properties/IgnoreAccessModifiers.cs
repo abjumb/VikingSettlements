@@ -1,8 +1,8 @@
-﻿// Veilheim
+﻿// VikingSettlements
 // a Valheim mod
-// 
+//
 // File:    IgnoreAccessModifiers.cs
-// Project: Veilheim
+// Project: VikingSettlements
 
 using System.Security.Permissions;
 
