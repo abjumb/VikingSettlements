@@ -1,0 +1,10 @@
+{
+  "name": "VikingSettlements",
+  "description": "Adds inhabited NPC settlements to world generation: meadows villages, black forest outposts and plains steadings with named settlers and a trader.",
+  "version_number": "1.0.0",
+  "website_url": "https://github.com/abjumb/JotunnModStub",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2333",
+    "ValheimModding-Jotunn-2.29.2"
+  ]
+}

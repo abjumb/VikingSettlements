@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <RootNamespace>VikingSettlements</RootNamespace>
+    <AssemblyName>VikingSettlements</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <LangVersion>10</LangVersion>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JotunnLib" Version="2.29.2" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <VALHEIM_MANAGED>$(VALHEIM_INSTALL)/valheim_Data/Managed</VALHEIM_MANAGED>
+    <UNITY_FOLDER>$(SolutionDir)VikingSettlementsUnity</UNITY_FOLDER>
+  </PropertyGroup>
+
+  <Target Name="CopyToUnity">
+    <Message Text="Copy assemblies to Unity" Importance="high" />
+    <ItemGroup>
+      <UnityAssemblies Include="$(BEPINEX_PATH)/core/BepInEx.dll" />
+      <UnityAssemblies Include="$(BEPINEX_PATH)/core/0Harmony.dll" />
+      <UnityAssemblies Include="$(BEPINEX_PATH)/core/Mono.Cecil.dll" />
+      <UnityAssemblies Include="$(BEPINEX_PATH)/core/MonoMod.Utils.dll" />
+      <UnityAssemblies Include="$(BEPINEX_PATH)/core/MonoMod.RuntimeDetour.dll" />
+      <UnityAssemblies Include="$(TargetDir)Jotunn.dll" />
+      <UnityAssemblies Include="$(TargetDir)$(TargetName).dll" />
+      <UnityAssemblies Include="$(TargetDir)$(TargetName).pdb" />
+      <UnityAssemblies Include="$(TargetDir)$(TargetName).dll.mdb" />
+      <UnityAssemblies Include="$(VALHEIM_MANAGED)/Assembly-CSharp.dll" />
+      <UnityAssemblies Include="$(VALHEIM_MANAGED)/assembly_valheim.dll" />
+      <UnityAssemblies Include="$(VALHEIM_MANAGED)/assembly_utils.dll" />
+      <UnityAssemblies Include="$(VALHEIM_MANAGED)/assembly_postprocessing.dll" />
+      <UnityAssemblies Include="$(VALHEIM_MANAGED)/assembly_sunshafts.dll" />
+      <UnityAssemblies Include="$(VALHEIM_MANAGED)/assembly_guiutils.dll" />
+      <UnityAssemblies Include="$(VALHEIM_MANAGED)/assembly_lux.dll" />
+      <UnityAssemblies Include="$(VALHEIM_MANAGED)/assembly_simplemeshcombine.dll" />
+      <UnityAssemblies Include="$(VALHEIM_MANAGED)/assembly_googleanalytics.dll" />
+      <UnityAssemblies Include="$(VALHEIM_MANAGED)/PlayFab.dll" />
+      <UnityAssemblies Include="$(VALHEIM_MANAGED)/PlayFabParty.dll" />
+      <UnityAssemblies Include="$(VALHEIM_MANAGED)/Splatform.dll" />
+      <UnityAssemblies Include="$(VALHEIM_MANAGED)/Splatform.Steam.dll" />
+      <UnityAssemblies Include="$(VALHEIM_MANAGED)/gui_framework.dll" />
+      <UnityAssemblies Include="$(VALHEIM_MANAGED)/com.rlabrecque.steamworks.net.dll" />
+      <UnityAssemblies Include="$(VALHEIM_MANAGED)/SoftReferenceableAssets.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="%(UnityAssemblies.Identity)" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" Condition="Exists('%(UnityAssemblies.Identity)')" />
+  </Target>
+
+  <Target Name="JotunnPostBuildTask" AfterTargets="Build">
+    <CallTarget Targets="CopyToUnity" Condition="Exists('$(UNITY_FOLDER)')" />
+  </Target>
+
+  <Target Name="JotunnPostBuildTaskWin" AfterTargets="Build" Condition=" '$(OS)' == 'Windows_NT' ">
+    <Exec Command="powershell.exe -ExecutionPolicy RemoteSigned -File &quot;$(SolutionDir)scripts/publish.ps1&quot; -Target &quot;$(ConfigurationName)&quot; -TargetPath &quot;$(TargetDir.TrimEnd('\'))&quot; -TargetAssembly &quot;$(TargetFileName)&quot; -ValheimPath &quot;$(VALHEIM_INSTALL.TrimEnd('\'))&quot; -DeployPath &quot;$(MOD_DEPLOYPATH.TrimEnd('\'))&quot; -ProjectPath &quot;$(ProjectDir.TrimEnd('\'))&quot; " />
+  </Target>
+
+  <Target Name="JotunnPostBuildTaskUnix" AfterTargets="Build" Condition=" '$(OS)' == 'Unix' ">
+    <Exec  Command="sh &quot;$(SolutionDir)scripts/publish.sh&quot; --target &quot;$(ConfigurationName)&quot; --target-path &quot;$(TargetDir)&quot; --target-assembly &quot;$(TargetFileName)&quot; --valheim-path &quot;$(VALHEIM_INSTALL)&quot; --deploy-path &quot;$(MOD_DEPLOYPATH)&quot; --project-path &quot;$(ProjectDir)&quot;" />
+  </Target>
+</Project>
