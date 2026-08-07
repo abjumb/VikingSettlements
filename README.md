@@ -64,7 +64,7 @@ server-side; purely cosmetic client settings (chatter) stay local.
 Open `<Valheim>/BepInEx/LogOutput.log` and look for these lines:
 
 ```
-[Info   :VikingSettlements] VikingSettlements v1.4.0 loaded - settlements appear in newly generated world areas
+[Info   :VikingSettlements] VikingSettlements v1.5.0 loaded - settlements appear in newly generated world areas
 [Info   :VikingSettlements] Created settlement NPC prefab VS_Settler
 [Info   :VikingSettlements] Registered location VS_MeadowsVillage (... parts, quantity 60)
 [Info   :VikingSettlements] Registered bandit raid with the native random event system
@@ -151,6 +151,9 @@ wild settlements:
    hungry and stops working until its next meal. Keep the chests stocked and
    your settlement *grows*: each night a settlement below its cap with a
    spare unclaimed bed and food to spare has a chance to attract a newcomer.
+   Long-serving settlers become **veterans**: 1 XP per day of service and
+   2 XP per battle survived earn them star levels with real stat scaling —
+   hover text shows their rank (Veteran, Elite).
 5. **Defend** — the banner emits a player-base area, so Valheim's native
    random event system can target your settlement: a custom raid event
    ("The clanless are raiding!") is registered alongside the vanilla ones
@@ -200,6 +203,8 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Economy / GrowthChancePerDay | 0.35 | Nightly chance of a newcomer when conditions are met |
 | Economy / GrowthFoodCost | 3 | Food consumed when a newcomer arrives |
 | Economy / RequireWorkstations | true | Blacksmith needs a forge, builder a workbench, honey a beehive |
+| Veterancy / VeterancyEnabled | true | Settlers earn XP and star levels from service and battles |
+| Veterancy / XpPerStar | 20 | XP for the first star; second star costs three times as much |
 
 Location counts only affect world generation, so changing them has no effect
 on already-generated terrain.

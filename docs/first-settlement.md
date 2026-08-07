@@ -148,6 +148,12 @@ palisade, and a few workbench-repairable walls go a long way. Builders will
 patch up the damage afterwards — and a fed settlement regrows lost settlers
 over time.
 
+Settlers who stick around get better at this: a day of service earns 1 XP and
+every battle survived earns 2, promoting them to **Veteran** (1 star) at 20 XP
+and **Elite** (2 stars) at 60. Stars mean vanilla stat scaling — an Elite guard
+is a genuinely dangerous opponent for a war party. One more reason to keep
+your people alive and fed.
+
 Want to fight back at the source? The raiders live in **clanless camps**
 scattered through the world (`vs_find camp` points you at the nearest).
 Destroy the **war totem** at a camp's center and rival raids get permanently

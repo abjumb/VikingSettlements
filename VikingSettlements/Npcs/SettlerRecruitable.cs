@@ -164,7 +164,12 @@ namespace VikingSettlements.Npcs
 
         public string GetHoverName()
         {
-            return _character != null ? _character.m_name : "";
+            if (_character == null)
+            {
+                return "";
+            }
+            return Localization.instance.Localize(
+                _character.m_name + SettlerVeterancy.RankToken(_character));
         }
 
         public string GetHoverText()
