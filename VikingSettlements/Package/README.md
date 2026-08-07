@@ -65,6 +65,11 @@ the same way; world and raid settings are admin-only and sync from the server.
   Lumberjacks and farmers deposit resources into your settlement's chests,
   blacksmiths smelt ore they find in them, builders repair damaged
   structures, guards get sharper senses. Shift+E unassigns/dismisses.
+- **Food & growth**: settlers eat from your chests (cheapest food first) about
+  once per game day; a hungry settler stops working. A well-fed settlement
+  below its cap, with a spare bed, attracts newcomers on its own.
+- **Workstations matter**: blacksmiths need a forge in the settlement,
+  builders a workbench, and honey production a beehive.
 - **Raids**: your settlement counts as a base for Valheim's native random
   event system — a new "The clanless are raiding!" event sends bandits
   against it. Rival clans may also assault your settlement at night.
@@ -93,8 +98,26 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Raids / EnableRaids | true | Enable bandit raid event and rival clan raids |
 | Raids / RaidsAfterFirstBoss | true | Raids only start once Eikthyr is dead |
 | Raids / RivalRaidChancePerDay | 0.15 | Nightly chance of a rival clan raid per settlement |
+| Economy / FoodUpkeep | true | Settlers eat from settlement chests; hungry settlers stop working |
+| Economy / MealIntervalSeconds | 1800 | In-game seconds between settler meals (~1 per game day) |
+| Economy / GrowthEnabled | true | Settlements attract newcomers when beds and food allow |
+| Economy / GrowthChancePerDay | 0.35 | Nightly chance of a newcomer when conditions are met |
+| Economy / GrowthFoodCost | 3 | Food consumed when a newcomer arrives |
+| Economy / RequireWorkstations | true | Blacksmith needs a forge, builder a workbench, honey a beehive |
 
 ## Changelog
+
+### 1.2.0
+
+- Settlement economy: settlers now eat one food item from settlement chests
+  roughly once per in-game day (cheapest first); hungry settlers stop
+  working until their next meal. Hover a settler or the banner to see hunger.
+- Population growth: a settlement below its cap, with a spare unclaimed bed
+  and enough food, can attract a newcomer each night — rarely a seer.
+- Workstation-gated jobs: blacksmiths need a forge inside the settlement,
+  builders a workbench, and farmers a beehive to produce honey.
+- All of it is configurable (new Economy config section) and can be disabled
+  to restore 1.1 behavior.
 
 ### 1.1.0
 

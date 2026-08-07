@@ -77,14 +77,14 @@ A settlement holds **10 settlers** by default.
 Press `E` on a settled villager again to cycle their job. Keep pressing to
 scroll through all six:
 
-| Job | What they do |
-|---|---|
-| **Villager** | Nothing. The default — just lives there |
-| **Lumberjack** | Drops **2–4 wood** into a settlement chest |
-| **Farmer** | Drops **1–2 carrots or turnips**, with a 1-in-5 chance of honey |
-| **Builder** | Repairs up to **3 damaged structures** in the settlement |
-| **Blacksmith** | Smelts ore sitting in your chests |
-| **Guard** | No production — patrols with **60% wider awareness** for threats |
+| Job | What they do | Needs |
+|---|---|---|
+| **Villager** | Nothing. The default — just lives there | — |
+| **Lumberjack** | Drops **2–4 wood** into a settlement chest | — |
+| **Farmer** | Drops **1–2 carrots or turnips**, with a 1-in-5 chance of honey | A **beehive** for the honey |
+| **Builder** | Repairs up to **3 damaged structures** in the settlement | A **workbench** in the radius |
+| **Blacksmith** | Smelts ore sitting in your chests | A **forge** in the radius |
+| **Guard** | No production — patrols with **60% wider awareness** for threats | — |
 
 They work roughly **once a minute**, whether or not you're watching, as long as
 the area is loaded.
@@ -97,17 +97,33 @@ the area is loaded.
 settlement radius. Without one, your lumberjacks and farmers work and produce
 nothing, silently.
 
-Two things worth knowing:
+Three things worth knowing:
 
 - **A full chest stops production.** They won't find another one if the nearest
   one with room is gone. Keep space free.
-- **A blacksmith with no ore burns your wood into coal.** They try copper ore,
-  tin ore, then iron scrap — and if none of those are in your chests, they fall
-  back to converting wood into coal. If you're running a lumberjack and a
-  blacksmith together and don't want your firewood eaten, keep ore stocked or
-  put the wood in a chest outside the radius.
+- **A blacksmith with ore missing burns wood into coal.** With a forge built,
+  they try copper ore, tin ore, then iron scrap — and if none of those are in
+  your chests, they fall back to converting wood into coal. Keep ore stocked,
+  or park the firewood in a chest outside the radius.
+- **Settlers eat from these chests too.** See the next step.
 
-## Step 7 — Expect trouble
+## Step 7 — Feed your people
+
+Settlers eat **one food item roughly once per in-game day**, taken from your
+settlement chests — always the **cheapest food first**, so nobody touches your
+serpent stew while there are berries in the box.
+
+A settler that finds nothing to eat goes **hungry and stops working** until
+their next meal. You'll see it on their hover text and on the banner.
+
+Keep the pantry stocked and the settlement takes care of its own future:
+each night, a settlement below its settler cap has a chance to **attract a
+newcomer** — as long as there's a **spare unclaimed bed** and about **3 food**
+in the chests to spare (consumed when they arrive). Rarely, the newcomer is a
+seer. Build beds ahead of your population and the village grows on its own,
+which also means raid losses heal with time instead of being forever.
+
+## Step 8 — Expect trouble
 
 A settlement is a target. Two things can come for it:
 
@@ -119,7 +135,8 @@ A settlement is a target. Two things can come for it:
 
 Your settlers fight back on your side automatically. A couple of **Guards**, a
 palisade, and a few workbench-repairable walls go a long way. Builders will
-patch up the damage afterwards.
+patch up the damage afterwards — and a fed settlement regrows lost settlers
+over time.
 
 If raids aren't your thing, you can turn them off entirely in the config.
 
@@ -136,6 +153,8 @@ Settlement Banner ............. Hammer -> Misc  (10 wood, 4 fine wood, 20 coins)
 Settlement radius ............. 32 m
 Max settlers .................. 10
 Work tick ..................... every 60 seconds
+Meals ......................... 1 food per settler per ~game day, cheapest first
+Growth ........................ spare unclaimed bed + 3 food + below cap
 ```
 
 ## If something isn't working
@@ -146,7 +165,10 @@ Work tick ..................... every 60 seconds
 | No banner in the hammer menu | You need to be near a workbench, and it's under **Misc** |
 | "No settlement banner nearby" | Your follower is outside the 32 m radius — walk them closer |
 | Settlers work but nothing appears | No chest inside the radius, or every chest is full |
-| Wood keeps turning into coal | A blacksmith with no ore to smelt. See Step 6 |
+| A settler stopped working | Probably hungry — check the hover text, stock food in a chest |
+| Blacksmith or builder does nothing | They need a forge / workbench inside the radius |
+| Wood keeps turning into coal | A blacksmith with a forge but no ore to smelt. See Step 6 |
+| No newcomers ever arrive | Needs a spare unclaimed bed, ~3 food in chests, and room below the cap |
 | Friends can't join my server | Everyone — server included — needs the mod at the same version |
 
 Every number above is a default. All of them are adjustable in

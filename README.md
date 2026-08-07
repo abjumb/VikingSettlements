@@ -64,7 +64,7 @@ server-side; purely cosmetic client settings (chatter) stay local.
 Open `<Valheim>/BepInEx/LogOutput.log` and look for these lines:
 
 ```
-[Info   :VikingSettlements] VikingSettlements v1.1.0 loaded - settlements appear in newly generated world areas
+[Info   :VikingSettlements] VikingSettlements v1.2.0 loaded - settlements appear in newly generated world areas
 [Info   :VikingSettlements] Created settlement NPC prefab VS_Settler
 [Info   :VikingSettlements] Registered location VS_MeadowsVillage (... parts, quantity 60)
 [Info   :VikingSettlements] Registered bandit raid with the native random event system
@@ -110,7 +110,7 @@ vs_spawn [village|outpost|steading]
 
 > New here? **[Building Your First Settlement](docs/first-settlement.md)** walks
 > through the whole thing step by step — what to bring, how to recruit, and the
-> two mistakes that make settlers look broken.
+> handful of mistakes that make settlers look broken.
 
 You can found your own settlement and staff it with NPCs recruited from the
 wild settlements:
@@ -124,12 +124,19 @@ wild settlements:
 3. **Assign** — with a follower inside the banner's area, press `E` to settle
    them there. Press `E` again to cycle their job, `Shift+E` to unassign:
    - **Lumberjack** — periodically deposits wood into your settlement chests
-   - **Farmer** — deposits carrots/turnips and the occasional honey
-   - **Builder** — repairs damaged build pieces in the settlement
-   - **Blacksmith** — smelts ore found in settlement chests (copper, tin,
-     iron scraps; converts wood to coal otherwise)
+   - **Farmer** — deposits carrots/turnips; with a beehive in the settlement,
+     the occasional honey
+   - **Builder** — repairs damaged build pieces (needs a workbench in the
+     settlement)
+   - **Blacksmith** — smelts ore found in settlement chests (needs a forge;
+     copper, tin, iron scraps, wood to coal otherwise)
    - **Guard** — sharper senses, holds position at the settlement
-4. **Defend** — the banner emits a player-base area, so Valheim's native
+4. **Sustain** — settlers eat one food item from your chests roughly once
+   per in-game day, cheapest food first. A settler that finds nothing goes
+   hungry and stops working until its next meal. Keep the chests stocked and
+   your settlement *grows*: each night a settlement below its cap with a
+   spare unclaimed bed and food to spare has a chance to attract a newcomer.
+5. **Defend** — the banner emits a player-base area, so Valheim's native
    random event system can target your settlement: a custom raid event
    ("The clanless are raiding!") is registered alongside the vanilla ones
    (gated behind Eikthyr by default). Independently, rival clans roll a
@@ -163,6 +170,12 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Raids / EnableRaids | true | Enable the bandit raid event and rival clan raids |
 | Raids / RaidsAfterFirstBoss | true | Raids only start once Eikthyr is dead |
 | Raids / RivalRaidChancePerDay | 0.15 | Nightly chance of a rival clan raid per settlement |
+| Economy / FoodUpkeep | true | Settlers eat from settlement chests; hungry settlers stop working |
+| Economy / MealIntervalSeconds | 1800 | In-game seconds between settler meals (~1 per game day) |
+| Economy / GrowthEnabled | true | Settlements attract newcomers when beds and food allow |
+| Economy / GrowthChancePerDay | 0.35 | Nightly chance of a newcomer when conditions are met |
+| Economy / GrowthFoodCost | 3 | Food consumed when a newcomer arrives |
+| Economy / RequireWorkstations | true | Blacksmith needs a forge, builder a workbench, honey a beehive |
 
 Location counts only affect world generation, so changing them has no effect
 on already-generated terrain.

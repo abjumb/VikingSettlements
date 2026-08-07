@@ -75,6 +75,9 @@ namespace VikingSettlements.Npcs
 
         internal Vector3 Home => _nview.GetZDO().GetVec3(HomeKey, transform.position);
 
+        internal bool IsHungry => _nview != null && _nview.IsValid()
+            && _nview.GetZDO().GetBool(SettlerWork.HungryKey);
+
         private void Update()
         {
             if (_nview == null || !_nview.IsValid() || _character == null)
@@ -178,7 +181,8 @@ namespace VikingSettlements.Npcs
                     text = $"{name} ($vs_following)\n[<color=yellow><b>$KEY_Use</b></color>] $vs_assign\n[<color=yellow><b>$KEY_AltPlace + $KEY_Use</b></color>] $vs_dismiss";
                     break;
                 default:
-                    text = $"{name} ({JobToken(Job)})\n[<color=yellow><b>$KEY_Use</b></color>] $vs_changejob\n[<color=yellow><b>$KEY_AltPlace + $KEY_Use</b></color>] $vs_unassign";
+                    var hungry = IsHungry ? " — $vs_hungry" : "";
+                    text = $"{name} ({JobToken(Job)}{hungry})\n[<color=yellow><b>$KEY_Use</b></color>] $vs_changejob\n[<color=yellow><b>$KEY_AltPlace + $KEY_Use</b></color>] $vs_unassign";
                     break;
             }
             return Localization.instance.Localize(text);
