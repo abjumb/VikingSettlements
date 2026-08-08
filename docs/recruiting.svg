@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 780" width="1000" height="780" role="img" aria-labelledby="t d">
+<title id="t">The recruiting lifecycle</title>
+<desc id="d">Wild villagers are recruited with E for coins, follow you, and are assigned with E near your banner. Shift+E dismisses or unassigns. Village standing from Hated to Honored scales the recruit price from refusal to half price. Donations and defending raise standing; violence and recruiting lower it.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#141d22"/><stop offset="1" stop-color="#0b1013"/>
+  </linearGradient>
+  <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#e8a33d"/>
+  </marker>
+  <marker id="ad" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#8fa0a8"/>
+  </marker>
+</defs>
+<rect width="1000" height="780" fill="url(#bg)"/>
+<rect x="0.5" y="0.5" width="999" height="779" fill="none" stroke="#27353e"/>
+
+<text x="500" y="54" font-family="Georgia,serif" font-size="28" font-weight="700" fill="#f0e8d8" text-anchor="middle" letter-spacing="3">RECRUITING VILLAGERS</text>
+<text x="500" y="82" font-family="Segoe UI,Arial,sans-serif" font-size="14" fill="#8fa0a8" text-anchor="middle">The settler lifecycle, and how village standing sets the price</text>
+
+<!-- ===== STATE MACHINE ===== -->
+<text x="60" y="130" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#7fb5a4" letter-spacing="2.5">I · THE LIFECYCLE</text>
+
+<!-- WILD -->
+<rect x="60" y="150" width="250" height="170" rx="9" fill="#18232a" stroke="#7fb5a4" stroke-opacity="0.55"/>
+<text x="185" y="182" font-family="Georgia,serif" font-size="19" font-weight="700" fill="#7fb5a4" text-anchor="middle" letter-spacing="2">WILD</text>
+<text x="185" y="208" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#ded5c4" text-anchor="middle">lives in a village · neutral to you</text>
+<text x="185" y="227" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#ded5c4" text-anchor="middle">defends its home · gains battle XP</text>
+<text x="185" y="246" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#ded5c4" text-anchor="middle">hover shows name · rank · standing</text>
+<rect x="80" y="264" width="210" height="34" rx="6" fill="#141d22" stroke="#27353e"/>
+<text x="185" y="286" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#f5cd82" text-anchor="middle">Shift+E — donate 10 coins (+5 standing)</text>
+
+<!-- FOLLOWING -->
+<rect x="375" y="150" width="250" height="170" rx="9" fill="#18232a" stroke="#e8a33d" stroke-opacity="0.6"/>
+<text x="500" y="182" font-family="Georgia,serif" font-size="19" font-weight="700" fill="#f5cd82" text-anchor="middle" letter-spacing="2">FOLLOWING</text>
+<text x="500" y="208" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#ded5c4" text-anchor="middle">player faction · fights for you</text>
+<text x="500" y="227" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#ded5c4" text-anchor="middle">doesn't eat · can't use portals</text>
+<text x="500" y="246" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#ded5c4" text-anchor="middle">re-attaches within 60 m after relog</text>
+<rect x="395" y="264" width="210" height="34" rx="6" fill="#141d22" stroke="#d8735a" stroke-opacity="0.6"/>
+<text x="500" y="286" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#d8735a" text-anchor="middle">⚠ death is permanent — guard the trip</text>
+
+<!-- ASSIGNED -->
+<rect x="690" y="150" width="250" height="170" rx="9" fill="#18232a" stroke="#e8a33d" stroke-opacity="0.6"/>
+<text x="815" y="182" font-family="Georgia,serif" font-size="19" font-weight="700" fill="#f5cd82" text-anchor="middle" letter-spacing="2">ASSIGNED</text>
+<text x="815" y="208" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#ded5c4" text-anchor="middle">home pinned to your banner</text>
+<text x="815" y="227" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#ded5c4" text-anchor="middle">works one of ten jobs · eats daily</text>
+<text x="815" y="246" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#ded5c4" text-anchor="middle">gains service XP toward stars</text>
+<rect x="710" y="264" width="210" height="34" rx="6" fill="#141d22" stroke="#27353e"/>
+<text x="815" y="286" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#f5cd82" text-anchor="middle">E on banner — manage all from one panel</text>
+
+<!-- forward arrows -->
+<line x1="310" y1="200" x2="371" y2="200" stroke="#e8a33d" stroke-width="2.5" marker-end="url(#a)"/>
+<text x="340" y="186" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="700" fill="#f5cd82" text-anchor="middle">E</text>
+<text x="340" y="218" font-family="Segoe UI,Arial,sans-serif" font-size="10.5" fill="#8fa0a8" text-anchor="middle">recruit</text>
+<text x="340" y="232" font-family="Segoe UI,Arial,sans-serif" font-size="10.5" fill="#8fa0a8" text-anchor="middle">(pay coins)</text>
+<line x1="625" y1="200" x2="686" y2="200" stroke="#e8a33d" stroke-width="2.5" marker-end="url(#a)"/>
+<text x="655" y="186" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="700" fill="#f5cd82" text-anchor="middle">E</text>
+<text x="655" y="218" font-family="Segoe UI,Arial,sans-serif" font-size="10.5" fill="#8fa0a8" text-anchor="middle">assign, within</text>
+<text x="655" y="232" font-family="Segoe UI,Arial,sans-serif" font-size="10.5" fill="#8fa0a8" text-anchor="middle">32 m of banner</text>
+
+<!-- backward arrows -->
+<path d="M375 335 L340 335 L340 322" fill="none" stroke="#8fa0a8" stroke-width="1.8" marker-end="url(#ad)"/>
+<path d="M500 320 L500 335 L376 335" fill="none" stroke="#8fa0a8" stroke-width="1.8"/>
+<text x="452" y="352" font-family="Segoe UI,Arial,sans-serif" font-size="10.5" fill="#8fa0a8" text-anchor="middle">Shift+E — dismiss (settles where they stand)</text>
+<path d="M815 320 L815 340 L560 340" fill="none" stroke="#8fa0a8" stroke-width="1.8"/>
+<path d="M560 340 L530 340 L530 322" fill="none" stroke="#8fa0a8" stroke-width="1.8" marker-end="url(#ad)"/>
+<text x="700" y="356" font-family="Segoe UI,Arial,sans-serif" font-size="10.5" fill="#8fa0a8" text-anchor="middle">Shift+E — unassign, back to following</text>
+
+<!-- ===== STANDING LADDER ===== -->
+<text x="60" y="416" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#e8a33d" letter-spacing="2.5">II · VILLAGE STANDING SETS THE PRICE</text>
+<text x="940" y="416" font-family="Segoe UI,Arial,sans-serif" font-size="11" fill="#8fa0a8" text-anchor="end">prices at the default 50-coin recruit cost</text>
+
+<!-- ladder cells -->
+<g font-family="Segoe UI,Arial,sans-serif" text-anchor="middle">
+  <rect x="60"  y="436" width="168" height="112" rx="8" fill="#241a1c" stroke="#d8735a"/>
+  <text x="144" y="464" font-family="Georgia,serif" font-size="15" font-weight="700" fill="#d8735a">HATED</text>
+  <text x="144" y="484" font-size="11" fill="#8fa0a8">≤ −50</text>
+  <text x="144" y="512" font-size="13" font-weight="700" fill="#d8735a">refuses to deal</text>
+  <text x="144" y="530" font-size="13" font-weight="700" fill="#d8735a">with you</text>
+
+  <rect x="238" y="436" width="168" height="112" rx="8" fill="#221d1a" stroke="#d8735a" stroke-opacity="0.55"/>
+  <text x="322" y="464" font-family="Georgia,serif" font-size="15" font-weight="700" fill="#e0937a">DISTRUSTED</text>
+  <text x="322" y="484" font-size="11" fill="#8fa0a8">≤ −20</text>
+  <text x="322" y="514" font-size="17" font-weight="700" fill="#ded5c4">75 coins</text>
+  <text x="322" y="532" font-size="11" fill="#8fa0a8">150%</text>
+
+  <rect x="416" y="436" width="168" height="112" rx="8" fill="#18232a" stroke="#27353e"/>
+  <text x="500" y="464" font-family="Georgia,serif" font-size="15" font-weight="700" fill="#ded5c4">NEUTRAL</text>
+  <text x="500" y="484" font-size="11" fill="#8fa0a8">the default</text>
+  <text x="500" y="514" font-size="17" font-weight="700" fill="#ded5c4">50 coins</text>
+  <text x="500" y="532" font-size="11" fill="#8fa0a8">100%</text>
+
+  <rect x="594" y="436" width="168" height="112" rx="8" fill="#1a231e" stroke="#7fb5a4" stroke-opacity="0.55"/>
+  <text x="678" y="464" font-family="Georgia,serif" font-size="15" font-weight="700" fill="#7fb5a4">FRIENDLY</text>
+  <text x="678" y="484" font-size="11" fill="#8fa0a8">≥ +20</text>
+  <text x="678" y="514" font-size="17" font-weight="700" fill="#ded5c4">38 coins</text>
+  <text x="678" y="532" font-size="11" fill="#8fa0a8">75%</text>
+
+  <rect x="772" y="436" width="168" height="112" rx="8" fill="#20231a" stroke="#e8a33d"/>
+  <text x="856" y="464" font-family="Georgia,serif" font-size="15" font-weight="700" fill="#f5cd82">HONORED</text>
+  <text x="856" y="484" font-size="11" fill="#8fa0a8">≥ +50</text>
+  <text x="856" y="514" font-size="17" font-weight="700" fill="#f5cd82">25 coins</text>
+  <text x="856" y="532" font-size="11" fill="#8fa0a8">50%</text>
+</g>
+<line x1="60" y1="562" x2="940" y2="562" stroke="#27353e"/>
+<line x1="500" y1="556" x2="930" y2="556" stroke="#e8a33d" stroke-width="2" marker-end="url(#a)" opacity="0.7"/>
+<line x1="500" y1="556" x2="70" y2="556" stroke="#d8735a" stroke-width="2" marker-end="url(#a)" opacity="0.0"/>
+<line x1="440" y1="556" x2="70" y2="556" stroke="#8fa0a8" stroke-width="1.6" marker-end="url(#ad)" opacity="0.7"/>
+
+<!-- gain / lose columns -->
+<rect x="60" y="586" width="425" height="128" rx="8" fill="#18232a" stroke="#27353e"/>
+<text x="84" y="614" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#d8735a" letter-spacing="1.5">STANDING FALLS</text>
+<text x="84" y="640" font-family="Segoe UI,Arial,sans-serif" font-size="13" fill="#ded5c4">−5&#160;&#160;&#160;hitting a villager (they fight back, too)</text>
+<text x="84" y="663" font-family="Segoe UI,Arial,sans-serif" font-size="13" fill="#ded5c4">−25&#160;killing one</text>
+<text x="84" y="686" font-family="Segoe UI,Arial,sans-serif" font-size="13" fill="#ded5c4">−2&#160;&#160;&#160;each recruit — they notice people leaving</text>
+
+<rect x="515" y="586" width="425" height="128" rx="8" fill="#18232a" stroke="#27353e"/>
+<text x="539" y="614" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#7fb5a4" letter-spacing="1.5">STANDING RISES</text>
+<text x="539" y="640" font-family="Segoe UI,Arial,sans-serif" font-size="13" fill="#ded5c4">+5&#160;&#160;per 10-coin donation (Shift+E on a villager)</text>
+<text x="539" y="663" font-family="Segoe UI,Arial,sans-serif" font-size="13" fill="#ded5c4">+1&#160;&#160;defending — be within 40 m when monsters attack</text>
+<text x="539" y="686" font-family="Segoe UI,Arial,sans-serif" font-size="13" fill="#8fa0a8">100 coins of gifts → Honored → pays off in 4 hires</text>
+
+<text x="500" y="750" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#8fa0a8" text-anchor="middle">Veterans cost the same as anyone — old villages hold Elite villagers at base price · standing is shared by all players · vs_find village finds the nearest</text>
+</svg>
