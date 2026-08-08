@@ -13,7 +13,7 @@ namespace VikingSettlements
     {
         public const string PluginGUID = "com.abjumb.vikingsettlements";
         public const string PluginName = "VikingSettlements";
-        public const string PluginVersion = "1.6.0";
+        public const string PluginVersion = "1.7.0";
 
         public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
@@ -87,6 +87,15 @@ namespace VikingSettlements
                 { "vs_elite", "Elite" },
                 { "vs_levelup", "has grown stronger!" },
                 { "vs_manage", "Manage" },
+                { "vs_rep", "Village standing" },
+                { "vs_rep_honored", "Honored" },
+                { "vs_rep_friendly", "Friendly" },
+                { "vs_rep_neutral", "Neutral" },
+                { "vs_rep_distrusted", "Distrusted" },
+                { "vs_rep_hated", "Hated" },
+                { "vs_rep_refuse", "They refuse to deal with you" },
+                { "vs_donate", "Donate" },
+                { "vs_donated", "The village appreciates your gift" },
                 { "vs_rename", "Rename" },
                 { "vs_rename_topic", "Name your settlement" },
                 { "vs_close", "Close" },

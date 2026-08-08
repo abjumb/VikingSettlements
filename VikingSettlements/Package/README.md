@@ -74,6 +74,9 @@ the same way; world and raid settings are admin-only and sync from the server.
 - **Veterancy**: settlers earn XP from days of service and battles survived,
   rising to Veteran and Elite star levels with vanilla stat scaling — your
   longest-serving villagers become your best defenders.
+- **Village standing**: wild villages remember how you treat them. Defend
+  and donate to recruit at a discount; rob and murder and they refuse to
+  deal with you.
 - **Workstations matter**: blacksmiths need a forge in the settlement,
   builders a workbench, and honey production a beehive.
 - **Raids**: your settlement counts as a base for Valheim's native random
@@ -120,8 +123,22 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Economy / RequireWorkstations | true | Blacksmith needs a forge, builder a workbench, honey a beehive |
 | Veterancy / VeterancyEnabled | true | Settlers earn XP and star levels from service and battles |
 | Veterancy / XpPerStar | 20 | XP for the first star; second star costs three times as much |
+| Reputation / ReputationEnabled | true | Wild villages track standing; scales recruit costs |
+| Reputation / DonationCostCoins | 10 | Coins per donation (Shift+E on a wild settler) |
+| Reputation / DonationReputation | 5 | Standing gained per donation |
 
 ## Changelog
+
+### 1.7.0
+
+- Wild-village reputation: each village tracks a shared standing (-100..100)
+  toward players, anchored in an invisible Village Heart at its center.
+  Defending villagers while monsters attack (+1) and donating coins via
+  Shift+E (+5 per 10 coins) raise it; hitting villagers (-5), killing them
+  (-25) and recruiting (-2) lower it. Standing tiers scale recruit costs
+  from 50% (Honored) to 150% (Distrusted); Hated villages refuse recruits.
+  Villages generated before 1.7 behave neutrally (spawn VS_VillageHeart to
+  retrofit one).
 
 ### 1.6.0
 

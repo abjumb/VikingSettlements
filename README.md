@@ -64,7 +64,7 @@ server-side; purely cosmetic client settings (chatter) stay local.
 Open `<Valheim>/BepInEx/LogOutput.log` and look for these lines:
 
 ```
-[Info   :VikingSettlements] VikingSettlements v1.6.0 loaded - settlements appear in newly generated world areas
+[Info   :VikingSettlements] VikingSettlements v1.7.0 loaded - settlements appear in newly generated world areas
 [Info   :VikingSettlements] Created settlement NPC prefab VS_Settler
 [Info   :VikingSettlements] Registered location VS_MeadowsVillage (... parts, quantity 60)
 [Info   :VikingSettlements] Registered bandit raid with the native random event system
@@ -131,6 +131,11 @@ wild settlements:
 1. **Recruit** — press `E` on a settler in any wild settlement and pay the
    coin cost (default 50). The settler switches to the player faction and
    follows you. `Shift+E` dismisses a follower.
+   Villages track a **standing** toward players (shown on settler hover):
+   defending villagers from monsters and donating coins (`Shift+E` on a wild
+   settler) raise it, attacking or killing them tanks it, and each recruit
+   drains it slightly. Honored villages recruit at half price; hated ones
+   refuse to deal with you at all.
 2. **Found a settlement** — build the *Settlement Banner* (hammer → Misc,
    near a workbench; wood, fine wood and coins). The banner defines a
    settlement area (default 32 m radius) and shows its population on hover.
@@ -213,6 +218,9 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Economy / RequireWorkstations | true | Blacksmith needs a forge, builder a workbench, honey a beehive |
 | Veterancy / VeterancyEnabled | true | Settlers earn XP and star levels from service and battles |
 | Veterancy / XpPerStar | 20 | XP for the first star; second star costs three times as much |
+| Reputation / ReputationEnabled | true | Wild villages track standing; scales recruit costs |
+| Reputation / DonationCostCoins | 10 | Coins per donation (Shift+E on a wild settler) |
+| Reputation / DonationReputation | 5 | Standing gained per donation |
 
 Location counts only affect world generation, so changing them has no effect
 on already-generated terrain.
