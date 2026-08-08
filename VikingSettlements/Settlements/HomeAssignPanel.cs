@@ -118,10 +118,12 @@ namespace VikingSettlements.Settlements
                     : housedElsewhere
                         ? Localization.instance.Localize(" <color=grey>($vs_talk_home)</color>")
                         : "");
+            // CreateText positions the center of the text rect: 36px margin
+            // plus half the width keeps the label inside the panel.
             GUIManager.Instance.CreateText(
                 label,
                 _panel.transform, new Vector2(0f, 1f), new Vector2(0f, 1f),
-                new Vector2(36f, y),
+                new Vector2(36f + 170f, y),
                 GUIManager.Instance.AveriaSerif, 17, Color.white,
                 true, Color.black, 340f, 30f, false);
 

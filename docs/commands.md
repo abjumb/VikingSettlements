@@ -45,7 +45,7 @@ Usable with vanilla `spawn <prefab> [count] [stars]` (cheat):
 | `VS_VillageHeart` | The invisible reputation anchor — spawn one at the center of a pre-1.7 village to enable standing there |
 | `VS_BuildChest` | The Builders' Supply Chest piece (normally built with the hammer) |
 | `VS_BuildSite` | A bare construction site marker — has no blueprint assigned, so prefer ordering projects through a builder's talk menu |
-| `VS_Flatten` | ⚠ A one-shot terrain op: instantly levels a 13 m radius and paints it dirt **at your feet, permanently**. Handy for prepping a build site, but there is no undo |
+| `VS_Flatten` | ⚠ A one-shot terrain op: instantly levels a 13 m radius and paints it dirt **at your feet, permanently**. Handy for prepping a build site, but there is no undo. Sized variants exist for the settlements (`VS_FlattenVillage` 18 m, `VS_FlattenSteading` 17 m, `VS_FlattenOutpost` 11 m, `VS_FlattenCamp` 10 m) |
 
 ## Testing each system with vanilla commands
 

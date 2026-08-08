@@ -232,14 +232,9 @@ namespace VikingSettlements.World
         {
             var v = new SettlementLayout(SettlementLocations.MeadowsVillageLocation);
             v.Add(SettlerPrefabs.Heart, 0f, 0f, 0f);
-            // One flatten op per built-up area; they all level to the same
-            // height since they share the location's origin altitude.
-            v.Add(SettlerPrefabs.Flatten, 0f, 0f, 0f);
-            v.Add(SettlerPrefabs.Flatten, 0f, 0f, 13f);
-            v.Add(SettlerPrefabs.Flatten, -11f, 0f, 10f);
-            v.Add(SettlerPrefabs.Flatten, 10f, 0f, 9f);
-            v.Add(SettlerPrefabs.Flatten, 10f, 0f, -9f);
-            v.Add(SettlerPrefabs.Flatten, 0f, 0f, -10f);
+            // A single op sized to the whole footprint: overlapping ops
+            // re-slope each other's leveled ground and terrace the site.
+            v.Add(SettlerPrefabs.FlattenVillage, 0f, 0f, 0f);
 
             v.Place(FirePlaza(), 0f, 0f);
             v.Add("piece_maypole", 4f, 0f, -3f);
@@ -280,7 +275,7 @@ namespace VikingSettlements.World
         {
             var o = new SettlementLayout(SettlementLocations.ForestOutpostLocation);
             o.Add(SettlerPrefabs.Heart, 0f, 0f, 0f);
-            o.Add(SettlerPrefabs.Flatten, 0f, 0f, 0f);
+            o.Add(SettlerPrefabs.FlattenOutpost, 0f, 0f, 0f);
 
             o.Place(Watchtower(), 0f, 0f);
             o.Place(Cabin("TreasureChest_blackforest"), -6f, 2f, 90f);
@@ -304,7 +299,7 @@ namespace VikingSettlements.World
         public static SettlementLayout ClanlessCamp()
         {
             var c = new SettlementLayout(SettlementLocations.ClanlessCampLocation);
-            c.Add(SettlerPrefabs.Flatten, 0f, 0f, 0f);
+            c.Add(SettlerPrefabs.FlattenCamp, 0f, 0f, 0f);
 
             c.Add("fire_pit", 0f, 0f, 0f);
             c.Add(SettlerPrefabs.CampTotem, 2.5f, 0f, 0.5f);
@@ -338,9 +333,7 @@ namespace VikingSettlements.World
         {
             var s = new SettlementLayout(SettlementLocations.PlainsSteadingLocation);
             s.Add(SettlerPrefabs.Heart, 0f, 0f, 0f);
-            s.Add(SettlerPrefabs.Flatten, 0f, 0f, 0f);
-            s.Add(SettlerPrefabs.Flatten, -10f, 0f, -3f);
-            s.Add(SettlerPrefabs.Flatten, 11f, 0f, 2f);
+            s.Add(SettlerPrefabs.FlattenSteading, 0f, 0f, 0f);
 
             s.Place(Hall("stone_wall_2x1", true, "TreasureChest_heath"), 0f, 4f, 180f);
             s.Place(Farm("Pickable_Barley", "Pickable_Flax"), -10f, -3f, 0f);

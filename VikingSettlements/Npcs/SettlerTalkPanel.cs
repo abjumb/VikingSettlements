@@ -16,9 +16,13 @@ namespace VikingSettlements.Npcs
     /// </summary>
     internal static class SettlerTalkPanel
     {
-        private const float PanelWidth = 480f;
+        private const float PanelWidth = 560f;
         private const float LineHeight = 27f;
         private const float TargetRange = 5f;
+        private const float LineLeftMargin = 36f;
+        private const float LineWidth = PanelWidth - 2f * LineLeftMargin;
+        // CreateText positions the CENTER of the text rect, not its left edge.
+        private const float LineCenterX = LineLeftMargin + LineWidth / 2f;
 
         private static readonly string[] Greetings =
         {
@@ -178,7 +182,7 @@ namespace VikingSettlements.Npcs
                 _panel.transform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f),
                 new Vector2(0f, -36f),
                 GUIManager.Instance.AveriaSerifBold, 24, GUIManager.Instance.ValheimOrange,
-                true, Color.black, 420f, 36f, false);
+                true, Color.black, 500f, 36f, false);
 
             var greeting = Greetings[(int)((uint)name.GetHashCode() % (uint)Greetings.Length)];
             GUIManager.Instance.CreateText(
@@ -186,16 +190,16 @@ namespace VikingSettlements.Npcs
                 _panel.transform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f),
                 new Vector2(0f, -68f),
                 GUIManager.Instance.AveriaSerif, 16, Color.gray,
-                true, Color.black, 420f, 26f, false);
+                true, Color.black, 500f, 26f, false);
 
             for (var i = 0; i < lines.Count; i++)
             {
                 GUIManager.Instance.CreateText(
                     lines[i].Text,
                     _panel.transform, new Vector2(0f, 1f), new Vector2(0f, 1f),
-                    new Vector2(36f, -(110f + i * LineHeight)),
+                    new Vector2(LineCenterX, -(110f + i * LineHeight)),
                     GUIManager.Instance.AveriaSerif, 17, lines[i].Color,
-                    true, Color.black, PanelWidth - 72f, LineHeight - 2f, false);
+                    true, Color.black, LineWidth, LineHeight - 2f, false);
             }
 
             if (showBlueprints)
@@ -215,9 +219,9 @@ namespace VikingSettlements.Npcs
             GUIManager.Instance.CreateText(
                 Localization.instance.Localize("$vs_talk_build"),
                 _panel.transform, new Vector2(0f, 1f), new Vector2(0f, 1f),
-                new Vector2(36f, -baseY),
+                new Vector2(LineCenterX, -baseY),
                 GUIManager.Instance.AveriaSerifBold, 18, GUIManager.Instance.ValheimOrange,
-                true, Color.black, PanelWidth - 72f, 28f, false);
+                true, Color.black, LineWidth, 28f, false);
 
             for (var i = 0; i < Blueprints.All.Length; i++)
             {

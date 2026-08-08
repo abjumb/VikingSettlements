@@ -17,6 +17,10 @@ namespace VikingSettlements.Npcs
         public const string Seer = "VS_Seer";
         public const string Trader = "VS_Trader";
         public const string Flatten = "VS_Flatten";
+        public const string FlattenVillage = "VS_FlattenVillage";
+        public const string FlattenSteading = "VS_FlattenSteading";
+        public const string FlattenOutpost = "VS_FlattenOutpost";
+        public const string FlattenCamp = "VS_FlattenCamp";
         public const string Raider = "VS_Raider";
         public const string CampTotem = "VS_CampTotem";
         public const string Heart = "VS_VillageHeart";
@@ -280,15 +284,29 @@ namespace VikingSettlements.Npcs
         }
 
         /// <summary>
-        /// A one-shot terrain op that levels the ground under a settlement when
+        /// One-shot terrain ops that level the ground under a settlement when
         /// its location spawns, cloned from a vanilla terrain-modifying piece.
+        /// Each settlement uses a single op sized to its whole footprint:
+        /// overlapping ops fight each other - a later op's smoothing ring
+        /// re-slopes ground an earlier op already leveled, terracing the site
+        /// and leaving buildings buried in mounds or hovering over pits.
         /// </summary>
         private static void CreateFlatten()
         {
-            var clone = CloneFirstAvailable(Flatten, new[] { "mud_road_v2", "path_v2", "mud_road", "path" });
+            // The original small op stays for the console/prefab-spawn uses.
+            CreateFlattenVariant(Flatten, 13f, 18f, 6f);
+            CreateFlattenVariant(FlattenVillage, 18f, 24f, 8f);
+            CreateFlattenVariant(FlattenSteading, 17f, 23f, 7f);
+            CreateFlattenVariant(FlattenOutpost, 11f, 16f, 6f);
+            CreateFlattenVariant(FlattenCamp, 10f, 15f, 6f);
+        }
+
+        private static void CreateFlattenVariant(string name, float levelRadius, float smoothRadius, float paintRadius)
+        {
+            var clone = CloneFirstAvailable(name, new[] { "mud_road_v2", "path_v2", "mud_road", "path" });
             if (clone == null)
             {
-                Jotunn.Logger.LogWarning("Could not create VS_Flatten: no terrain op base prefab found");
+                Jotunn.Logger.LogWarning($"Could not create {name}: no terrain op base prefab found");
                 return;
             }
 
@@ -296,14 +314,14 @@ namespace VikingSettlements.Npcs
             if (terrainOp != null)
             {
                 terrainOp.m_settings.m_level = true;
-                terrainOp.m_settings.m_levelRadius = 13f;
+                terrainOp.m_settings.m_levelRadius = levelRadius;
                 terrainOp.m_settings.m_levelOffset = 0f;
                 terrainOp.m_settings.m_smooth = true;
-                terrainOp.m_settings.m_smoothRadius = 18f;
+                terrainOp.m_settings.m_smoothRadius = smoothRadius;
                 terrainOp.m_settings.m_smoothPower = 3f;
                 terrainOp.m_settings.m_paintCleared = true;
                 terrainOp.m_settings.m_paintType = TerrainModifier.PaintType.Dirt;
-                terrainOp.m_settings.m_paintRadius = 6f;
+                terrainOp.m_settings.m_paintRadius = paintRadius;
             }
             else
             {
@@ -311,17 +329,17 @@ namespace VikingSettlements.Npcs
                 if (terrainModifier != null)
                 {
                     terrainModifier.m_level = true;
-                    terrainModifier.m_levelRadius = 13f;
+                    terrainModifier.m_levelRadius = levelRadius;
                     terrainModifier.m_smooth = true;
-                    terrainModifier.m_smoothRadius = 18f;
+                    terrainModifier.m_smoothRadius = smoothRadius;
                     terrainModifier.m_smoothPower = 3f;
                     terrainModifier.m_paintCleared = true;
                     terrainModifier.m_paintType = TerrainModifier.PaintType.Dirt;
-                    terrainModifier.m_paintRadius = 6f;
+                    terrainModifier.m_paintRadius = paintRadius;
                 }
             }
 
-            // Not a buildable piece anymore, just a location helper.
+            // Not a buildable piece, just a location helper.
             var piece = clone.GetComponent<Piece>();
             if (piece != null)
             {
