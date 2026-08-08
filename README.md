@@ -124,6 +124,8 @@ prefab, and the vanilla dev commands that exercise each system — lives in
 > New here? **[Building Your First Settlement](docs/first-settlement.md)** walks
 > through the whole thing step by step — what to bring, how to recruit, and the
 > handful of mistakes that make settlers look broken.
+> For everything about hiring — standing, prices, donations, follower care —
+> see the **[complete recruiting guide](docs/recruiting.md)**.
 
 You can found your own settlement and staff it with NPCs recruited from the
 wild settlements:

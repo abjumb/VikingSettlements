@@ -39,6 +39,11 @@ attack unless you attack them first.
 
 ## Step 2 — Recruit your first settlers
 
+> Deeper detail on everything in this step — standing tiers, donation math,
+> veteran shopping, follower safety — lives in the
+> [complete recruiting guide](recruiting.md).
+
+
 Walk up to any villager. You'll see **"Recruit (50 Coins)"** in the hover text.
 
 - **Press `E`** to hire them. The coins come out of your inventory and they'll
