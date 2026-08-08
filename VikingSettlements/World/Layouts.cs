@@ -215,6 +215,15 @@ namespace VikingSettlements.World
             }
         }
 
+        // The meadows structures double as the blueprints players can hand
+        // to their builders (no NPCs, no terrain ops, plain storage chests).
+
+        public static SettlementLayout BlueprintCabin() => Cabin();
+
+        public static SettlementLayout BlueprintLonghouse() => Hall("wood_wall_full", false, "piece_chest_wood");
+
+        public static SettlementLayout BlueprintWatchtower() => Watchtower();
+
         /// <summary>
         /// The large meadows village: fire plaza, three cabins, a longhouse,
         /// a farm, a trader stall, a watchtower and eight villagers.

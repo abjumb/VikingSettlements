@@ -77,12 +77,21 @@ namespace VikingSettlements.Npcs
             {
                 return; // hungry settlers down tools until their next meal
             }
+            if (ModConfig.HomesMatter.Value && !SettlerHousing.HasHome(_settler)
+                && Random.value < 0.5f)
+            {
+                return; // no roof over their head: half the ticks are lost
+            }
 
             var gated = ModConfig.RequireWorkstations.Value;
             switch (_settler.Job)
             {
                 case SettlerJob.Lumberjack:
-                    Produce("Wood", Random.Range(2, 5));
+                    var wood = Random.Range(2, 5);
+                    if (!TrySupplyConstruction("Wood", wood))
+                    {
+                        Produce("Wood", wood);
+                    }
                     break;
                 case SettlerJob.Farmer:
                     Produce(Random.value < 0.5f ? "Carrot" : "Turnip", Random.Range(1, 3));
@@ -100,7 +109,16 @@ namespace VikingSettlements.Npcs
                 case SettlerJob.Builder:
                     if (!gated || HasStation("$piece_workbench"))
                     {
-                        Repair();
+                        // Construction first; repairs while nothing is ordered.
+                        var site = Settlements.ConstructionSite.FindNear(_settler.Home);
+                        if (site != null)
+                        {
+                            site.BuildTick();
+                        }
+                        else
+                        {
+                            Repair();
+                        }
                     }
                     break;
                 case SettlerJob.Cook:
@@ -110,7 +128,11 @@ namespace VikingSettlements.Npcs
                     }
                     break;
                 case SettlerJob.Miner:
-                    Produce("Stone", Random.Range(2, 5));
+                    var stone = Random.Range(2, 5);
+                    if (!TrySupplyConstruction("Stone", stone))
+                    {
+                        Produce("Stone", stone);
+                    }
                     if (Random.value < 0.15f)
                     {
                         Produce(Random.value < 0.5f ? "CopperOre" : "TinOre", 1);
@@ -345,6 +367,32 @@ namespace VikingSettlements.Npcs
         }
 
         // ---- Production ----
+
+        /// <summary>
+        /// The auto-gathering half of construction: when an active project
+        /// still needs this resource and the supply chests don't yet hold
+        /// enough to finish it, the settler's haul goes there instead of the
+        /// regular stockpile.
+        /// </summary>
+        private bool TrySupplyConstruction(string prefabName, int amount)
+        {
+            var site = Settlements.ConstructionSite.FindNear(_settler.Home);
+            if (site == null || !site.StillNeeds(prefabName))
+            {
+                return false;
+            }
+            if (Settlements.BuildChest.CountAround(site.transform.position, prefabName)
+                >= site.RemainingOf(prefabName))
+            {
+                return false; // the chests already hold enough to finish
+            }
+            var item = MakeItem(prefabName, amount);
+            if (item == null)
+            {
+                return false;
+            }
+            return Settlements.BuildChest.DepositAround(site.transform.position, item);
+        }
 
         private void Produce(string prefabName, int amount)
         {

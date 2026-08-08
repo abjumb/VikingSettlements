@@ -40,6 +40,7 @@ namespace VikingSettlements
         public static ConfigEntry<KeyboardShortcut> PartyStanceKey;
         public static ConfigEntry<KeyboardShortcut> PartyFallbackKey;
         public static ConfigEntry<KeyboardShortcut> TalkHotkey;
+        public static ConfigEntry<bool> HomesMatter;
 
         public static void Init(ConfigFile config)
         {
@@ -264,6 +265,13 @@ namespace VikingSettlements
                 new KeyboardShortcut(KeyCode.H),
                 "Orders the whole party to fall back: they stop fighting, run to you and " +
                 "take greatly reduced damage. Press again to resume following. Client-side.");
+
+            HomesMatter = config.Bind("Economy", "HomesMatter", true,
+                new ConfigDescription(
+                    "Settlers without an assigned home work at half speed. Assign homes " +
+                    "by pressing the talk key on a door inside the settlement.",
+                    null,
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
 
             TalkHotkey = config.Bind("Settlers", "TalkHotkey",
                 new KeyboardShortcut(KeyCode.T),

@@ -45,15 +45,59 @@ namespace VikingSettlements.Npcs
                 Close();
                 return;
             }
+            if (HomeAssignPanel.IsOpen)
+            {
+                HomeAssignPanel.Close();
+                return;
+            }
             if (PartySystem.UiHasFocus() || SettlementPanel.IsOpen)
             {
                 return;
             }
-            var settler = FindTarget(player);
-            if (settler != null)
+            // Priority: what the crosshair points at (settler, then door)
+            // beats the nearest-settler fallback, so aiming at a door in a
+            // crowd still opens the door's housing panel.
+            var hovered = HoveredSettler(player);
+            if (hovered != null)
             {
-                Open(settler);
+                Open(hovered);
+                return;
             }
+            var door = FindDoorTarget(player);
+            if (door != null)
+            {
+                var settlement = PlayerSettlement.FindNearest(
+                    door.transform.position, ModConfig.SettlementRadius.Value);
+                if (settlement != null)
+                {
+                    HomeAssignPanel.Open(door, settlement);
+                }
+                else
+                {
+                    player.Message(MessageHud.MessageType.TopLeft,
+                        Localization.instance.Localize("$vs_home_nosettlement"));
+                }
+                return;
+            }
+            var nearest = FindTarget(player);
+            if (nearest != null)
+            {
+                Open(nearest);
+            }
+        }
+
+        private static SettlerRecruitable HoveredSettler(Player player)
+        {
+            return player.m_hoveringCreature != null
+                ? player.m_hoveringCreature.GetComponent<SettlerRecruitable>()
+                : null;
+        }
+
+        private static Door FindDoorTarget(Player player)
+        {
+            return player.m_hovering != null
+                ? player.m_hovering.GetComponentInParent<Door>()
+                : null;
         }
 
         private static SettlerRecruitable FindTarget(Player player)
@@ -115,7 +159,14 @@ namespace VikingSettlements.Npcs
             var name = _settler.GetHoverName();
             var lines = ComposeLines(character);
 
-            var height = 118f + lines.Count * LineHeight + 64f;
+            var showBlueprints = _settler.State == SettlerState.Assigned
+                && _settler.Job == SettlerJob.Builder
+                && ConstructionSite.FindNear(_settler.Home) == null;
+            var blueprintHeight = showBlueprints
+                ? 36f + Blueprints.All.Length * 40f
+                : 0f;
+
+            var height = 118f + lines.Count * LineHeight + blueprintHeight + 64f;
             _panel = GUIManager.Instance.CreateWoodpanel(
                 GUIManager.CustomGUIFront.transform,
                 new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f),
@@ -147,11 +198,81 @@ namespace VikingSettlements.Npcs
                     true, Color.black, PanelWidth - 72f, LineHeight - 2f, false);
             }
 
+            if (showBlueprints)
+            {
+                BuildBlueprintButtons(110f + lines.Count * LineHeight + 8f);
+            }
+
             var closeButton = GUIManager.Instance.CreateButton(
                 Localization.instance.Localize("$vs_close"),
                 _panel.transform, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f),
                 new Vector2(0f, 36f), 140f, 38f);
             closeButton.GetComponent<Button>().onClick.AddListener(Close);
+        }
+
+        private static void BuildBlueprintButtons(float baseY)
+        {
+            GUIManager.Instance.CreateText(
+                Localization.instance.Localize("$vs_talk_build"),
+                _panel.transform, new Vector2(0f, 1f), new Vector2(0f, 1f),
+                new Vector2(36f, -baseY),
+                GUIManager.Instance.AveriaSerifBold, 18, GUIManager.Instance.ValheimOrange,
+                true, Color.black, PanelWidth - 72f, 28f, false);
+
+            for (var i = 0; i < Blueprints.All.Length; i++)
+            {
+                var blueprint = Blueprints.All[i];
+                var label = $"{blueprint.NameToken} — {blueprint.WoodCost} $item_wood";
+                if (blueprint.StoneCost > 0)
+                {
+                    label += $", {blueprint.StoneCost} $item_stone";
+                }
+                var button = GUIManager.Instance.CreateButton(
+                    Localization.instance.Localize(label),
+                    _panel.transform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f),
+                    new Vector2(0f, -(baseY + 34f + i * 40f + 15f)), 360f, 34f);
+                button.GetComponent<Button>().onClick.AddListener(() => StartProject(blueprint));
+            }
+        }
+
+        // The site is marked where the player is standing, facing the way
+        // they face: stand on the spot, then give the order.
+        private static void StartProject(Blueprint blueprint)
+        {
+            var player = Player.m_localPlayer;
+            var settler = _settler;
+            Close();
+            if (player == null || settler == null)
+            {
+                return;
+            }
+            var home = settler.Home;
+            if (ConstructionSite.FindNear(home) != null)
+            {
+                player.Message(MessageHud.MessageType.Center,
+                    Localization.instance.Localize("$vs_bp_busy"));
+                return;
+            }
+            if (Vector3.Distance(player.transform.position, home) > ModConfig.SettlementRadius.Value)
+            {
+                player.Message(MessageHud.MessageType.Center,
+                    Localization.instance.Localize("$vs_bp_outside"));
+                return;
+            }
+            var prefab = PrefabManager.Instance.GetPrefab(SettlementPieces.BuildSite);
+            if (prefab == null)
+            {
+                return;
+            }
+            var rotation = Quaternion.Euler(0f, player.transform.eulerAngles.y, 0f);
+            var site = Object.Instantiate(prefab, player.transform.position, rotation);
+            var view = site.GetComponent<ZNetView>();
+            if (view != null && view.IsValid())
+            {
+                view.GetZDO().Set(ConstructionSite.BlueprintKey, blueprint.Id);
+            }
+            player.Message(MessageHud.MessageType.Center,
+                Localization.instance.Localize($"$vs_bp_started: {blueprint.NameToken}"));
         }
 
         private struct PanelLine
@@ -208,6 +329,22 @@ namespace VikingSettlements.Npcs
                     lines.Add(Line(minutes >= 0
                         ? $"$vs_talk_fed ($vs_talk_nextmeal {minutes} min)"
                         : "$vs_talk_fed", ok));
+                }
+            }
+
+            // A builder with an active order reports its progress.
+            if (_settler.State == SettlerState.Assigned && _settler.Job == SettlerJob.Builder)
+            {
+                var site = ConstructionSite.FindNear(_settler.Home);
+                var blueprint = site != null ? site.Blueprint : null;
+                if (blueprint != null)
+                {
+                    var progress = $"$vs_talk_project: {blueprint.NameToken} — $item_wood {site.Wood}/{blueprint.WoodCost}";
+                    if (blueprint.StoneCost > 0)
+                    {
+                        progress += $", $item_stone {site.Stone}/{blueprint.StoneCost}";
+                    }
+                    lines.Add(Line(progress, Color.white));
                 }
             }
 

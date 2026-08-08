@@ -118,6 +118,23 @@ settler (or standing next to one) to talk: a panel shows their health, their
 hunger and next mealtime, and a live ✓/✗ checklist of everything their job
 still needs before they'll work.
 
+**Builders can construct whole buildings.** Build a **Builders' Supply
+Chest** (hammer → Misc, 10 wood) and fill it with wood. Then stand exactly
+where the new building should go, talk to a builder (`T`), and pick a
+blueprint: **cabin** (40 wood), **watchtower** (30 wood) or **longhouse**
+(100 wood + 10 stone). A construction site appears at your feet; each work
+tick your builders carry materials from the supply chest into it, and the
+finished building — beds, door, chest and all — goes up when the cost is
+paid. If the supply chest runs dry you'll get a warning, and any
+lumberjacks and miners you have will automatically top it back up.
+`Shift+E` on the site cancels the project.
+
+**Give everyone a home.** Press **`T` on a door** inside the settlement to
+choose who lives behind it — one settler per door, and blueprint cabins
+come with a door and a bed. A settler with a home works at full speed; a
+homeless one works at **half speed** and will tell you so when you talk to
+them. Cabins first, then jobs.
+
 The jobs feed each other: a **hunter** fills chests with raw meat, a **cook**
 turns it into proper food, and that food is what keeps everyone fed (Step 7) —
 a two-settler food chain that makes the settlement self-sufficient.
@@ -198,6 +215,9 @@ Party: fall back! ............. H          (they disengage and run to you)
 Change a settler's job ........ E          (cycles all ten)
 Unassign a settler ............ Shift + E
 Talk to a settler ............. T          (health, hunger, job needs)
+Order a building .............. T on a builder, stand where it goes
+Assign a home ................. T on a door
+Cancel a construction site .... Shift + E on the site
 
 Settlement Banner ............. Hammer -> Misc  (10 wood, 4 fine wood, 20 coins)
 Settlement radius ............. 32 m

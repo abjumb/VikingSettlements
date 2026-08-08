@@ -81,6 +81,16 @@ the same way; world and raid settings are admin-only and sync from the server.
   panel with their health, hunger and next mealtime, plus a live checklist
   of everything their job still needs — the workstation, the ingredients,
   the chest space — so an idle settler is never a mystery.
+- **Builder projects**: order construction through a builder's talk menu —
+  stand where the building should go, talk to a builder, pick a blueprint
+  (cabin, watchtower or longhouse — the same wooden buildings wild meadows
+  villages are made of). Builders raise it from materials in the new
+  **Builders' Supply Chest**; you get warned when supplies run dry, and
+  your lumberjacks and miners automatically redirect their haul to the
+  supply chest while a project needs it.
+- **Housing**: press T on any door inside your settlement to choose who
+  lives there. Settlers with a home work at full speed; homeless settlers
+  work at half speed and say so when you talk to them.
 - **Food & growth**: settlers eat from your chests (cheapest food first) about
   once per game day; a hungry settler stops working. A well-fed settlement
   below its cap, with a spare bed, attracts newcomers on its own.
@@ -135,6 +145,7 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Economy / GrowthChancePerDay | 0.35 | Nightly chance of a newcomer when conditions are met |
 | Economy / GrowthFoodCost | 3 | Food consumed when a newcomer arrives |
 | Economy / RequireWorkstations | true | Blacksmith needs a forge, builder a workbench, honey a beehive |
+| Economy / HomesMatter | true | Settlers without an assigned home (talk key on a door) work at half speed |
 | Veterancy / VeterancyEnabled | true | Settlers earn XP and star levels from service and battles |
 | Veterancy / XpPerStar | 20 | XP for the first star; second star costs three times as much |
 | Reputation / ReputationEnabled | true | Wild villages track standing; scales recruit costs |
@@ -183,6 +194,20 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
   ingredients, chest space) evaluated with the same checks the work loop
   uses. Recruiting now also hints that followers must be settled at your
   banner before they take a job.
+- Builder projects: order construction through a builder's talk menu.
+  Stand where the building should go, pick a blueprint (cabin 40 wood,
+  watchtower 30 wood, longhouse 100 wood + 10 stone - the wild meadows
+  buildings), and a construction site is marked out. Builders carry
+  materials into it from the new buildable Builders' Supply Chest on
+  their work ticks and raise the finished building on the spot. A
+  recurring warning fires while a project's materials have run dry, and
+  lumberjacks and miners automatically deposit their haul into the
+  supply chest while a project still needs it. Shift+E cancels a site.
+- Housing: press the talk key on a door inside your settlement to choose
+  which settler lives there (one per door; blueprint cabins and
+  longhouses come with doors and beds). With HomesMatter enabled,
+  settlers without a home work at half speed and say so in their talk
+  panel.
 
 ### 1.7.0
 
