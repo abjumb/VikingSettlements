@@ -1,7 +1,7 @@
 {
   "name": "VikingSettlements",
   "description": "NPC settlements: wild villages in world gen, recruitable settlers, build your own settlement, assign jobs, and defend it from native raids and rival clans.",
-  "version_number": "1.7.0",
+  "version_number": "1.8.0",
   "website_url": "https://github.com/abjumb/VikingSettlements",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2333",

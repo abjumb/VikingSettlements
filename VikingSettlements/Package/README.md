@@ -62,6 +62,15 @@ the same way; world and raid settings are admin-only and sync from the server.
 - **Recruit settlers**: press E on a settler in a wild settlement to recruit
   them for coins. They follow you; bring them home and press E near your
   banner to assign them.
+- **A war party you can lose**: up to 4 recruited villagers fight at your
+  side as a persistent party. Command them with hotkeys — G toggles
+  follow/hold, H orders a protected fall-back — or E on a member to post
+  them somewhere. They ride boats and take portals with you (stowed safely
+  into your character save) and survive logout. You can never hurt your own
+  people, and no fall, fire or forgotten corner of the map can kill them:
+  a party member can only die to a monster **in a fight you are standing
+  in**, after loud low-health warnings and an auto-retreat you can override.
+  When one falls, they are gone.
 - **Ten jobs**: press E on an assigned settler to cycle — Villager,
   Lumberjack, Farmer, Builder, Blacksmith, Guard, Cook, Miner, Hunter,
   Brewer. Producers fill your settlement's chests, cooks and brewers refine
@@ -126,8 +135,36 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Reputation / ReputationEnabled | true | Wild villages track standing; scales recruit costs |
 | Reputation / DonationCostCoins | 10 | Coins per donation (Shift+E on a wild settler) |
 | Reputation / DonationReputation | 5 | Standing gained per donation |
+| Party / MaxPartySize | 4 | Villagers that can travel with you at once (max 4) |
+| Party / AutoFallbackWhenGravelyWounded | true | Members below 25% health retreat to you automatically |
+| Party / OutOfCombatRegenPerSecond | 2 | Member health regen after 10s without damage (0 disables) |
+| Party / StanceHotkey | G | Toggle party follow/hold (client-side) |
+| Party / FallbackHotkey | H | Order a protected fall-back (client-side) |
 
 ## Changelog
+
+### 1.8.0
+
+- War party: up to 4 recruited villagers travel and fight at your side.
+  G toggles follow/hold for the party, H orders a fall-back (members stop
+  fighting, run to you and take 75% reduced damage); E on a member posts
+  them in place or brings them along, and near a banner E still settles
+  them in. `vs_party` lists the roster, `vs_party recall` retrieves
+  separated members (host/singleplayer).
+- Party members survive every traversal system: boats and portals stow
+  them into your character save and they step out with you at the other
+  end; logging out pockets them the same way, and members who fall behind
+  teleport to you instead of being lost to zone unloading.
+- The permadeath contract: players can no longer damage recruited
+  villagers at all (a stray swing cannot kill or aggro your own people),
+  party members take no environmental damage (falls, drowning, smoke,
+  fire), and they are untouchable while you are dead or away. The only
+  way to lose one is a monster killing them in a fight you are standing
+  in — telegraphed by wounded/gravely-wounded warnings and an automatic
+  retreat below 25% health that you can override. Death is permanent.
+- Members recover health out of combat, so losses are a stake inside the
+  fight rather than an attrition tax between fights. Settler names now
+  persist in the save (previously they were derived from the network id).
 
 ### 1.7.0
 

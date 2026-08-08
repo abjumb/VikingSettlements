@@ -184,6 +184,9 @@ If raids aren't your thing, you can turn them off entirely in the config.
 Recruit a villager ............ E          (50 coins)
 Dismiss a follower ............ Shift + E
 Settle a follower ............. E          (inside banner radius)
+Post / bring a follower ....... E          (away from any banner)
+Party: follow / hold all ...... G
+Party: fall back! ............. H          (they disengage and run to you)
 Change a settler's job ........ E          (cycles through six)
 Unassign a settler ............ Shift + E
 
@@ -201,7 +204,7 @@ Growth ........................ spare unclaimed bed + 3 food + below cap
 |---|---|
 | No villages anywhere | You're in terrain generated before you installed the mod. Explore somewhere new |
 | No banner in the hammer menu | You need to be near a workbench, and it's under **Misc** |
-| "No settlement banner nearby" | Your follower is outside the 32 m radius — walk them closer |
+| Follower "waits here" instead of settling | You pressed E away from any banner, which posts a party member. Walk them inside the 32 m radius and press E again |
 | Settlers work but nothing appears | No chest inside the radius, or every chest is full |
 | A settler stopped working | Probably hungry — check the hover text, stock food in a chest |
 | Blacksmith or builder does nothing | They need a forge / workbench inside the radius |

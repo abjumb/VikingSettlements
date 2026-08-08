@@ -104,6 +104,7 @@ namespace VikingSettlements.Npcs
             clone.AddComponent<SettlerWork>();
             clone.AddComponent<SettlerVeterancy>();
             clone.AddComponent<SettlerReputation>();
+            clone.AddComponent<Party.PartyMember>();
 
             PrefabManager.Instance.AddPrefab(new CustomPrefab(clone, false));
             Jotunn.Logger.LogInfo($"Created settlement NPC prefab {name}");

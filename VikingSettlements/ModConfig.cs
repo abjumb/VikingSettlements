@@ -1,5 +1,6 @@
 using BepInEx.Configuration;
 using Jotunn.Utils;
+using UnityEngine;
 
 namespace VikingSettlements
 {
@@ -33,6 +34,11 @@ namespace VikingSettlements
         public static ConfigEntry<bool> ReputationEnabled;
         public static ConfigEntry<int> DonationCostCoins;
         public static ConfigEntry<int> DonationReputation;
+        public static ConfigEntry<int> MaxPartySize;
+        public static ConfigEntry<bool> PartyAutoFallback;
+        public static ConfigEntry<float> PartyRegenPerSecond;
+        public static ConfigEntry<KeyboardShortcut> PartyStanceKey;
+        public static ConfigEntry<KeyboardShortcut> PartyFallbackKey;
 
         public static void Init(ConfigFile config)
         {
@@ -224,6 +230,39 @@ namespace VikingSettlements
                     "Reputation gained per donation.",
                     new AcceptableValueRange<int>(1, 50),
                     new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            MaxPartySize = config.Bind("Party", "MaxPartySize", 4,
+                new ConfigDescription(
+                    "Maximum recruited villagers that can travel with a player at once. " +
+                    "The party is strong because bringing it is a real bet - raising " +
+                    "this dilutes the stakes the feature is built on.",
+                    new AcceptableValueRange<int>(1, 4),
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            PartyAutoFallback = config.Bind("Party", "AutoFallbackWhenGravelyWounded", true,
+                new ConfigDescription(
+                    "A party member that drops below a quarter health automatically stops " +
+                    "fighting and retreats to you. Disabling this removes the telegraphed " +
+                    "safety net in front of every companion death.",
+                    null,
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            PartyRegenPerSecond = config.Bind("Party", "OutOfCombatRegenPerSecond", 2f,
+                new ConfigDescription(
+                    "Health a party member recovers per second after 10 seconds without " +
+                    "taking damage. Keeps losses a moment-to-moment stake instead of an " +
+                    "attrition tax between fights. 0 disables.",
+                    new AcceptableValueRange<float>(0f, 20f),
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            PartyStanceKey = config.Bind("Party", "StanceHotkey",
+                new KeyboardShortcut(KeyCode.G),
+                "Toggles the whole party between following you and holding position. Client-side.");
+
+            PartyFallbackKey = config.Bind("Party", "FallbackHotkey",
+                new KeyboardShortcut(KeyCode.H),
+                "Orders the whole party to fall back: they stop fighting, run to you and " +
+                "take greatly reduced damage. Press again to resume following. Client-side.");
         }
     }
 }
