@@ -33,6 +33,7 @@ echo ">> Fetching ValheimGameLibs $VGL_VERSION (publicized game assemblies)"
 curl -sSL -o "$TMP/vgl.nupkg" \
   "https://api.nuget.org/v3-flatcontainer/valheimgamelibs/$VGL_VERSION/valheimgamelibs.$VGL_VERSION.nupkg"
 unzip -qo "$TMP/vgl.nupkg" 'lib/*' -d "$TMP/vgl"
+chmod -R u+rw "$TMP/vgl"
 cp "$TMP"/vgl/lib/*.dll "$MANAGED/"
 
 # The JotunnLib build props reference the game assemblies via
@@ -47,7 +48,13 @@ echo ">> Fetching UnityEngine.Modules $UNITY_VERSION"
 curl -sSL -o "$TMP/unity.nupkg" \
   "https://api.nuget.org/v3-flatcontainer/unityengine.modules/$UNITY_VERSION/unityengine.modules.$UNITY_VERSION.nupkg"
 unzip -qo "$TMP/unity.nupkg" 'lib/*' -d "$TMP/unity"
+# The nupkg stores these entries with mode 000; unzip preserves that, and an
+# unprivileged user then cannot read what it just extracted. (find -exec cp
+# would also swallow the failures.)
+chmod -R u+rw "$TMP/unity"
 find "$TMP/unity/lib" -name '*.dll' -exec cp {} "$MANAGED/" \;
+test -f "$MANAGED/UnityEngine.dll" \
+  || { echo "ERROR: UnityEngine modules failed to copy into $MANAGED" >&2; exit 1; }
 
 # UnityEngine.UI (uGUI) ships separately from the engine modules; the API
 # surface the mod uses (Button, onClick) is stable across Unity versions and
@@ -57,7 +64,10 @@ echo ">> Fetching Unity3D.UnityEngine.UI $UGUI_VERSION"
 curl -sSL -o "$TMP/ugui.nupkg" \
   "https://api.nuget.org/v3-flatcontainer/unity3d.unityengine.ui/$UGUI_VERSION/unity3d.unityengine.ui.$UGUI_VERSION.nupkg"
 unzip -qo "$TMP/ugui.nupkg" 'lib/*' -d "$TMP/ugui"
+chmod -R u+rw "$TMP/ugui"
 find "$TMP/ugui/lib" -name 'UnityEngine.UI.dll' -exec cp {} "$MANAGED/" \;
+test -f "$MANAGED/UnityEngine.UI.dll" \
+  || { echo "ERROR: UnityEngine.UI failed to copy into $MANAGED" >&2; exit 1; }
 
 echo ">> Fetching BepInEx $BEPINEX_VERSION"
 curl -sSL -o "$TMP/bepinex.zip" \
