@@ -15,7 +15,7 @@ namespace VikingSettlements
     {
         public const string PluginGUID = "com.abjumb.vikingsettlements";
         public const string PluginName = "VikingSettlements";
-        public const string PluginVersion = "1.8.0";
+        public const string PluginVersion = "1.8.1";
 
         public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
@@ -150,7 +150,7 @@ namespace VikingSettlements
                 { "vs_need_cookstation", "A cooking station in the settlement" },
                 { "vs_need_fermenter", "A fermenter in the settlement" },
                 { "vs_need_beehive", "A beehive, for honey" },
-                { "vs_need_ore", "Copper ore, tin ore or iron scraps in one chest (wood becomes coal)" },
+                { "vs_need_ore", "Copper/tin ore or iron scraps in one chest" },
                 { "vs_need_rawfood", "Raw meat or fish in one chest" },
                 { "vs_need_brewing", "2 honey or 2 barley together in one chest" },
                 { "vs_need_damage", "Damaged structures to repair" },
@@ -175,7 +175,7 @@ namespace VikingSettlements
                 { "vs_talk_build", "What should we build?" },
                 { "vs_talk_project", "Current project" },
                 { "vs_talk_home", "Has a home" },
-                { "vs_talk_homeless", "No home — working slower. Assign one with the talk key on a door" },
+                { "vs_talk_homeless", "No home — working slower (talk key on a door)" },
                 { "vs_need_supplies", "Materials in the supply chest" },
                 { "vs_home_title", "Who lives here?" },
                 { "vs_home_occupant", "lives here" },

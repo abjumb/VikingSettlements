@@ -1,5 +1,17 @@
 # Changelog
 
+### 1.8.1
+
+- Fixed settlement terrain spawning terraced, with buildings buried in
+  mounds or hovering over pits: each settlement now levels its ground
+  with a single terrain op sized to the whole footprint (village 18 m,
+  steading 17 m, outpost 11 m, camp 10 m). The previous overlapping ops
+  re-sloped each other's leveled ground. Applies to newly generated or
+  vs_spawn-ed settlements; already-spawned terrain is not reshaped.
+- Fixed the settler talk panel rendering its text half outside the
+  panel, and two lines being cut off. The "who lives here?" door panel
+  had the same alignment bug.
+
 ### 1.8.0
 
 - War party: up to 4 recruited villagers travel and fight at your side.
