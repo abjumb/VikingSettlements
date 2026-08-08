@@ -187,6 +187,11 @@ jobs:
         run: gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "VikingSettlements-$TAG.zip"
 
       - name: Publish to Thunderstore
+        id: publish
+        # A concurrent run can publish this version between our pre-check
+        # and this step; the follow-up step decides whether a failure here
+        # was that benign race or a real problem.
+        continue-on-error: true
         if: ${{ steps.token.outputs.present == 'true' && steps.published.outputs.exists != 'true' }}
         uses: GreenTF/upload-thunderstore-package@aef20d7e07a0858d0decae64872aa5526662ab8d # v4.3
         with:
@@ -201,3 +206,21 @@ jobs:
           # The action's default repository selection is buggy when this is
           # unset; always pass it explicitly.
           repo: "https://thunderstore.io"
+
+      - name: Treat an already-published version as success
+        if: ${{ steps.publish.outcome == 'failure' }}
+        env:
+          TAG: ${{ needs.release.outputs.tag }}
+        run: |
+          version="${TAG#v}"
+          for attempt in 1 2 3; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" \
+              "https://thunderstore.io/api/experimental/package/morosmods/VikingSettlements/$version/")
+            if [ "$code" = "200" ]; then
+              echo "morosmods-VikingSettlements-$version is on Thunderstore - the publish failure was a duplicate-version race, all good."
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "::error::Thunderstore publish failed and version $version is not visible on Thunderstore."
+          exit 1
