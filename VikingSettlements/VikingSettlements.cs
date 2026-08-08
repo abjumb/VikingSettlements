@@ -15,7 +15,7 @@ namespace VikingSettlements
     {
         public const string PluginGUID = "com.abjumb.vikingsettlements";
         public const string PluginName = "VikingSettlements";
-        public const string PluginVersion = "1.8.2";
+        public const string PluginVersion = "1.9.0";
 
         public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
@@ -189,6 +189,27 @@ namespace VikingSettlements
                 { "vs_home_assign", "Move in" },
                 { "vs_home_unassign", "Move out" },
                 { "vs_home_nosettlement", "This door is not inside a settlement" },
+                { "vs_tier1", "Hamlet" },
+                { "vs_tier2", "Village" },
+                { "vs_tier3", "Town" },
+                { "vs_promoted", "has grown into a" },
+                { "vs_bp_greathall", "Stone Great-Hall" },
+                { "vs_bp_locked", "Higher settlement tiers unlock more blueprints" },
+                { "vs_warlord", "Clanless Warlord" },
+                { "vs_warlord_comes", "A clanless warlord marches on your settlement!" },
+                { "vs_warlord_slain", "The warlord has fallen! The clanless grant this land peace" },
+                { "vs_gear", "Equipment" },
+                { "vs_gear_give", "Give from your inventory" },
+                { "vs_gear_givebtn", "Give" },
+                { "vs_gear_return", "Take back" },
+                { "vs_gear_none", "—" },
+                { "vs_gear_nothing", "Nothing equippable in your inventory" },
+                { "vs_inv_full", "No room in your inventory" },
+                { "vs_slot_weapon", "Weapon" },
+                { "vs_slot_shield", "Shield" },
+                { "vs_slot_helmet", "Helmet" },
+                { "vs_slot_chest", "Chest" },
+                { "vs_slot_legs", "Legs" },
             });
         }
     }

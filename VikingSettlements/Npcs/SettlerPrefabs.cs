@@ -22,6 +22,7 @@ namespace VikingSettlements.Npcs
         public const string FlattenOutpost = "VS_FlattenOutpost";
         public const string FlattenCamp = "VS_FlattenCamp";
         public const string Raider = "VS_Raider";
+        public const string Warlord = "VS_Warlord";
         public const string CampTotem = "VS_CampTotem";
         public const string Heart = "VS_VillageHeart";
 
@@ -40,6 +41,7 @@ namespace VikingSettlements.Npcs
             CreateTrader();
             CreateFlatten();
             CreateRaider();
+            CreateWarlord();
             CreateCampTotem();
             CreateVillageHeart();
         }
@@ -109,6 +111,7 @@ namespace VikingSettlements.Npcs
             clone.AddComponent<SettlerVeterancy>();
             clone.AddComponent<SettlerReputation>();
             clone.AddComponent<Party.PartyMember>();
+            clone.AddComponent<SettlerEquipment>();
 
             PrefabManager.Instance.AddPrefab(new CustomPrefab(clone, false));
             Jotunn.Logger.LogInfo($"Created settlement NPC prefab {name}");
@@ -163,6 +166,54 @@ namespace VikingSettlements.Npcs
 
             PrefabManager.Instance.AddPrefab(new CustomPrefab(clone, false));
             Jotunn.Logger.LogInfo("Created raider prefab VS_Raider");
+        }
+
+        /// <summary>
+        /// The clanless warlord: a mini-boss that joins rival raids once
+        /// enough camps have been cleared. Health and stars are scaled at
+        /// spawn time by boss progression; killing him grants the settlement
+        /// days of raid peace (see WarlordFall).
+        /// </summary>
+        private static void CreateWarlord()
+        {
+            var clone = CloneFirstAvailable(Warlord, new[] { "GoblinBrute", "Goblin", "Draugr", "Dverger" });
+            if (clone == null)
+            {
+                Jotunn.Logger.LogWarning("Could not create VS_Warlord: no base prefab found");
+                return;
+            }
+
+            var humanoid = clone.GetComponent<Humanoid>();
+            if (humanoid != null)
+            {
+                humanoid.m_name = "$vs_warlord";
+                humanoid.m_group = "vs_raiders";
+                humanoid.m_boss = false;
+                humanoid.m_faction = Character.Faction.Undead;
+            }
+
+            var characterDrop = clone.GetComponent<CharacterDrop>();
+            if (characterDrop != null)
+            {
+                characterDrop.m_drops.Clear();
+                var coins = PrefabManager.Instance.GetPrefab("Coins");
+                if (coins != null)
+                {
+                    characterDrop.m_drops.Add(new CharacterDrop.Drop
+                    {
+                        m_prefab = coins,
+                        m_amountMin = 80,
+                        m_amountMax = 200,
+                        m_chance = 1f,
+                    });
+                }
+            }
+
+            clone.AddComponent<RaiderDespawn>();
+            clone.AddComponent<Raids.WarlordFall>();
+
+            PrefabManager.Instance.AddPrefab(new CustomPrefab(clone, false));
+            Jotunn.Logger.LogInfo("Created warlord prefab VS_Warlord");
         }
 
         /// <summary>

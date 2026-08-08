@@ -491,6 +491,11 @@ namespace VikingSettlements.Party
             {
                 zdo.Set(SettlerIdentity.NameKey, name);
             }
+            // Equipment specs ride along (entries stowed before 1.9 lack them).
+            for (var slot = 0; slot < SettlerEquipment.SlotCount && 6 + slot < parts.Length; slot++)
+            {
+                zdo.Set(SettlerEquipment.SlotKeys[slot], parts[6 + slot]);
+            }
 
             var character = spawned.GetComponent<Character>();
             if (character != null)

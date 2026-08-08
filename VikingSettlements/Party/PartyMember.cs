@@ -304,18 +304,29 @@ namespace VikingSettlements.Party
 
         /// <summary>
         /// Everything needed to rebuild this member from the player save:
-        /// prefab, personal name, health, star level and veterancy XP.
+        /// prefab, personal name, health, star level, veterancy XP, and the
+        /// five equipment slots (specs contain no field separators).
         /// </summary>
         internal string SerializeStow()
         {
             var prefabName = gameObject.name.Replace("(Clone)", "");
             var hp = _character != null ? _character.GetHealth() : 0f;
             var level = _character != null ? _character.GetLevel() : 1;
-            var xp = _nview.GetZDO().GetInt(SettlerVeterancy.XpKey);
-            return string.Join("|", "S", prefabName, MemberName,
+            var zdo = _nview.GetZDO();
+            var xp = zdo.GetInt(SettlerVeterancy.XpKey);
+            var fields = new[]
+            {
+                "S", prefabName, MemberName,
                 hp.ToString("F1", CultureInfo.InvariantCulture),
                 level.ToString(CultureInfo.InvariantCulture),
-                xp.ToString(CultureInfo.InvariantCulture));
+                xp.ToString(CultureInfo.InvariantCulture),
+                zdo.GetString(SettlerEquipment.SlotKeys[0]),
+                zdo.GetString(SettlerEquipment.SlotKeys[1]),
+                zdo.GetString(SettlerEquipment.SlotKeys[2]),
+                zdo.GetString(SettlerEquipment.SlotKeys[3]),
+                zdo.GetString(SettlerEquipment.SlotKeys[4]),
+            };
+            return string.Join("|", fields);
         }
 
         internal void DespawnStowed()

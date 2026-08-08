@@ -41,6 +41,10 @@ namespace VikingSettlements
         public static ConfigEntry<KeyboardShortcut> PartyFallbackKey;
         public static ConfigEntry<KeyboardShortcut> TalkHotkey;
         public static ConfigEntry<bool> HomesMatter;
+        public static ConfigEntry<bool> TiersEnabled;
+        public static ConfigEntry<bool> WarlordEnabled;
+        public static ConfigEntry<float> WarlordChance;
+        public static ConfigEntry<int> WarlordPeaceDays;
 
         public static void Init(ConfigFile config)
         {
@@ -271,6 +275,34 @@ namespace VikingSettlements
                     "Settlers without an assigned home work at half speed. Assign homes " +
                     "by pressing the talk key on a door inside the settlement.",
                     null,
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            TiersEnabled = config.Bind("Progression", "TiersEnabled", true,
+                new ConfigDescription(
+                    "Settlements progress Hamlet -> Village -> Town, with tier-scaled " +
+                    "settler caps and tier-gated blueprints. Disabled, every settlement " +
+                    "behaves as a Village.",
+                    null,
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            WarlordEnabled = config.Bind("Progression", "WarlordEnabled", true,
+                new ConfigDescription(
+                    "Once three or more clanless camps have been cleared, rival raids " +
+                    "can bring a warlord. Killing him grants the settlement days of " +
+                    "raid peace.",
+                    null,
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            WarlordChance = config.Bind("Progression", "WarlordChance", 0.25f,
+                new ConfigDescription(
+                    "Chance that a rival raid includes the warlord (after 3+ camps cleared).",
+                    new AcceptableValueRange<float>(0f, 1f),
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            WarlordPeaceDays = config.Bind("Progression", "WarlordPeaceDays", 10,
+                new ConfigDescription(
+                    "In-game days without rival raids for the settlement that fells a warlord.",
+                    new AcceptableValueRange<int>(1, 100),
                     new ConfigurationManagerAttributes { IsAdminOnly = true }));
 
             TalkHotkey = config.Bind("Settlers", "TalkHotkey",

@@ -222,6 +222,8 @@ namespace VikingSettlements.World
 
         public static SettlementLayout BlueprintLonghouse() => Hall("wood_wall_full", false, "piece_chest_wood");
 
+        public static SettlementLayout BlueprintGreatHall() => Hall("stone_wall_2x1", true, "piece_chest_wood");
+
         public static SettlementLayout BlueprintWatchtower() => Watchtower();
 
         /// <summary>

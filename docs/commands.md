@@ -39,6 +39,7 @@ Usable with vanilla `spawn <prefab> [count] [stars]` (cheat):
 | `VS_Settler` | A wild settler — recruitable as normal. `spawn VS_Settler 1 3` spawns one already at Elite (2 stars) |
 | `VS_Seer` | The support-mage settler variant |
 | `VS_Raider` | A hostile clanless bandit — instant raid practice |
+| `VS_Warlord` | The clanless warlord mini-boss — spawns unscaled; raids scale him by boss progression |
 | `VS_Trader` | The village trader (static NPC; opens his store on interact) |
 | `VS_CampTotem` | A destructible war totem — smashing it counts as clearing a camp |
 | `VS_SettlementBanner` | The settlement banner piece (normally built with the hammer) |

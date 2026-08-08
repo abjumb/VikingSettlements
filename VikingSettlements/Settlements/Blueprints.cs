@@ -13,6 +13,7 @@ namespace VikingSettlements.Settlements
         public string NameToken;
         public int WoodCost;
         public int StoneCost;
+        public int MinTier = 1;
         public System.Func<SettlementLayout> Layout;
     }
 
@@ -42,7 +43,17 @@ namespace VikingSettlements.Settlements
                 NameToken = "$vs_bp_longhouse",
                 WoodCost = 100,
                 StoneCost = 10,
+                MinTier = 2,
                 Layout = Layouts.BlueprintLonghouse,
+            },
+            new Blueprint
+            {
+                Id = "greathall",
+                NameToken = "$vs_bp_greathall",
+                WoodCost = 60,
+                StoneCost = 40,
+                MinTier = 3,
+                Layout = Layouts.BlueprintGreatHall,
             },
         };
 

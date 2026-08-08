@@ -282,6 +282,10 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Economy / GrowthFoodCost | 3 | Food consumed when a newcomer arrives |
 | Economy / RequireWorkstations | true | Blacksmith needs a forge, builder a workbench, honey a beehive |
 | Economy / HomesMatter | true | Settlers without an assigned home (talk key on a door) work at half speed |
+| Progression / TiersEnabled | true | Settlements grow Hamlet -> Village -> Town with tier caps and blueprint gates |
+| Progression / WarlordEnabled | true | Rival raids can bring a warlord after 3+ camps cleared |
+| Progression / WarlordChance | 0.25 | Chance a rival raid includes the warlord |
+| Progression / WarlordPeaceDays | 10 | Days without rival raids after felling a warlord |
 | Veterancy / VeterancyEnabled | true | Settlers earn XP and star levels from service and battles |
 | Veterancy / XpPerStar | 20 | XP for the first star; second star costs three times as much |
 | Reputation / ReputationEnabled | true | Wild villages track standing; scales recruit costs |

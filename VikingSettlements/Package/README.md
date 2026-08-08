@@ -93,6 +93,17 @@ the same way; world and raid settings are admin-only and sync from the server.
 - **Housing**: press T on any door inside your settlement to choose who
   lives there. Settlers with a home work at full speed; homeless settlers
   work at half speed and say so when you talk to them.
+- **Settler equipment**: arm your people. The talk panel's Equipment
+  button hands a settler a weapon, shield or armor from your inventory —
+  their AI fights with the weapon, the armor genuinely reduces damage,
+  and everything they wear drops at their corpse if they fall.
+- **Settlement tiers**: Hamlet → Village → Town. Growing population and
+  workstations promote the settlement, raising the settler cap and
+  unlocking bigger builder blueprints, up to the Town-only Stone
+  Great-Hall.
+- **The clanless warlord**: clear enough camps and the clanless answer —
+  rival raids can bring a scaled mini-boss. Kill him and your settlement
+  earns days of guaranteed peace.
 - **Food & growth**: settlers eat from your chests (cheapest food first) about
   once per game day; a hungry settler stops working. A well-fed settlement
   below its cap, with a spare bed, attracts newcomers on its own.
@@ -148,6 +159,10 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Economy / GrowthFoodCost | 3 | Food consumed when a newcomer arrives |
 | Economy / RequireWorkstations | true | Blacksmith needs a forge, builder a workbench, honey a beehive |
 | Economy / HomesMatter | true | Settlers without an assigned home (talk key on a door) work at half speed |
+| Progression / TiersEnabled | true | Settlements grow Hamlet -> Village -> Town with tier caps and blueprint gates |
+| Progression / WarlordEnabled | true | Rival raids can bring a warlord after 3+ camps cleared |
+| Progression / WarlordChance | 0.25 | Chance a rival raid includes the warlord |
+| Progression / WarlordPeaceDays | 10 | Days without rival raids after felling a warlord |
 | Veterancy / VeterancyEnabled | true | Settlers earn XP and star levels from service and battles |
 | Veterancy / XpPerStar | 20 | XP for the first star; second star costs three times as much |
 | Reputation / ReputationEnabled | true | Wild villages track standing; scales recruit costs |
