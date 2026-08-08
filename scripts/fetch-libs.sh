@@ -123,6 +123,11 @@ build_stub Splatform 'namespace Splatform
     }
 }'
 
+# cp onto a pre-existing file keeps the destination's old mode, so a vendor
+# tree populated by an older run of this script may still carry mode-000
+# files; normalize everything we just assembled.
+chmod -R u+rw "$VENDOR"
+
 echo ">> Writing Environment.props"
 cat > "$ROOT/Environment.props" <<EOF
 <?xml version="1.0" encoding="utf-8"?>
