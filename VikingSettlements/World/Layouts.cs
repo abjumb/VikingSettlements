@@ -222,6 +222,7 @@ namespace VikingSettlements.World
         public static SettlementLayout MeadowsVillage()
         {
             var v = new SettlementLayout(SettlementLocations.MeadowsVillageLocation);
+            v.Add(SettlerPrefabs.Heart, 0f, 0f, 0f);
             // One flatten op per built-up area; they all level to the same
             // height since they share the location's origin altitude.
             v.Add(SettlerPrefabs.Flatten, 0f, 0f, 0f);
@@ -269,6 +270,7 @@ namespace VikingSettlements.World
         public static SettlementLayout ForestOutpost()
         {
             var o = new SettlementLayout(SettlementLocations.ForestOutpostLocation);
+            o.Add(SettlerPrefabs.Heart, 0f, 0f, 0f);
             o.Add(SettlerPrefabs.Flatten, 0f, 0f, 0f);
 
             o.Place(Watchtower(), 0f, 0f);
@@ -326,6 +328,7 @@ namespace VikingSettlements.World
         public static SettlementLayout PlainsSteading()
         {
             var s = new SettlementLayout(SettlementLocations.PlainsSteadingLocation);
+            s.Add(SettlerPrefabs.Heart, 0f, 0f, 0f);
             s.Add(SettlerPrefabs.Flatten, 0f, 0f, 0f);
             s.Add(SettlerPrefabs.Flatten, -10f, 0f, -3f);
             s.Add(SettlerPrefabs.Flatten, 11f, 0f, 2f);

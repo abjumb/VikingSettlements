@@ -184,7 +184,23 @@ namespace VikingSettlements.Npcs
             switch (State)
             {
                 case SettlerState.Wild:
-                    text = $"{name}\n[<color=yellow><b>$KEY_Use</b></color>] $vs_recruit ({ModConfig.RecruitCostCoins.Value} $item_coins)";
+                    var heart = VillageHeart.FindNearest(transform.position);
+                    if (heart == null || !ModConfig.ReputationEnabled.Value)
+                    {
+                        text = $"{name}\n[<color=yellow><b>$KEY_Use</b></color>] $vs_recruit ({ModConfig.RecruitCostCoins.Value} $item_coins)";
+                        break;
+                    }
+                    var rep = heart.Reputation;
+                    var standing = $"$vs_rep: {VillageHeart.TierToken(rep)}";
+                    var donate = $"\n[<color=yellow><b>$KEY_AltPlace + $KEY_Use</b></color>] $vs_donate ({ModConfig.DonationCostCoins.Value} $item_coins)";
+                    if (VillageHeart.RefusesRecruits(rep))
+                    {
+                        text = $"{name}\n{standing}\n<color=orange>$vs_rep_refuse</color>{donate}";
+                    }
+                    else
+                    {
+                        text = $"{name}\n{standing}\n[<color=yellow><b>$KEY_Use</b></color>] $vs_recruit ({ScaledRecruitCost(rep)} $item_coins){donate}";
+                    }
                     break;
                 case SettlerState.Following:
                     text = $"{name} ($vs_following)\n[<color=yellow><b>$KEY_Use</b></color>] $vs_assign\n[<color=yellow><b>$KEY_AltPlace + $KEY_Use</b></color>] $vs_dismiss";
@@ -214,7 +230,7 @@ namespace VikingSettlements.Npcs
             switch (State)
             {
                 case SettlerState.Wild:
-                    return Recruit(player);
+                    return alt ? Donate(player) : Recruit(player);
                 case SettlerState.Following:
                     return alt ? Dismiss(player) : Assign(player);
                 default:
@@ -227,9 +243,29 @@ namespace VikingSettlements.Npcs
             return false;
         }
 
+        private int ScaledRecruitCost(int rep)
+        {
+            return Mathf.Max(0,
+                Mathf.RoundToInt(ModConfig.RecruitCostCoins.Value * VillageHeart.CostMultiplier(rep)));
+        }
+
         private bool Recruit(Player player)
         {
+            var heart = ModConfig.ReputationEnabled.Value
+                ? VillageHeart.FindNearest(transform.position)
+                : null;
             var cost = ModConfig.RecruitCostCoins.Value;
+            if (heart != null)
+            {
+                if (VillageHeart.RefusesRecruits(heart.Reputation))
+                {
+                    player.Message(MessageHud.MessageType.Center,
+                        Localization.instance.Localize("$vs_rep_refuse"));
+                    return true;
+                }
+                cost = ScaledRecruitCost(heart.Reputation);
+            }
+
             var coinsName = CoinsSharedName();
             if (cost > 0)
             {
@@ -241,6 +277,9 @@ namespace VikingSettlements.Npcs
                 player.GetInventory().RemoveItem(coinsName, cost);
             }
 
+            // The village notices its people leaving.
+            heart?.AddReputation(-2);
+
             _nview.GetZDO().Set(OwnerKey, player.GetPlayerID());
             State = SettlerState.Following;
             if (_ai != null)
@@ -249,6 +288,36 @@ namespace VikingSettlements.Npcs
             }
             player.Message(MessageHud.MessageType.Center,
                 Localization.instance.Localize($"{GetHoverName()} $vs_joined"));
+            return true;
+        }
+
+        private bool Donate(Player player)
+        {
+            if (!ModConfig.ReputationEnabled.Value)
+            {
+                return false;
+            }
+            var heart = VillageHeart.FindNearest(transform.position);
+            if (heart == null)
+            {
+                return false;
+            }
+
+            var cost = ModConfig.DonationCostCoins.Value;
+            var coinsName = CoinsSharedName();
+            if (cost > 0)
+            {
+                if (coinsName == null || player.GetInventory().CountItems(coinsName) < cost)
+                {
+                    player.Message(MessageHud.MessageType.Center, Localization.instance.Localize("$vs_needcoins"));
+                    return true;
+                }
+                player.GetInventory().RemoveItem(coinsName, cost);
+            }
+            heart.AddReputation(ModConfig.DonationReputation.Value);
+            player.Message(MessageHud.MessageType.Center,
+                Localization.instance.Localize(
+                    $"$vs_donated ($vs_rep: {VillageHeart.TierToken(heart.Reputation)})"));
             return true;
         }
 

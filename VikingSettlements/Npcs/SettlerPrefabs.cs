@@ -19,6 +19,7 @@ namespace VikingSettlements.Npcs
         public const string Flatten = "VS_Flatten";
         public const string Raider = "VS_Raider";
         public const string CampTotem = "VS_CampTotem";
+        public const string Heart = "VS_VillageHeart";
 
         private static bool _created;
 
@@ -36,6 +37,7 @@ namespace VikingSettlements.Npcs
             CreateFlatten();
             CreateRaider();
             CreateCampTotem();
+            CreateVillageHeart();
         }
 
         private static GameObject CloneFirstAvailable(string newName, IEnumerable<string> baseCandidates)
@@ -101,6 +103,7 @@ namespace VikingSettlements.Npcs
             clone.AddComponent<SettlerRecruitable>();
             clone.AddComponent<SettlerWork>();
             clone.AddComponent<SettlerVeterancy>();
+            clone.AddComponent<SettlerReputation>();
 
             PrefabManager.Instance.AddPrefab(new CustomPrefab(clone, false));
             Jotunn.Logger.LogInfo($"Created settlement NPC prefab {name}");
@@ -181,6 +184,49 @@ namespace VikingSettlements.Npcs
 
             PrefabManager.Instance.AddPrefab(new CustomPrefab(clone, false));
             Jotunn.Logger.LogInfo("Created camp totem prefab VS_CampTotem");
+        }
+
+        /// <summary>
+        /// The invisible reputation anchor of a wild village: a networked
+        /// prefab stripped down to nothing but its ZNetView plus the
+        /// VillageHeart behavior.
+        /// </summary>
+        private static void CreateVillageHeart()
+        {
+            var clone = CloneFirstAvailable(Heart, new[] { "guard_stone" });
+            if (clone == null)
+            {
+                Jotunn.Logger.LogWarning("Could not create VS_VillageHeart: guard_stone prefab not found");
+                return;
+            }
+
+            // Strip everything visible and interactive; only the network
+            // identity remains.
+            foreach (var componentType in new[] { typeof(PrivateArea), typeof(WearNTear), typeof(Piece) })
+            {
+                var component = clone.GetComponent(componentType);
+                if (component != null)
+                {
+                    Object.DestroyImmediate(component);
+                }
+            }
+            for (var i = clone.transform.childCount - 1; i >= 0; i--)
+            {
+                Object.DestroyImmediate(clone.transform.GetChild(i).gameObject);
+            }
+            foreach (var renderer in clone.GetComponents<Renderer>())
+            {
+                Object.DestroyImmediate(renderer);
+            }
+            foreach (var collider in clone.GetComponents<Collider>())
+            {
+                Object.DestroyImmediate(collider);
+            }
+
+            clone.AddComponent<VillageHeart>();
+
+            PrefabManager.Instance.AddPrefab(new CustomPrefab(clone, false));
+            Jotunn.Logger.LogInfo("Created village heart prefab VS_VillageHeart");
         }
 
         private static void CreateTrader()

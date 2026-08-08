@@ -30,6 +30,9 @@ namespace VikingSettlements
         public static ConfigEntry<bool> RequireWorkstations;
         public static ConfigEntry<bool> VeterancyEnabled;
         public static ConfigEntry<int> XpPerStar;
+        public static ConfigEntry<bool> ReputationEnabled;
+        public static ConfigEntry<int> DonationCostCoins;
+        public static ConfigEntry<int> DonationReputation;
 
         public static void Init(ConfigFile config)
         {
@@ -200,6 +203,26 @@ namespace VikingSettlements
                     "Experience required for a settler's first star. The second star costs " +
                     "three times as much.",
                     new AcceptableValueRange<int>(5, 200),
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            ReputationEnabled = config.Bind("Reputation", "ReputationEnabled", true,
+                new ConfigDescription(
+                    "Wild villages track a shared standing toward players: defending " +
+                    "villagers and donating coins raise it, attacking them lowers it. " +
+                    "Standing scales recruit costs; hated villages refuse recruiting.",
+                    null,
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            DonationCostCoins = config.Bind("Reputation", "DonationCostCoins", 10,
+                new ConfigDescription(
+                    "Coins given per donation (Shift+E on a wild settler).",
+                    new AcceptableValueRange<int>(1, 1000),
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            DonationReputation = config.Bind("Reputation", "DonationReputation", 5,
+                new ConfigDescription(
+                    "Reputation gained per donation.",
+                    new AcceptableValueRange<int>(1, 50),
                     new ConfigurationManagerAttributes { IsAdminOnly = true }));
         }
     }

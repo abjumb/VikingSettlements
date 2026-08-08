@@ -46,6 +46,11 @@ Walk up to any villager. You'll see **"Recruit (50 Coins)"** in the hover text.
 - **`Shift+E`** dismisses a follower if you change your mind — they'll settle
   back down where they are.
 
+Villages keep track of how you treat them — the **standing** on a settler's
+hover text. Donate 10 coins with `Shift+E` to raise it, defend the village
+when monsters attack, and recruits get cheaper (half price at Honored).
+Attack or kill villagers and prices climb until they refuse you entirely.
+
 Recruit two or three to start. They follow you like a tamed wolf, so you can
 walk them home. Don't march them through a swamp at night — they fight, but
 they can die, and **dead settlers don't come back**.
@@ -80,8 +85,9 @@ A settlement holds **10 settlers** by default.
 
 ## Step 5 — Give them jobs
 
-Press `E` on a settled villager again to cycle their job. Keep pressing to
-scroll through all six:
+Press `E` on a settled villager again to cycle their job (or use the banner's
+management panel to do it from one screen). Keep pressing to scroll through
+all ten:
 
 | Job | What they do | Needs |
 |---|---|---|
