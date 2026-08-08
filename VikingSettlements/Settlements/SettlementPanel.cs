@@ -23,6 +23,8 @@ namespace VikingSettlements.Settlements
         private static GameObject _panel;
         private static PlayerSettlement _settlement;
 
+        internal static bool IsOpen => _panel != null;
+
         public static void Toggle(PlayerSettlement settlement)
         {
             if (_panel != null && _settlement == settlement)

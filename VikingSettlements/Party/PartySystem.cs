@@ -170,7 +170,7 @@ namespace VikingSettlements.Party
             }
         }
 
-        private static bool UiHasFocus()
+        internal static bool UiHasFocus()
         {
             return Console.IsVisible()
                 || TextInput.IsVisible()

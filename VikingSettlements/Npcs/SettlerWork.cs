@@ -15,9 +15,9 @@ namespace VikingSettlements.Npcs
     public class SettlerWork : MonoBehaviour
     {
         public const string HungryKey = "vs_hungry";
-        private const string NextMealKey = "vs_nextmeal";
+        internal const string NextMealKey = "vs_nextmeal";
 
-        private static readonly (string From, int Count, string To)[] SmeltingRecipes =
+        internal static readonly (string From, int Count, string To)[] SmeltingRecipes =
         {
             ("CopperOre", 1, "Copper"),
             ("TinOre", 1, "Tin"),
@@ -25,7 +25,7 @@ namespace VikingSettlements.Npcs
             ("Wood", 1, "Coal"),
         };
 
-        private static readonly (string From, int Count, string To)[] CookingRecipes =
+        internal static readonly (string From, int Count, string To)[] CookingRecipes =
         {
             ("RawMeat", 1, "CookedMeat"),
             ("DeerMeat", 1, "CookedDeerMeat"),
@@ -35,7 +35,7 @@ namespace VikingSettlements.Npcs
             ("LoxMeat", 1, "CookedLoxMeat"),
         };
 
-        private static readonly (string From, int Count, string To)[] BrewingRecipes =
+        internal static readonly (string From, int Count, string To)[] BrewingRecipes =
         {
             ("Honey", 2, "MeadHealthMinor"),
             ("Barley", 2, "BarleyWine"),
@@ -240,20 +240,12 @@ namespace VikingSettlements.Npcs
         }
 
         // ---- Workstations ----
+        // Static "around a point" variants exist so the talk panel can run
+        // exactly the same checks the work loop gates on.
 
         private bool HasStation(string nameToken)
         {
-            var radius = ModConfig.SettlementRadius.Value;
-            var home = _settler.Home;
-            foreach (var station in FindObjectsOfType<CraftingStation>())
-            {
-                if (station.m_name == nameToken
-                    && Vector3.Distance(station.transform.position, home) <= radius)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return HasStationAround(_settler.Home, nameToken);
         }
 
         private bool HasBeehive()
@@ -263,16 +255,93 @@ namespace VikingSettlements.Npcs
 
         private bool HasNearby<T>() where T : Component
         {
+            return HasAround<T>(_settler.Home);
+        }
+
+        internal static bool HasStationAround(Vector3 center, string nameToken)
+        {
             var radius = ModConfig.SettlementRadius.Value;
-            var home = _settler.Home;
-            foreach (var component in FindObjectsOfType<T>())
+            foreach (var station in FindObjectsOfType<CraftingStation>())
             {
-                if (Vector3.Distance(component.transform.position, home) <= radius)
+                if (station.m_name == nameToken
+                    && Vector3.Distance(station.transform.position, center) <= radius)
                 {
                     return true;
                 }
             }
             return false;
+        }
+
+        internal static bool HasAround<T>(Vector3 center) where T : Component
+        {
+            var radius = ModConfig.SettlementRadius.Value;
+            foreach (var component in FindObjectsOfType<T>())
+            {
+                if (Vector3.Distance(component.transform.position, center) <= radius)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>Food items sitting in settlement chests, without eating any.</summary>
+        internal static int CountFoodAround(Vector3 center)
+        {
+            var radius = ModConfig.SettlementRadius.Value;
+            var count = 0;
+            foreach (var container in FindObjectsOfType<Container>())
+            {
+                if (Vector3.Distance(container.transform.position, center) > radius)
+                {
+                    continue;
+                }
+                var inventory = container.GetInventory();
+                if (inventory == null)
+                {
+                    continue;
+                }
+                foreach (var item in inventory.GetAllItems())
+                {
+                    if (item.m_shared.m_itemType == ItemDrop.ItemData.ItemType.Consumable
+                        && item.m_shared.m_food > 0f)
+                    {
+                        count += item.m_stack;
+                    }
+                }
+            }
+            return count;
+        }
+
+        /// <summary>
+        /// Whether any conversion of <paramref name="recipes"/> could run right
+        /// now: ingredients and room for the output found in one chest - the
+        /// same single-chest rule <see cref="Convert"/> applies.
+        /// </summary>
+        internal static bool CanConvertAround(Vector3 center, (string From, int Count, string To)[] recipes)
+        {
+            foreach (var (from, needed, to) in recipes)
+            {
+                var fromName = SharedName(from);
+                var product = MakeItem(to, 1);
+                if (fromName == null || product == null)
+                {
+                    continue;
+                }
+                if (FindStorageAround(center, inventory =>
+                        inventory.CountItems(fromName) >= needed && inventory.CanAddItem(product)) != null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>Whether a chest around the point has room for one more of the item.</summary>
+        internal static bool HasStorageForAround(Vector3 center, string prefabName)
+        {
+            var item = MakeItem(prefabName, 1);
+            return item != null && FindStorageAround(center, inventory => inventory.CanAddItem(item)) != null;
         }
 
         // ---- Production ----
@@ -318,6 +387,21 @@ namespace VikingSettlements.Npcs
             }
         }
 
+        internal static int CountDamagedAround(Vector3 center)
+        {
+            var radius = ModConfig.SettlementRadius.Value;
+            var damaged = 0;
+            foreach (var wearNTear in FindObjectsOfType<WearNTear>())
+            {
+                if (Vector3.Distance(wearNTear.transform.position, center) <= radius
+                    && wearNTear.GetHealthPercentage() < 1f)
+                {
+                    damaged++;
+                }
+            }
+            return damaged;
+        }
+
         private void Repair()
         {
             var radius = ModConfig.SettlementRadius.Value;
@@ -342,13 +426,17 @@ namespace VikingSettlements.Npcs
 
         private Container FindStorage(System.Func<Inventory, bool> predicate)
         {
+            return FindStorageAround(_settler.Home, predicate);
+        }
+
+        internal static Container FindStorageAround(Vector3 center, System.Func<Inventory, bool> predicate)
+        {
             var radius = ModConfig.SettlementRadius.Value;
-            var home = _settler.Home;
             Container best = null;
             var bestDistance = float.MaxValue;
             foreach (var container in FindObjectsOfType<Container>())
             {
-                var distance = Vector3.Distance(container.transform.position, home);
+                var distance = Vector3.Distance(container.transform.position, center);
                 if (distance > radius || distance >= bestDistance)
                 {
                     continue;
@@ -364,7 +452,7 @@ namespace VikingSettlements.Npcs
             return best;
         }
 
-        private static ItemDrop.ItemData MakeItem(string prefabName, int stack)
+        internal static ItemDrop.ItemData MakeItem(string prefabName, int stack)
         {
             var prefab = ObjectDB.instance != null ? ObjectDB.instance.GetItemPrefab(prefabName) : null;
             var drop = prefab != null ? prefab.GetComponent<ItemDrop>() : null;
@@ -378,7 +466,7 @@ namespace VikingSettlements.Npcs
             return item;
         }
 
-        private static string SharedName(string prefabName)
+        internal static string SharedName(string prefabName)
         {
             var prefab = ObjectDB.instance != null ? ObjectDB.instance.GetItemPrefab(prefabName) : null;
             var drop = prefab != null ? prefab.GetComponent<ItemDrop>() : null;
