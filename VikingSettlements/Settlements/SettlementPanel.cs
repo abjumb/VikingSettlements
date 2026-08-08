@@ -118,22 +118,24 @@ namespace VikingSettlements.Settlements
                 GUIManager.Instance.AveriaSerifBold);
             title.alignment = TextAnchor.MiddleLeft;
 
-            // Population line: count, bar, hungry warning.
+            // Population line: tier, count, bar, hungry warning.
             var count = settlers.Count;
-            var capacity = ModConfig.MaxSettlersPerSettlement.Value;
+            var capacity = _settlement.SettlerCap;
             var countText = Text(
-                Localization.instance.Localize($"$vs_settlers {count}/{capacity}"),
-                new Vector2(0f, 1f), new Vector2(26f + 70f, -68f),
-                15, UiPalette.Beige, 140f, 22f);
+                Localization.instance.Localize(
+                    $"{PlayerSettlement.TierToken(_settlement.Tier)} — $vs_settlers {count}/{capacity}"),
+                new Vector2(0f, 1f), new Vector2(26f + 115f, -68f),
+                15, UiPalette.Beige, 230f, 22f);
             countText.alignment = TextAnchor.MiddleLeft;
 
             var barAnchor = new Vector2(0f, 1f);
-            UiPalette.CreateRect(_panel.transform, barAnchor, new Vector2(26f + 140f + 20f + 75f, -68f), 150f, 8f, UiPalette.BarTrack);
+            var barLeft = 26f + 230f + 16f;
+            UiPalette.CreateRect(_panel.transform, barAnchor, new Vector2(barLeft + 75f, -68f), 150f, 8f, UiPalette.BarTrack);
             var fillWidth = capacity > 0 ? 150f * Mathf.Clamp01((float)count / capacity) : 0f;
             if (fillWidth > 0f)
             {
                 UiPalette.CreateRect(_panel.transform, barAnchor,
-                    new Vector2(26f + 140f + 20f + fillWidth / 2f, -68f), fillWidth, 8f, UiPalette.BarFill);
+                    new Vector2(barLeft + fillWidth / 2f, -68f), fillWidth, 8f, UiPalette.BarFill);
             }
 
             var hungryCount = 0;
@@ -148,7 +150,7 @@ namespace VikingSettlements.Settlements
             {
                 var hungry = Text(
                     Localization.instance.Localize($"{hungryCount} $vs_hungry"),
-                    new Vector2(0f, 1f), new Vector2(26f + 140f + 20f + 150f + 14f + 60f, -68f),
+                    new Vector2(0f, 1f), new Vector2(barLeft + 150f + 14f + 60f, -68f),
                     15, UiPalette.Warning, 120f, 22f);
                 hungry.alignment = TextAnchor.MiddleLeft;
             }

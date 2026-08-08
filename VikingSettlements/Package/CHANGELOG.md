@@ -1,5 +1,28 @@
 # Changelog
 
+### 1.9.0
+
+- Settler equipment: open a recruited settler's talk panel and press
+  Equipment to hand over a weapon, shield, helmet, chest or leg armor
+  from your inventory (take-back buttons included). Gear persists in
+  the save, survives party travel, changes their combat strength -
+  weapons are used by their AI, armor reduces damage they take - and
+  drops at their corpse if they die. A geared war party is a real
+  investment, and losing one hurts accordingly.
+- Settlement tiers: settlements now grow Hamlet -> Village -> Town.
+  Population plus a workbench earns Village; a real population plus a
+  forge earns Town. Each tier raises the settler cap (Hamlet 60%,
+  Village 100%, Town 150% of the configured max) and unlocks builder
+  blueprints: the longhouse needs a Village, and Towns unlock the new
+  Stone Great-Hall. The tier shows on the banner and in the panel.
+- The clanless warlord: once three or more camps are cleared, rival
+  raids can bring a warlord - a mini-boss whose health and stars scale
+  with boss progression, with a heavy coin purse. Fell him and the
+  settlement he marched on gets 10 days (configurable) with no rival
+  raids. Camp-clearing now has a climax instead of a quiet fade-out.
+- New config section Progression: TiersEnabled, WarlordEnabled,
+  WarlordChance, WarlordPeaceDays.
+
 ### 1.8.2
 
 - New look, from the mod's design system: the package icon is now the

@@ -54,6 +54,11 @@ namespace VikingSettlements.Npcs
                 HomeAssignPanel.Close();
                 return;
             }
+            if (SettlerGearPanel.IsOpen)
+            {
+                SettlerGearPanel.Close();
+                return;
+            }
             if (PartySystem.UiHasFocus() || SettlementPanel.IsOpen)
             {
                 return;
@@ -166,8 +171,10 @@ namespace VikingSettlements.Npcs
             var showBlueprints = _settler.State == SettlerState.Assigned
                 && _settler.Job == SettlerJob.Builder
                 && ConstructionSite.FindNear(_settler.Home) == null;
+            var unlocked = showBlueprints ? UnlockedBlueprints() : new List<Blueprint>();
+            var anyLocked = unlocked.Count < Blueprints.All.Length;
             var blueprintHeight = showBlueprints
-                ? 36f + Blueprints.All.Length * 40f
+                ? 36f + unlocked.Count * 40f + (anyLocked ? 26f : 0f)
                 : 0f;
 
             var height = 118f + lines.Count * LineHeight + blueprintHeight + 64f;
@@ -204,7 +211,22 @@ namespace VikingSettlements.Npcs
 
             if (showBlueprints)
             {
-                BuildBlueprintButtons(110f + lines.Count * LineHeight + 8f);
+                BuildBlueprintButtons(110f + lines.Count * LineHeight + 8f, unlocked, anyLocked);
+            }
+
+            // Recruited settlers can be geared up.
+            if (_settler.State != SettlerState.Wild)
+            {
+                var gearButton = GUIManager.Instance.CreateButton(
+                    Localization.instance.Localize("$vs_gear"),
+                    _panel.transform, new Vector2(0f, 0f), new Vector2(0f, 0f),
+                    new Vector2(36f + 70f, 36f), 140f, 38f);
+                gearButton.GetComponent<Button>().onClick.AddListener(() =>
+                {
+                    var settler = _settler;
+                    Close();
+                    SettlerGearPanel.Open(settler);
+                });
             }
 
             var closeButton = GUIManager.Instance.CreateButton(
@@ -214,7 +236,23 @@ namespace VikingSettlements.Npcs
             closeButton.GetComponent<Button>().onClick.AddListener(Close);
         }
 
-        private static void BuildBlueprintButtons(float baseY)
+        private static List<Blueprint> UnlockedBlueprints()
+        {
+            var settlement = PlayerSettlement.FindNearest(
+                _settler.Home, ModConfig.SettlementRadius.Value);
+            var tier = settlement != null ? settlement.Tier : 1;
+            var unlocked = new List<Blueprint>();
+            foreach (var blueprint in Blueprints.All)
+            {
+                if (blueprint.MinTier <= tier)
+                {
+                    unlocked.Add(blueprint);
+                }
+            }
+            return unlocked;
+        }
+
+        private static void BuildBlueprintButtons(float baseY, List<Blueprint> unlocked, bool anyLocked)
         {
             GUIManager.Instance.CreateText(
                 Localization.instance.Localize("$vs_talk_build"),
@@ -223,9 +261,9 @@ namespace VikingSettlements.Npcs
                 GUIManager.Instance.AveriaSerifBold, 18, GUIManager.Instance.ValheimOrange,
                 true, Color.black, LineWidth, 28f, false);
 
-            for (var i = 0; i < Blueprints.All.Length; i++)
+            for (var i = 0; i < unlocked.Count; i++)
             {
-                var blueprint = Blueprints.All[i];
+                var blueprint = unlocked[i];
                 var label = $"{blueprint.NameToken} — {blueprint.WoodCost} $item_wood";
                 if (blueprint.StoneCost > 0)
                 {
@@ -236,6 +274,16 @@ namespace VikingSettlements.Npcs
                     _panel.transform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f),
                     new Vector2(0f, -(baseY + 34f + i * 40f + 15f)), 360f, 34f);
                 button.GetComponent<Button>().onClick.AddListener(() => StartProject(blueprint));
+            }
+
+            if (anyLocked)
+            {
+                GUIManager.Instance.CreateText(
+                    Localization.instance.Localize("$vs_bp_locked"),
+                    _panel.transform, new Vector2(0f, 1f), new Vector2(0f, 1f),
+                    new Vector2(LineCenterX, -(baseY + 34f + unlocked.Count * 40f + 8f)),
+                    GUIManager.Instance.AveriaSerif, 14, Settlements.UiPalette.SecondaryOnWood,
+                    true, Color.black, LineWidth, 24f, false);
             }
         }
 
@@ -255,6 +303,13 @@ namespace VikingSettlements.Npcs
             {
                 player.Message(MessageHud.MessageType.Center,
                     Localization.instance.Localize("$vs_bp_busy"));
+                return;
+            }
+            var settlement = PlayerSettlement.FindNearest(home, ModConfig.SettlementRadius.Value);
+            if (blueprint.MinTier > (settlement != null ? settlement.Tier : 1))
+            {
+                player.Message(MessageHud.MessageType.Center,
+                    Localization.instance.Localize("$vs_bp_locked"));
                 return;
             }
             if (Vector3.Distance(player.transform.position, home) > ModConfig.SettlementRadius.Value)

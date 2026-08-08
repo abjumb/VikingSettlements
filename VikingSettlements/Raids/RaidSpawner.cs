@@ -86,7 +86,78 @@ namespace VikingSettlements.Raids
                 }
             }
 
+            // The counterweight to clearing camps: the clanless eventually
+            // send a warlord. Kill him and the settlement earns real peace.
+            if (ModConfig.WarlordEnabled.Value
+                && CampTotem.ClearedCampCount() >= 3
+                && Random.value < ModConfig.WarlordChance.Value)
+            {
+                SpawnWarlord(center, angle, distance);
+            }
+
             Jotunn.Logger.LogInfo($"Rival clan raid: {count} raiders assault the settlement at {center}");
+        }
+
+        private static void SpawnWarlord(Vector3 center, float angle, float distance)
+        {
+            var prefab = PrefabManager.Instance.GetPrefab(SettlerPrefabs.Warlord);
+            if (prefab == null)
+            {
+                return;
+            }
+            var rad = angle * Mathf.Deg2Rad;
+            var position = center + new Vector3(Mathf.Sin(rad) * distance, 0f, Mathf.Cos(rad) * distance);
+            position.y = GroundHeight(position);
+            var toCenter = center - position;
+            toCenter.y = 0f;
+
+            var warlord = Object.Instantiate(prefab, position,
+                Quaternion.LookRotation(toCenter.normalized));
+
+            var view = warlord.GetComponent<ZNetView>();
+            if (view != null && view.IsValid())
+            {
+                view.GetZDO().Set(Npcs.RaiderDespawn.WarPartyKey, true);
+            }
+
+            // Scale to boss progression, like starred raiders.
+            var health = 300f;
+            var level = 1;
+            if (ZoneSystem.instance != null)
+            {
+                if (ZoneSystem.instance.GetGlobalKey("defeated_bonemass"))
+                {
+                    health = 800f;
+                    level = 3;
+                }
+                else if (ZoneSystem.instance.GetGlobalKey("defeated_gdking"))
+                {
+                    health = 500f;
+                    level = 2;
+                }
+            }
+            var character = warlord.GetComponent<Character>();
+            if (character != null)
+            {
+                character.SetLevel(level);
+                character.SetMaxHealth(health);
+                character.SetHealth(health);
+            }
+            var ai = warlord.GetComponent<MonsterAI>();
+            if (ai != null)
+            {
+                ai.SetHuntPlayer(true);
+                ai.Alert();
+            }
+
+            var player = Player.m_localPlayer;
+            if (player != null
+                && Vector3.Distance(player.transform.position, center) < 80f)
+            {
+                player.Message(MessageHud.MessageType.Center,
+                    Localization.instance.Localize("$vs_warlord_comes"));
+            }
+            Jotunn.Logger.LogInfo($"A clanless warlord joins the raid at {center}");
         }
 
         private static float GroundHeight(Vector3 position)

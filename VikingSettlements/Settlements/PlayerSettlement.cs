@@ -14,6 +14,8 @@ namespace VikingSettlements.Settlements
     {
         private const string LastRaidDayKey = "vs_lastraid";
         private const string NameKey = "vs_name";
+        public const string TierKey = "vs_tier";
+        public const string PeaceDayKey = "vs_peaceday";
         private const int NameCharLimit = 30;
 
         public static readonly List<PlayerSettlement> Instances = new List<PlayerSettlement>();
@@ -71,6 +73,54 @@ namespace VikingSettlements.Settlements
         public int CountAssignedSettlers()
         {
             return GetSettlers().Count;
+        }
+
+        /// <summary>Hamlet (1) → Village (2) → Town (3). Permanent once earned.</summary>
+        internal int Tier => !ModConfig.TiersEnabled.Value ? 2
+            : _nview != null && _nview.IsValid()
+                ? Mathf.Clamp(_nview.GetZDO().GetInt(TierKey, 1), 1, 3)
+                : 1;
+
+        /// <summary>The settler cap for the current tier (config value = Village).</summary>
+        internal int SettlerCap
+        {
+            get
+            {
+                var baseline = ModConfig.MaxSettlersPerSettlement.Value;
+                switch (Tier)
+                {
+                    case 1: return Mathf.Max(3, baseline * 3 / 5);
+                    case 3: return baseline + baseline / 2;
+                    default: return baseline;
+                }
+            }
+        }
+
+        internal static string TierToken(int tier)
+        {
+            switch (tier)
+            {
+                case 3: return "$vs_tier3";
+                case 2: return "$vs_tier2";
+                default: return "$vs_tier1";
+            }
+        }
+
+        /// <summary>Whether rival raids are suspended (warlord recently slain).</summary>
+        internal bool InPeace(int day)
+        {
+            return _nview != null && _nview.IsValid()
+                && _nview.GetZDO().GetInt(PeaceDayKey) > day;
+        }
+
+        internal void GrantPeace(int untilDay)
+        {
+            if (_nview == null || !_nview.IsValid())
+            {
+                return;
+            }
+            _nview.ClaimOwnership();
+            _nview.GetZDO().Set(PeaceDayKey, untilDay);
         }
 
         private Dictionary<SettlerJob, int> CountJobs()
@@ -143,11 +193,53 @@ namespace VikingSettlements.Settlements
             }
             _nview.GetZDO().Set(LastRaidDayKey, day);
 
-            if (ModConfig.EnableRaids.Value && Random.value < Raids.RaidSpawner.EffectiveRaidChance())
+            if (ModConfig.EnableRaids.Value && !InPeace(day)
+                && Random.value < Raids.RaidSpawner.EffectiveRaidChance())
             {
                 Raids.RaidSpawner.SpawnRivalRaid(this);
             }
             TryGrow();
+            TryPromote();
+        }
+
+        // Promotion is a head-count and infrastructure check, once per night:
+        // Hamlet -> Village needs people and a workbench; Village -> Town
+        // needs a real population and a forge. Tiers never regress.
+        private void TryPromote()
+        {
+            if (!ModConfig.TiersEnabled.Value || _nview == null || !_nview.IsValid())
+            {
+                return;
+            }
+            var tier = Mathf.Clamp(_nview.GetZDO().GetInt(TierKey, 1), 1, 3);
+            var assigned = CountAssignedSettlers();
+            var baseline = ModConfig.MaxSettlersPerSettlement.Value;
+            var promoted = false;
+            if (tier == 1 && assigned >= Mathf.Max(4, baseline / 2)
+                && SettlerWork.HasStationAround(transform.position, "$piece_workbench"))
+            {
+                tier = 2;
+                promoted = true;
+            }
+            else if (tier == 2 && assigned >= Mathf.Max(6, baseline * 4 / 5)
+                && SettlerWork.HasStationAround(transform.position, "$piece_forge"))
+            {
+                tier = 3;
+                promoted = true;
+            }
+            if (!promoted)
+            {
+                return;
+            }
+            _nview.GetZDO().Set(TierKey, tier);
+            var player = Player.m_localPlayer;
+            if (player != null
+                && Vector3.Distance(player.transform.position, transform.position) < 50f)
+            {
+                player.Message(MessageHud.MessageType.Center,
+                    Localization.instance.Localize(
+                        $"{DisplayName} $vs_promoted {TierToken(tier)}!"));
+            }
         }
 
         /// <summary>
@@ -165,7 +257,7 @@ namespace VikingSettlements.Settlements
                 return;
             }
             var assigned = CountAssignedSettlers();
-            if (assigned >= ModConfig.MaxSettlersPerSettlement.Value)
+            if (assigned >= SettlerCap)
             {
                 return;
             }
@@ -268,7 +360,8 @@ namespace VikingSettlements.Settlements
             var hungryLine = hungry > 0 ? $"\n$vs_hungry: {hungry}" : "";
 
             return Localization.instance.Localize(
-                $"{DisplayName}\n$vs_settlers: {total}/{ModConfig.MaxSettlersPerSettlement.Value}{breakdown}{hungryLine}"
+                $"{DisplayName} ({TierToken(Tier)})"
+                + $"\n$vs_settlers: {total}/{SettlerCap}{breakdown}{hungryLine}"
                 + "\n[<color=yellow><b>$KEY_Use</b></color>] $vs_manage"
                 + "\n[<color=yellow><b>$KEY_AltPlace + $KEY_Use</b></color>] $vs_rename");
         }

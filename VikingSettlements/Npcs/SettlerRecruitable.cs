@@ -393,7 +393,7 @@ namespace VikingSettlements.Npcs
                 player.Message(MessageHud.MessageType.Center, Localization.instance.Localize("$vs_nosettlement"));
                 return true;
             }
-            if (settlement.CountAssignedSettlers() >= ModConfig.MaxSettlersPerSettlement.Value)
+            if (settlement.CountAssignedSettlers() >= settlement.SettlerCap)
             {
                 player.Message(MessageHud.MessageType.Center, Localization.instance.Localize("$vs_settlementfull"));
                 return true;

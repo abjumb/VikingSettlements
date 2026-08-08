@@ -59,6 +59,14 @@ namespace VikingSettlements.Party
                     hit.ApplyModifier(FallbackDamageMultiplier);
                 }
             }
+
+            // Player-given armor counts: NPCs never apply equipment armor on
+            // their own, so worn pieces reduce the hit here on the owner.
+            var equipment = target.GetComponent<SettlerEquipment>();
+            if (equipment != null && equipment.EquippedArmor > 0f)
+            {
+                hit.ApplyArmor(equipment.EquippedArmor);
+            }
             return true;
         }
     }
