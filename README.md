@@ -189,6 +189,33 @@ with.
 All settler state (recruiter, job, home) lives in the creature's ZDO, so it
 persists across sessions and syncs to every client.
 
+## The war party
+
+Followers are not just cargo on the way to a settlement — up to **4** of them
+form a persistent party that fights at your side. The design pillar:
+**companions you can lose.** The party is strong because bringing it is a
+real bet.
+
+- **Commands** — `G` toggles the whole party between following and holding
+  position; `H` orders a fall-back (they stop fighting, run to you, and take
+  75% less damage — the rescue button). `E` on a member posts them where
+  they stand or brings them along; near your banner `E` still settles them
+  in, and `Shift+E` dismisses. `vs_party` in the console lists the roster.
+- **They survive the game's traversal systems** — boarding a boat or
+  stepping into a portal stows the party into your character save; they
+  step out with you at the other end. Logging out pockets them the same
+  way, and a member who falls too far behind teleports to you instead of
+  being lost to zone unloading. Members told to hold stay posted — and are
+  untouchable while you're away.
+- **The permadeath contract** — a party member can only die to a monster,
+  in a fight you are standing in, after telegraphed warnings (wounded at
+  50%, gravely wounded at 25%, when they automatically retreat unless you
+  re-engage them). You can never damage your own people — a stray cleave
+  does nothing — and neither can falls, drowning, smoke or fire. Out of
+  combat they regenerate, so there is no attrition tax between fights.
+  But when a member dies, they are **gone** — no respawn, no backup copy.
+  Veterans with stars are exactly the ones that hurt to lose.
+
 ## Configuration
 
 Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
@@ -223,6 +250,11 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Reputation / ReputationEnabled | true | Wild villages track standing; scales recruit costs |
 | Reputation / DonationCostCoins | 10 | Coins per donation (Shift+E on a wild settler) |
 | Reputation / DonationReputation | 5 | Standing gained per donation |
+| Party / MaxPartySize | 4 | Villagers that can travel with you at once (max 4) |
+| Party / AutoFallbackWhenGravelyWounded | true | Members below 25% health retreat to you automatically |
+| Party / OutOfCombatRegenPerSecond | 2 | Member health regen after 10s without damage (0 disables) |
+| Party / StanceHotkey | G | Toggle party follow/hold (client-side) |
+| Party / FallbackHotkey | H | Order a protected fall-back (client-side) |
 
 Location counts only affect world generation, so changing them has no effect
 on already-generated terrain.

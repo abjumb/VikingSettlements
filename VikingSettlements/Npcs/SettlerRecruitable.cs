@@ -42,6 +42,7 @@ namespace VikingSettlements.Npcs
         private ZNetView _nview;
         private Humanoid _character;
         private MonsterAI _ai;
+        private Party.PartyMember _member;
         private float _baseAlertRange = -1f;
 
         private void Awake()
@@ -49,6 +50,7 @@ namespace VikingSettlements.Npcs
             _nview = GetComponent<ZNetView>();
             _character = GetComponent<Humanoid>();
             _ai = GetComponent<MonsterAI>();
+            _member = GetComponent<Party.PartyMember>();
         }
 
         private void OnEnable()
@@ -79,6 +81,10 @@ namespace VikingSettlements.Npcs
 
         internal Vector3 Home => _nview.GetZDO().GetVec3(HomeKey, transform.position);
 
+        internal long RecruiterId => _nview != null && _nview.IsValid()
+            ? _nview.GetZDO().GetLong(OwnerKey)
+            : 0L;
+
         internal bool IsHungry => _nview != null && _nview.IsValid()
             && _nview.GetZDO().GetBool(SettlerWork.HungryKey);
 
@@ -100,10 +106,14 @@ namespace VikingSettlements.Npcs
 
             if (state == SettlerState.Following && _ai.GetFollowTarget() == null)
             {
-                var recruiter = FindRecruiter();
-                if (recruiter != null && Vector3.Distance(recruiter.transform.position, transform.position) < 60f)
+                // Members ordered to hold stay posted instead of re-following.
+                if (_member == null || _member.Stance != Party.PartyStance.Hold)
                 {
-                    _ai.SetFollowTarget(recruiter.gameObject);
+                    var recruiter = FindRecruiter();
+                    if (recruiter != null && Vector3.Distance(recruiter.transform.position, transform.position) < 60f)
+                    {
+                        _ai.SetFollowTarget(recruiter.gameObject);
+                    }
                 }
             }
             else if (state != SettlerState.Following && _ai.GetFollowTarget() != null)
@@ -203,7 +213,17 @@ namespace VikingSettlements.Npcs
                     }
                     break;
                 case SettlerState.Following:
-                    text = $"{name} ($vs_following)\n[<color=yellow><b>$KEY_Use</b></color>] $vs_assign\n[<color=yellow><b>$KEY_AltPlace + $KEY_Use</b></color>] $vs_dismiss";
+                    if (!_nview.GetZDO().GetBool(Party.PartySystem.PartyKey))
+                    {
+                        text = $"{name} ($vs_following)\n[<color=yellow><b>$KEY_Use</b></color>] $vs_assign\n[<color=yellow><b>$KEY_AltPlace + $KEY_Use</b></color>] $vs_dismiss";
+                        break;
+                    }
+                    var stance = _member != null ? _member.Stance : Party.PartyStance.Follow;
+                    var nearBanner = PlayerSettlement.FindNearest(transform.position, ModConfig.SettlementRadius.Value) != null;
+                    var action = nearBanner
+                        ? "$vs_assign"
+                        : (stance == Party.PartyStance.Hold ? "$vs_party_followcmd" : "$vs_party_waitcmd");
+                    text = $"{name} ($vs_party_member — {Party.PartySystem.StanceToken(stance)})\n[<color=yellow><b>$KEY_Use</b></color>] {action}\n[<color=yellow><b>$KEY_AltPlace + $KEY_Use</b></color>] $vs_dismiss";
                     break;
                 default:
                     var hungry = IsHungry ? " — $vs_hungry" : "";
@@ -232,7 +252,19 @@ namespace VikingSettlements.Npcs
                 case SettlerState.Wild:
                     return alt ? Donate(player) : Recruit(player);
                 case SettlerState.Following:
-                    return alt ? Dismiss(player) : Assign(player);
+                    if (alt)
+                    {
+                        return Dismiss(player);
+                    }
+                    // Near a banner E settles them in; in the field it toggles
+                    // a party member between waiting here and following.
+                    if (_member != null
+                        && _nview.GetZDO().GetBool(Party.PartySystem.PartyKey)
+                        && PlayerSettlement.FindNearest(transform.position, ModConfig.SettlementRadius.Value) == null)
+                    {
+                        return ToggleWait(player);
+                    }
+                    return Assign(player);
                 default:
                     return alt ? Unassign(player) : CycleJob(player);
             }
@@ -251,6 +283,13 @@ namespace VikingSettlements.Npcs
 
         private bool Recruit(Player player)
         {
+            if (player == Player.m_localPlayer && !Party.PartySystem.HasRoom())
+            {
+                player.Message(MessageHud.MessageType.Center,
+                    Localization.instance.Localize("$vs_party_full"));
+                return true;
+            }
+
             var heart = ModConfig.ReputationEnabled.Value
                 ? VillageHeart.FindNearest(transform.position)
                 : null;
@@ -285,6 +324,10 @@ namespace VikingSettlements.Npcs
             if (_ai != null)
             {
                 _ai.SetFollowTarget(player.gameObject);
+            }
+            if (_member != null && player == Player.m_localPlayer)
+            {
+                Party.PartySystem.AddMember(player, _member);
             }
             player.Message(MessageHud.MessageType.Center,
                 Localization.instance.Localize($"{GetHoverName()} $vs_joined"));
@@ -323,6 +366,11 @@ namespace VikingSettlements.Npcs
 
         private bool Dismiss(Player player)
         {
+            if (_member != null)
+            {
+                Party.PartySystem.RemoveMember(_member.Id);
+                _member.ClearMember();
+            }
             State = SettlerState.Wild;
             _nview.GetZDO().Set(OwnerKey, 0L);
             if (_ai != null)
@@ -349,6 +397,11 @@ namespace VikingSettlements.Npcs
                 return true;
             }
 
+            if (_member != null)
+            {
+                Party.PartySystem.RemoveMember(_member.Id);
+                _member.ClearMember();
+            }
             State = SettlerState.Assigned;
             Job = SettlerJob.Villager;
             _nview.GetZDO().Set(HomeKey, settlement.transform.position);
@@ -364,6 +417,12 @@ namespace VikingSettlements.Npcs
 
         private bool Unassign(Player player)
         {
+            if (player == Player.m_localPlayer && !Party.PartySystem.HasRoom())
+            {
+                player.Message(MessageHud.MessageType.Center,
+                    Localization.instance.Localize("$vs_party_full"));
+                return true;
+            }
             State = SettlerState.Following;
             Job = SettlerJob.Villager;
             _nview.GetZDO().Set(OwnerKey, player.GetPlayerID());
@@ -371,8 +430,26 @@ namespace VikingSettlements.Npcs
             {
                 _ai.SetFollowTarget(player.gameObject);
             }
+            if (_member != null && player == Player.m_localPlayer)
+            {
+                Party.PartySystem.AddMember(player, _member);
+            }
             player.Message(MessageHud.MessageType.TopLeft,
                 Localization.instance.Localize($"{GetHoverName()} $vs_following"));
+            return true;
+        }
+
+        // E on a party member away from any banner: post them here / bring
+        // them along. The field half of the party command set.
+        private bool ToggleWait(Player player)
+        {
+            var next = _member.Stance == Party.PartyStance.Hold
+                ? Party.PartyStance.Follow
+                : Party.PartyStance.Hold;
+            _member.SetStance(next, player);
+            player.Message(MessageHud.MessageType.TopLeft,
+                Localization.instance.Localize($"{GetHoverName()} "
+                    + (next == Party.PartyStance.Hold ? "$vs_party_waits" : "$vs_party_comes")));
             return true;
         }
 

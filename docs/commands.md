@@ -25,8 +25,10 @@ dedicated server it only works if you're in `adminlist.txt`. With it enabled,
 |---|---|---|
 | `vs_find [village\|outpost\|steading\|camp]` | **No** | Marks the nearest settlement or camp on your map with distance and compass direction. Works without `devcommands` — it's a legitimate player tool, like Hugin's boss hints. Finds locations anywhere in generated terrain, explored or not |
 | `vs_spawn [village\|outpost\|steading\|camp]` | Yes | Builds the chosen settlement 15 m in front of you, settlers/raiders included. The way to get settlements into already-explored terrain |
+| `vs_party` | **No** | Lists your war party: name, stance, health, distance — including members stowed for travel or waiting where you posted them |
+| `vs_party recall` | **No** | Teleports separated members (after a crash, or posted and forgotten) to your side. Works in singleplayer and on the host; on a dedicated-server client it can only reach members in loaded areas |
 
-Both default to `village` when no argument is given.
+`vs_find` and `vs_spawn` default to `village` when no argument is given.
 
 ## The mod's spawnable prefabs
 

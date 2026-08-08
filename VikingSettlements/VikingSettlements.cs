@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Reflection;
 using BepInEx;
+using HarmonyLib;
 using Jotunn.Entities;
 using Jotunn.Managers;
 using Jotunn.Utils;
@@ -13,19 +15,24 @@ namespace VikingSettlements
     {
         public const string PluginGUID = "com.abjumb.vikingsettlements";
         public const string PluginName = "VikingSettlements";
-        public const string PluginVersion = "1.7.0";
+        public const string PluginVersion = "1.8.0";
 
         public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
+
+        private Harmony _harmony;
 
         private void Awake()
         {
             ModConfig.Init(Config);
             AddLocalizations();
+            _harmony = new Harmony(PluginGUID);
+            _harmony.PatchAll(Assembly.GetExecutingAssembly());
 
             PrefabManager.OnVanillaPrefabsAvailable += CreatePrefabs;
             ZoneManager.OnVanillaLocationsAvailable += RegisterLocations;
             CommandManager.Instance.AddConsoleCommand(new Commands.SpawnSettlementCommand());
             CommandManager.Instance.AddConsoleCommand(new Commands.FindSettlementCommand());
+            CommandManager.Instance.AddConsoleCommand(new Commands.PartyCommand());
 
             Jotunn.Logger.LogInfo($"{PluginName} v{PluginVersion} loaded - settlements appear in newly generated world areas");
         }
@@ -47,6 +54,7 @@ namespace VikingSettlements
             // The random event system is recreated per game session; keep the
             // bandit raid registered in it.
             Raids.RaidEvents.EnsureRegistered();
+            Party.PartySystem.OnUpdate();
         }
 
         private void AddLocalizations()
@@ -105,6 +113,24 @@ namespace VikingSettlements
                 { "vs_camp_totem", "Clanless War Totem" },
                 { "vs_camp_totem_hint", "Destroy it to weaken the clanless raids" },
                 { "vs_camp_cleared", "A clanless camp is broken! Their raids weaken" },
+                { "vs_party_member", "Party" },
+                { "vs_party_full", "Your party is full" },
+                { "vs_party_waitcmd", "Wait here" },
+                { "vs_party_followcmd", "With me" },
+                { "vs_party_waits", "waits here" },
+                { "vs_party_comes", "follows you" },
+                { "vs_party_stance_follow", "Following" },
+                { "vs_party_stance_hold", "Holding" },
+                { "vs_party_stance_fallback", "Falling back" },
+                { "vs_party_cmd_follow", "Party: with me!" },
+                { "vs_party_cmd_hold", "Party: hold here!" },
+                { "vs_party_cmd_fallback", "Party: fall back!" },
+                { "vs_party_wounded", "is wounded!" },
+                { "vs_party_grave", "is gravely wounded!" },
+                { "vs_party_retreats", "is gravely wounded and retreats to you!" },
+                { "vs_party_fallen", "has fallen" },
+                { "vs_party_aboard", "Your party travels with you" },
+                { "vs_party_ashore", "Your party regroups around you" },
             });
         }
     }
