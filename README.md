@@ -170,6 +170,22 @@ wild settlements:
    **Press `T` while looking at any settler to talk to them**: a panel shows
    their health, hunger and next mealtime, and a live ✓/✗ checklist of what
    their job still needs before they'll work.
+
+   **Builders take construction orders** through that same talk menu: stand
+   where the new building should go, talk to a builder, and pick a blueprint
+   — *cabin* (40 wood), *watchtower* (30 wood) or *longhouse* (100 wood,
+   10 stone), the same wooden buildings wild meadows villages are made of.
+   A construction site is marked out on the spot; builders carry materials
+   into it each work tick from the **Builders' Supply Chest** (hammer →
+   Misc, 10 wood) and raise the finished building when the cost is paid.
+   You're warned when supplies run dry — and lumberjacks and miners
+   automatically redirect their haul into the supply chest while a project
+   needs it. `Shift+E` on the site cancels it.
+
+   **Housing:** press `T` on any door inside the settlement to pick who
+   lives there (blueprint cabins and longhouses come with doors and beds).
+   Settlers with a home work at full speed; homeless settlers work at half
+   speed and complain about it when you talk to them.
 4. **Sustain** — settlers eat one food item from your chests roughly once
    per in-game day, cheapest food first. A settler that finds nothing goes
    hungry and stops working until its next meal. Keep the chests stocked and
@@ -255,6 +271,7 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Economy / GrowthChancePerDay | 0.35 | Nightly chance of a newcomer when conditions are met |
 | Economy / GrowthFoodCost | 3 | Food consumed when a newcomer arrives |
 | Economy / RequireWorkstations | true | Blacksmith needs a forge, builder a workbench, honey a beehive |
+| Economy / HomesMatter | true | Settlers without an assigned home (talk key on a door) work at half speed |
 | Veterancy / VeterancyEnabled | true | Settlers earn XP and star levels from service and battles |
 | Veterancy / XpPerStar | 20 | XP for the first star; second star costs three times as much |
 | Reputation / ReputationEnabled | true | Wild villages track standing; scales recruit costs |

@@ -43,6 +43,8 @@ Usable with vanilla `spawn <prefab> [count] [stars]` (cheat):
 | `VS_CampTotem` | A destructible war totem — smashing it counts as clearing a camp |
 | `VS_SettlementBanner` | The settlement banner piece (normally built with the hammer) |
 | `VS_VillageHeart` | The invisible reputation anchor — spawn one at the center of a pre-1.7 village to enable standing there |
+| `VS_BuildChest` | The Builders' Supply Chest piece (normally built with the hammer) |
+| `VS_BuildSite` | A bare construction site marker — has no blueprint assigned, so prefer ordering projects through a builder's talk menu |
 | `VS_Flatten` | ⚠ A one-shot terrain op: instantly levels a 13 m radius and paints it dirt **at your feet, permanently**. Handy for prepping a build site, but there is no undo |
 
 ## Testing each system with vanilla commands

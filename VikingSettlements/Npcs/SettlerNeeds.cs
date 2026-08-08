@@ -34,6 +34,15 @@ namespace VikingSettlements.Npcs
                     Met = SettlerWork.CountFoodAround(home) > 0,
                 });
             }
+            if (ModConfig.HomesMatter.Value)
+            {
+                var housed = SettlerHousing.HasHome(settler);
+                lines.Add(new Line
+                {
+                    Token = housed ? "$vs_talk_home" : "$vs_talk_homeless",
+                    Met = housed,
+                });
+            }
 
             switch (settler.Job)
             {
@@ -60,11 +69,23 @@ namespace VikingSettlements.Npcs
                             Met = SettlerWork.HasStationAround(home, "$piece_workbench"),
                         });
                     }
-                    lines.Add(new Line
+                    var site = Settlements.ConstructionSite.FindNear(home);
+                    if (site != null)
                     {
-                        Token = "$vs_need_damage",
-                        Met = SettlerWork.CountDamagedAround(home) > 0,
-                    });
+                        lines.Add(new Line
+                        {
+                            Token = "$vs_need_supplies",
+                            Met = site.SuppliesAvailable(),
+                        });
+                    }
+                    else
+                    {
+                        lines.Add(new Line
+                        {
+                            Token = "$vs_need_damage",
+                            Met = SettlerWork.CountDamagedAround(home) > 0,
+                        });
+                    }
                     break;
                 case SettlerJob.Blacksmith:
                     if (gated)
