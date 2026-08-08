@@ -27,6 +27,8 @@ JOBS = [
     ("Miner", None, ["2–4 stone per tick; 15% chance of", "a copper or tin ore."]),
     ("Hunter", None, ["1–2 raw meat per tick; 40% deer hide,", "20% chance of feathers."]),
     ("Brewer", "fermenter", ["2 honey → minor healing mead,", "or 2 barley → barley wine."]),
+    ("Courier", "2nd settlement", ["Hauls up to 8 surplus goods to another", "settlement on foot; can be ambushed."]),
+    ("Herder", "tamed animals", ["Feeds pen animals from your chests,", "culls the herd above 4, tidies drops."]),
 ]
 
 W = 1000
@@ -53,7 +55,7 @@ parts.append(f'<rect width="{W}" height="{H}" fill="url(#bg)" stroke="{CARD_STRO
 
 parts.append(
     f'<text x="{W / 2}" y="62" text-anchor="middle" font-size="28" font-weight="bold" '
-    f'fill="{IVORY}" letter-spacing="3">THE TEN SETTLER JOBS</text>')
+    f'fill="{IVORY}" letter-spacing="3">THE TWELVE SETTLER JOBS</text>')
 parts.append(
     f'<text x="{W / 2}" y="90" text-anchor="middle" font-size="14" fill="{MIST}" '
     f'font-family="\'Segoe UI\', Arial, sans-serif">'

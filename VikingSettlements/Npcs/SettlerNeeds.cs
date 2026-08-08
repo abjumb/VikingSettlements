@@ -123,6 +123,31 @@ namespace VikingSettlements.Npcs
                 case SettlerJob.Hunter:
                     lines.Add(Storage(home, "RawMeat"));
                     break;
+                case SettlerJob.Courier:
+                    lines.Add(new Line
+                    {
+                        Token = "$vs_need_dest",
+                        Met = SettlerCourier.FindPartner(home) != null,
+                    });
+                    lines.Add(new Line
+                    {
+                        Token = "$vs_need_surplus",
+                        Met = HasSurplus(home),
+                    });
+                    break;
+                case SettlerJob.Herder:
+                    lines.Add(new Line
+                    {
+                        Token = "$vs_need_animals",
+                        Met = HasTamedAnimal(home),
+                    });
+                    lines.Add(new Line
+                    {
+                        Token = "$vs_need_feed",
+                        Met = SettlerWork.CountItemAround(home, "Carrot") > 0
+                            || SettlerWork.CountItemAround(home, "Turnip") > 0,
+                    });
+                    break;
                 case SettlerJob.Brewer:
                     if (gated)
                     {
@@ -158,6 +183,33 @@ namespace VikingSettlements.Npcs
             }
             var seconds = nextMeal - ZNet.instance.GetTimeSeconds();
             return Mathf.Max(0, Mathf.CeilToInt((float)seconds / 60f));
+        }
+
+        private static bool HasSurplus(Vector3 home)
+        {
+            foreach (var prefabName in new[] { "Wood", "Stone", "Coal", "Carrot", "Turnip", "RawMeat" })
+            {
+                if (SettlerWork.CountItemAround(home, prefabName) > 10)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static bool HasTamedAnimal(Vector3 home)
+        {
+            var radius = ModConfig.SettlementRadius.Value;
+            foreach (var tameable in Object.FindObjectsOfType<Tameable>())
+            {
+                var animal = tameable.GetComponent<Character>();
+                if (animal != null && animal.IsTamed() && !animal.IsDead()
+                    && Vector3.Distance(animal.transform.position, home) <= radius)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private static Line Storage(Vector3 home, string product)

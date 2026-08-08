@@ -23,6 +23,7 @@ namespace VikingSettlements.Npcs
         public const string FlattenCamp = "VS_FlattenCamp";
         public const string Raider = "VS_Raider";
         public const string Warlord = "VS_Warlord";
+        public const string PenBoar = "VS_PenBoar";
         public const string CampTotem = "VS_CampTotem";
         public const string Heart = "VS_VillageHeart";
 
@@ -42,6 +43,7 @@ namespace VikingSettlements.Npcs
             CreateFlatten();
             CreateRaider();
             CreateWarlord();
+            CreatePenBoar();
             CreateCampTotem();
             CreateVillageHeart();
         }
@@ -112,6 +114,8 @@ namespace VikingSettlements.Npcs
             clone.AddComponent<SettlerReputation>();
             clone.AddComponent<Party.PartyMember>();
             clone.AddComponent<SettlerEquipment>();
+            clone.AddComponent<SettlerMorale>();
+            clone.AddComponent<SettlerCourier>();
 
             PrefabManager.Instance.AddPrefab(new CustomPrefab(clone, false));
             Jotunn.Logger.LogInfo($"Created settlement NPC prefab {name}");
@@ -214,6 +218,29 @@ namespace VikingSettlements.Npcs
 
             PrefabManager.Instance.AddPrefab(new CustomPrefab(clone, false));
             Jotunn.Logger.LogInfo("Created warlord prefab VS_Warlord");
+        }
+
+        /// <summary>
+        /// A boar that spawns already tamed, for the livestock pen blueprint:
+        /// the tamed flag is baked into the prefab so instances come up tame
+        /// without any spawn-time scripting. Vanilla Tameable/Procreation
+        /// behavior does the rest (feeding, breeding, petting).
+        /// </summary>
+        private static void CreatePenBoar()
+        {
+            if (PrefabManager.Instance.GetPrefab("Boar") == null)
+            {
+                Jotunn.Logger.LogWarning("Could not create VS_PenBoar: Boar prefab not found");
+                return;
+            }
+            var clone = PrefabManager.Instance.CreateClonedPrefab(PenBoar, "Boar");
+            var character = clone.GetComponent<Character>();
+            if (character != null)
+            {
+                character.m_tamed = true;
+            }
+            PrefabManager.Instance.AddPrefab(new CustomPrefab(clone, false));
+            Jotunn.Logger.LogInfo("Created tame boar prefab VS_PenBoar");
         }
 
         /// <summary>

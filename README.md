@@ -171,6 +171,10 @@ wild settlements:
      chance of 2 feathers
    - **Brewer** — one brew per tick: 2 honey → minor healing mead or
      2 barley → barley wine (needs a fermenter)
+   - **Courier** — hauls up to 8 surplus goods to another settlement
+     within range and walks back; can be ambushed on the road
+   - **Herder** — keeps pen animals fed from your chests, culls the herd
+     above four head, and carries loose drops into storage
 
    **Press `T` while looking at any settler to talk to them**: a panel shows
    their health, hunger and next mealtime, and a live ✓/✗ checklist of what
@@ -282,6 +286,9 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Economy / GrowthFoodCost | 3 | Food consumed when a newcomer arrives |
 | Economy / RequireWorkstations | true | Blacksmith needs a forge, builder a workbench, honey a beehive |
 | Economy / HomesMatter | true | Settlers without an assigned home (talk key on a door) work at half speed |
+| Economy / MoraleEnabled | true | Settler moods affect output; rock-bottom morale makes settlers leave |
+| Trade / CourierRange | 300 | Max distance to a partner settlement for the Courier job |
+| Trade / CourierAmbushChance | 0.02 | Chance a travelling courier draws a clanless ambush |
 | Progression / TiersEnabled | true | Settlements grow Hamlet -> Village -> Town with tier caps and blueprint gates |
 | Progression / WarlordEnabled | true | Rival raids can bring a warlord after 3+ camps cleared |
 | Progression / WarlordChance | 0.25 | Chance a rival raid includes the warlord |

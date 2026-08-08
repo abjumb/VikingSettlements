@@ -73,9 +73,9 @@ the same way; world and raid settings are admin-only and sync from the server.
   a party member can only die to a monster **in a fight you are standing
   in**, after loud low-health warnings and an auto-retreat you can override.
   When one falls, they are gone.
-- **Ten jobs**: press E on an assigned settler to cycle — Villager,
+- **Twelve jobs**: press E on an assigned settler to cycle — Villager,
   Lumberjack, Farmer, Builder, Blacksmith, Guard, Cook, Miner, Hunter,
-  Brewer. Producers fill your settlement's chests, cooks and brewers refine
+  Brewer, Courier, Herder. Producers fill your settlement's chests, cooks and brewers refine
   what they find in them, builders repair damage, guards keep watch.
   The jobs chain: hunters bring raw meat, cooks turn it into the food that
   keeps the whole settlement fed. Shift+E unassigns/dismisses.
@@ -104,6 +104,15 @@ the same way; world and raid settings are admin-only and sync from the server.
 - **The clanless warlord**: clear enough camps and the clanless answer —
   rival raids can bring a scaled mini-boss. Kill him and your settlement
   earns days of guaranteed peace.
+- **Morale**: settlers have moods — housing, food, company and raids all
+  count. Cheerful settlers work extra, miserable ones drag their feet,
+  and a settler neglected for days walks out on you.
+- **Caravans**: give a settler the Courier job and they haul surplus
+  goods to your other settlement on foot — and can be ambushed by the
+  clanless on the way.
+- **Livestock pens**: a builder blueprint with two tame boars; a Herder
+  keeps them fed (vanilla breeding included), culls the herd for meat,
+  and tidies loose drops into chests.
 - **Food & growth**: settlers eat from your chests (cheapest food first) about
   once per game day; a hungry settler stops working. A well-fed settlement
   below its cap, with a spare bed, attracts newcomers on its own.
@@ -159,6 +168,9 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Economy / GrowthFoodCost | 3 | Food consumed when a newcomer arrives |
 | Economy / RequireWorkstations | true | Blacksmith needs a forge, builder a workbench, honey a beehive |
 | Economy / HomesMatter | true | Settlers without an assigned home (talk key on a door) work at half speed |
+| Economy / MoraleEnabled | true | Settler moods affect output; rock-bottom morale makes settlers leave |
+| Trade / CourierRange | 300 | Max distance to a partner settlement for the Courier job |
+| Trade / CourierAmbushChance | 0.02 | Chance a travelling courier draws a clanless ambush |
 | Progression / TiersEnabled | true | Settlements grow Hamlet -> Village -> Town with tier caps and blueprint gates |
 | Progression / WarlordEnabled | true | Rival raids can bring a warlord after 3+ camps cleared |
 | Progression / WarlordChance | 0.25 | Chance a rival raid includes the warlord |

@@ -41,6 +41,9 @@ namespace VikingSettlements
         public static ConfigEntry<KeyboardShortcut> PartyFallbackKey;
         public static ConfigEntry<KeyboardShortcut> TalkHotkey;
         public static ConfigEntry<bool> HomesMatter;
+        public static ConfigEntry<bool> MoraleEnabled;
+        public static ConfigEntry<float> CourierRange;
+        public static ConfigEntry<float> CourierAmbushChance;
         public static ConfigEntry<bool> TiersEnabled;
         public static ConfigEntry<bool> WarlordEnabled;
         public static ConfigEntry<float> WarlordChance;
@@ -275,6 +278,27 @@ namespace VikingSettlements
                     "Settlers without an assigned home work at half speed. Assign homes " +
                     "by pressing the talk key on a door inside the settlement.",
                     null,
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            MoraleEnabled = config.Bind("Economy", "MoraleEnabled", true,
+                new ConfigDescription(
+                    "Settlers track morale from housing, food, company and raids. " +
+                    "Cheerful settlers produce extra, miserable ones slow down, and a " +
+                    "settler at rock bottom leaves the settlement.",
+                    null,
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            CourierRange = config.Bind("Trade", "CourierRange", 300f,
+                new ConfigDescription(
+                    "Maximum distance in meters to a partner settlement for the Courier job.",
+                    new AcceptableValueRange<float>(50f, 2000f),
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            CourierAmbushChance = config.Bind("Trade", "CourierAmbushChance", 0.02f,
+                new ConfigDescription(
+                    "Chance every few seconds that a courier on the open road draws a " +
+                    "clanless ambush. 0 disables ambushes.",
+                    new AcceptableValueRange<float>(0f, 1f),
                     new ConfigurationManagerAttributes { IsAdminOnly = true }));
 
             TiersEnabled = config.Bind("Progression", "TiersEnabled", true,

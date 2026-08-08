@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="734" viewBox="0 0 1000 734" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="842" viewBox="0 0 1000 842" font-family="Georgia, 'Times New Roman', serif">
 <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1E3A34"/><stop offset="1" stop-color="#122019"/></linearGradient><linearGradient id="badge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5C4227"/><stop offset="1" stop-color="#402C15"/></linearGradient></defs>
-<rect width="1000" height="734" fill="url(#bg)" stroke="#2F4F47"/>
-<text x="500.0" y="62" text-anchor="middle" font-size="28" font-weight="bold" fill="#F4F2E6" letter-spacing="3">THE TEN SETTLER JOBS</text>
+<rect width="1000" height="842" fill="url(#bg)" stroke="#2F4F47"/>
+<text x="500.0" y="62" text-anchor="middle" font-size="28" font-weight="bold" fill="#F4F2E6" letter-spacing="3">THE TWELVE SETTLER JOBS</text>
 <text x="500.0" y="90" text-anchor="middle" font-size="14" fill="#93ACA4" font-family="'Segoe UI', Arial, sans-serif">What each job does every work tick, and the workstation it needs first</text>
 <rect x="60" y="128" width="434" height="96" rx="8" fill="#21403A" stroke="#2F4F47"/>
 <rect x="78" y="146" width="40" height="40" rx="6" fill="url(#badge)" stroke="#120B05"/>
@@ -73,6 +73,22 @@
 <text x="664" y="593.5" font-size="11.5" fill="#B5C65B" font-family="'Segoe UI', Arial, sans-serif">needs fermenter</text>
 <text x="578" y="616" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">2 honey → minor healing mead,</text>
 <text x="578" y="635" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">or 2 barley → barley wine.</text>
-<text x="500.0" y="688" text-anchor="middle" font-size="12" fill="#93ACA4" font-family="'Segoe UI', Arial, sans-serif">Producers need a chest with room inside the settlement radius (32 m) — smelting, cooking and brewing need their input and space for the output in the same chest.</text>
-<text x="500.0" y="708" text-anchor="middle" font-size="12" fill="#93ACA4" font-family="'Segoe UI', Arial, sans-serif">Settlers eat one food item from your chests about once per game day; hungry settlers stop working, homeless ones work at half speed. Press T on a settler to see what they need.</text>
+<rect x="60" y="668" width="434" height="96" rx="8" fill="#21403A" stroke="#2F4F47"/>
+<rect x="78" y="686" width="40" height="40" rx="6" fill="url(#badge)" stroke="#120B05"/>
+<text x="98" y="712" text-anchor="middle" font-size="16" font-weight="bold" fill="#F5CD82">Co</text>
+<text x="132" y="702" font-size="17" font-weight="bold" fill="#F2DC96" letter-spacing="1">Courier</text>
+<rect x="221" y="688" width="139" height="19" rx="4" fill="none" stroke="rgba(157,175,58,.55)"/>
+<text x="229" y="701.5" font-size="11.5" fill="#B5C65B" font-family="'Segoe UI', Arial, sans-serif">needs 2nd settlement</text>
+<text x="132" y="724" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">Hauls up to 8 surplus goods to another</text>
+<text x="132" y="743" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">settlement on foot; can be ambushed.</text>
+<rect x="506" y="668" width="434" height="96" rx="8" fill="#21403A" stroke="#2F4F47"/>
+<rect x="524" y="686" width="40" height="40" rx="6" fill="url(#badge)" stroke="#120B05"/>
+<text x="544" y="712" text-anchor="middle" font-size="16" font-weight="bold" fill="#F5CD82">He</text>
+<text x="578" y="702" font-size="17" font-weight="bold" fill="#F2DC96" letter-spacing="1">Herder</text>
+<rect x="656" y="688" width="133" height="19" rx="4" fill="none" stroke="rgba(157,175,58,.55)"/>
+<text x="664" y="701.5" font-size="11.5" fill="#B5C65B" font-family="'Segoe UI', Arial, sans-serif">needs tamed animals</text>
+<text x="578" y="724" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">Feeds pen animals from your chests,</text>
+<text x="578" y="743" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">culls the herd above 4, tidies drops.</text>
+<text x="500.0" y="796" text-anchor="middle" font-size="12" fill="#93ACA4" font-family="'Segoe UI', Arial, sans-serif">Producers need a chest with room inside the settlement radius (32 m) — smelting, cooking and brewing need their input and space for the output in the same chest.</text>
+<text x="500.0" y="816" text-anchor="middle" font-size="12" fill="#93ACA4" font-family="'Segoe UI', Arial, sans-serif">Settlers eat one food item from your chests about once per game day; hungry settlers stop working, homeless ones work at half speed. Press T on a settler to see what they need.</text>
 </svg>

@@ -15,7 +15,7 @@ namespace VikingSettlements
     {
         public const string PluginGUID = "com.abjumb.vikingsettlements";
         public const string PluginName = "VikingSettlements";
-        public const string PluginVersion = "1.9.0";
+        public const string PluginVersion = "1.10.0";
 
         public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
@@ -210,6 +210,20 @@ namespace VikingSettlements
                 { "vs_slot_helmet", "Helmet" },
                 { "vs_slot_chest", "Chest" },
                 { "vs_slot_legs", "Legs" },
+                { "vs_job_courier", "Courier" },
+                { "vs_job_herder", "Herder" },
+                { "vs_bp_pen", "Livestock Pen" },
+                { "vs_talk_mood", "Mood" },
+                { "vs_mood_cheerful", "Cheerful — working extra hard" },
+                { "vs_mood_content", "Content" },
+                { "vs_mood_unhappy", "Unhappy" },
+                { "vs_mood_miserable", "Miserable — barely working" },
+                { "vs_mood_left", "has had enough and left the settlement!" },
+                { "vs_need_dest", "Another settlement within courier range" },
+                { "vs_need_surplus", "Surplus goods to haul (more than 10 of something)" },
+                { "vs_need_animals", "Tamed animals in the settlement" },
+                { "vs_need_feed", "Carrots or turnips in a chest, for feed" },
+                { "vs_courier_ambush", "A courier is ambushed on the road!" },
             });
         }
     }
