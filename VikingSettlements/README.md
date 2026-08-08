@@ -165,6 +165,13 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 - Members recover health out of combat, so losses are a stake inside the
   fight rather than an attrition tax between fights. Settler names now
   persist in the save (previously they were derived from the network id).
+- Fixed villages spawning half-collapsed: settlement buildings are now
+  built from hardened piece variants (VS_loc_*) with structural-integrity
+  and rain wear disabled, so the support calculation racing the terrain
+  flatten at spawn can no longer tear down towers, roofs and walls.
+  Existing already-collapsed villages are not retroactively rebuilt; newly
+  generated (or vs_spawn-ed) ones spawn intact. Raids can still damage the
+  buildings and builders still repair them.
 
 ### 1.7.0
 
