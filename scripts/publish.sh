@@ -60,6 +60,8 @@ if [ "$target" = "Release" ]; then
     mkdir -p "$packagePath/plugins"
     cp "$targetPath/$targetAssembly" "$packagePath/plugins/"
     cp "$projectPath/README.md" "$packagePath/"
+    # Thunderstore renders CHANGELOG.md as its own tab on the package page.
+    [ -e "$projectPath/CHANGELOG.md" ] && cp "$projectPath/CHANGELOG.md" "$packagePath/"
     # Ship the licence alongside the binary.
     [ -e "$projectPath/../LICENSE" ] && cp "$projectPath/../LICENSE" "$packagePath/"
 
