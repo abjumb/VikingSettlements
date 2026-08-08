@@ -11,6 +11,12 @@
 - Fixed the settler talk panel rendering its text half outside the
   panel, and two lines being cut off. The "who lives here?" door panel
   had the same alignment bug.
+- New look, from the mod's design system: the package icon is now the
+  hand-made VS shield, the settlement management panel was redesigned
+  (population bar, level badges, rank stars, job stepper wells and a
+  working/hungry status column), and the panels share one consistent
+  palette. The README gained the pixel-art banner and a ten-jobs
+  reference graphic.
 
 ### 1.8.0
 

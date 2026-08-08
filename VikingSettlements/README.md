@@ -1,5 +1,7 @@
 # VikingSettlements
 
+![VikingSettlements — a pixel-art village of moss-roofed cabins at the forest's edge](https://raw.githubusercontent.com/abjumb/VikingSettlements/master/docs/brand/banner-800x296.png)
+
 Vikings have finally learned to build homes of their own. This mod adds
 **inhabited NPC settlements** to Valheim's world generation:
 

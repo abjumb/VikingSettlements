@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="734" viewBox="0 0 1000 734" font-family="Georgia, 'Times New Roman', serif">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1E3A34"/><stop offset="1" stop-color="#122019"/></linearGradient><linearGradient id="badge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5C4227"/><stop offset="1" stop-color="#402C15"/></linearGradient></defs>
+<rect width="1000" height="734" fill="url(#bg)" stroke="#2F4F47"/>
+<text x="500.0" y="62" text-anchor="middle" font-size="28" font-weight="bold" fill="#F4F2E6" letter-spacing="3">THE TEN SETTLER JOBS</text>
+<text x="500.0" y="90" text-anchor="middle" font-size="14" fill="#93ACA4" font-family="'Segoe UI', Arial, sans-serif">What each job does every work tick, and the workstation it needs first</text>
+<rect x="60" y="128" width="434" height="96" rx="8" fill="#21403A" stroke="#2F4F47"/>
+<rect x="78" y="146" width="40" height="40" rx="6" fill="url(#badge)" stroke="#120B05"/>
+<text x="98" y="172" text-anchor="middle" font-size="16" font-weight="bold" fill="#F5CD82">Vi</text>
+<text x="132" y="162" font-size="17" font-weight="bold" fill="#F2DC96" letter-spacing="1">Villager</text>
+<text x="132" y="184" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">The default job — lives in the settlement</text>
+<text x="132" y="203" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">and fights in its defense.</text>
+<rect x="506" y="128" width="434" height="96" rx="8" fill="#21403A" stroke="#2F4F47"/>
+<rect x="524" y="146" width="40" height="40" rx="6" fill="url(#badge)" stroke="#120B05"/>
+<text x="544" y="172" text-anchor="middle" font-size="16" font-weight="bold" fill="#F5CD82">Lu</text>
+<text x="578" y="162" font-size="17" font-weight="bold" fill="#F2DC96" letter-spacing="1">Lumberjack</text>
+<text x="578" y="184" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">2–4 wood per work tick into the</text>
+<text x="578" y="203" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">nearest chest with room.</text>
+<rect x="60" y="236" width="434" height="96" rx="8" fill="#21403A" stroke="#2F4F47"/>
+<rect x="78" y="254" width="40" height="40" rx="6" fill="url(#badge)" stroke="#120B05"/>
+<text x="98" y="280" text-anchor="middle" font-size="16" font-weight="bold" fill="#F5CD82">Fa</text>
+<text x="132" y="270" font-size="17" font-weight="bold" fill="#F2DC96" letter-spacing="1">Farmer</text>
+<rect x="210" y="256" width="157" height="19" rx="4" fill="none" stroke="rgba(157,175,58,.55)"/>
+<text x="218" y="269.5" font-size="11.5" fill="#B5C65B" font-family="'Segoe UI', Arial, sans-serif">needs beehive for honey</text>
+<text x="132" y="292" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">1–2 carrots or turnips per tick;</text>
+<text x="132" y="311" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">20% chance of a honey.</text>
+<rect x="506" y="236" width="434" height="96" rx="8" fill="#21403A" stroke="#2F4F47"/>
+<rect x="524" y="254" width="40" height="40" rx="6" fill="url(#badge)" stroke="#120B05"/>
+<text x="544" y="280" text-anchor="middle" font-size="16" font-weight="bold" fill="#F5CD82">Bu</text>
+<text x="578" y="270" font-size="17" font-weight="bold" fill="#F2DC96" letter-spacing="1">Builder</text>
+<rect x="667" y="256" width="108" height="19" rx="4" fill="none" stroke="rgba(157,175,58,.55)"/>
+<text x="675" y="269.5" font-size="11.5" fill="#B5C65B" font-family="'Segoe UI', Arial, sans-serif">needs workbench</text>
+<text x="578" y="292" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">Builds ordered blueprints from the supply</text>
+<text x="578" y="311" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">chest; otherwise repairs up to 3 damaged pieces.</text>
+<rect x="60" y="344" width="434" height="96" rx="8" fill="#21403A" stroke="#2F4F47"/>
+<rect x="78" y="362" width="40" height="40" rx="6" fill="url(#badge)" stroke="#120B05"/>
+<text x="98" y="388" text-anchor="middle" font-size="16" font-weight="bold" fill="#F5CD82">Bl</text>
+<text x="132" y="378" font-size="17" font-weight="bold" fill="#F2DC96" letter-spacing="1">Blacksmith</text>
+<rect x="254" y="364" width="83" height="19" rx="4" fill="none" stroke="rgba(157,175,58,.55)"/>
+<text x="262" y="377.5" font-size="11.5" fill="#B5C65B" font-family="'Segoe UI', Arial, sans-serif">needs forge</text>
+<text x="132" y="400" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">One smelt per tick: copper ore, tin ore,</text>
+<text x="132" y="419" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">iron scraps — or wood into coal.</text>
+<rect x="506" y="344" width="434" height="96" rx="8" fill="#21403A" stroke="#2F4F47"/>
+<rect x="524" y="362" width="40" height="40" rx="6" fill="url(#badge)" stroke="#120B05"/>
+<text x="544" y="388" text-anchor="middle" font-size="16" font-weight="bold" fill="#F5CD82">Gu</text>
+<text x="578" y="378" font-size="17" font-weight="bold" fill="#F2DC96" letter-spacing="1">Guard</text>
+<text x="578" y="400" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">No production; 60% wider alert range,</text>
+<text x="578" y="419" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">holds position at the settlement.</text>
+<rect x="60" y="452" width="434" height="96" rx="8" fill="#21403A" stroke="#2F4F47"/>
+<rect x="78" y="470" width="40" height="40" rx="6" fill="url(#badge)" stroke="#120B05"/>
+<text x="98" y="496" text-anchor="middle" font-size="16" font-weight="bold" fill="#F5CD82">Co</text>
+<text x="132" y="486" font-size="17" font-weight="bold" fill="#F2DC96" letter-spacing="1">Cook</text>
+<rect x="188" y="472" width="145" height="19" rx="4" fill="none" stroke="rgba(157,175,58,.55)"/>
+<text x="196" y="485.5" font-size="11.5" fill="#B5C65B" font-family="'Segoe UI', Arial, sans-serif">needs cooking station</text>
+<text x="132" y="508" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">One cook per tick: raw meats and fish</text>
+<text x="132" y="527" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">into their cooked forms.</text>
+<rect x="506" y="452" width="434" height="96" rx="8" fill="#21403A" stroke="#2F4F47"/>
+<rect x="524" y="470" width="40" height="40" rx="6" fill="url(#badge)" stroke="#120B05"/>
+<text x="544" y="496" text-anchor="middle" font-size="16" font-weight="bold" fill="#F5CD82">Mi</text>
+<text x="578" y="486" font-size="17" font-weight="bold" fill="#F2DC96" letter-spacing="1">Miner</text>
+<text x="578" y="508" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">2–4 stone per tick; 15% chance of</text>
+<text x="578" y="527" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">a copper or tin ore.</text>
+<rect x="60" y="560" width="434" height="96" rx="8" fill="#21403A" stroke="#2F4F47"/>
+<rect x="78" y="578" width="40" height="40" rx="6" fill="url(#badge)" stroke="#120B05"/>
+<text x="98" y="604" text-anchor="middle" font-size="16" font-weight="bold" fill="#F5CD82">Hu</text>
+<text x="132" y="594" font-size="17" font-weight="bold" fill="#F2DC96" letter-spacing="1">Hunter</text>
+<text x="132" y="616" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">1–2 raw meat per tick; 40% deer hide,</text>
+<text x="132" y="635" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">20% chance of feathers.</text>
+<rect x="506" y="560" width="434" height="96" rx="8" fill="#21403A" stroke="#2F4F47"/>
+<rect x="524" y="578" width="40" height="40" rx="6" fill="url(#badge)" stroke="#120B05"/>
+<text x="544" y="604" text-anchor="middle" font-size="16" font-weight="bold" fill="#F5CD82">Br</text>
+<text x="578" y="594" font-size="17" font-weight="bold" fill="#F2DC96" letter-spacing="1">Brewer</text>
+<rect x="656" y="580" width="108" height="19" rx="4" fill="none" stroke="rgba(157,175,58,.55)"/>
+<text x="664" y="593.5" font-size="11.5" fill="#B5C65B" font-family="'Segoe UI', Arial, sans-serif">needs fermenter</text>
+<text x="578" y="616" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">2 honey → minor healing mead,</text>
+<text x="578" y="635" font-size="13" fill="#DAE4DC" font-family="'Segoe UI', Arial, sans-serif">or 2 barley → barley wine.</text>
+<text x="500.0" y="688" text-anchor="middle" font-size="12" fill="#93ACA4" font-family="'Segoe UI', Arial, sans-serif">Producers need a chest with room inside the settlement radius (32 m) — smelting, cooking and brewing need their input and space for the output in the same chest.</text>
+<text x="500.0" y="708" text-anchor="middle" font-size="12" fill="#93ACA4" font-family="'Segoe UI', Arial, sans-serif">Settlers eat one food item from your chests about once per game day; hungry settlers stop working, homeless ones work at half speed. Press T on a settler to see what they need.</text>
+</svg>

@@ -81,7 +81,7 @@ namespace VikingSettlements.Settlements
                 _settlement.DisplayName,
                 _panel.transform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f),
                 new Vector2(0f, -66f),
-                GUIManager.Instance.AveriaSerif, 16, Color.gray,
+                GUIManager.Instance.AveriaSerif, 16, UiPalette.SecondaryOnWood,
                 true, Color.black, 460f, 26f, false);
 
             if (settlers.Count == 0)
@@ -90,7 +90,7 @@ namespace VikingSettlements.Settlements
                     Localization.instance.Localize("$vs_nosettlers"),
                     _panel.transform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f),
                     new Vector2(0f, -(96f + RowHeight / 2f)),
-                    GUIManager.Instance.AveriaSerif, 17, Color.gray,
+                    GUIManager.Instance.AveriaSerif, 17, UiPalette.SecondaryOnWood,
                     true, Color.black, 460f, 28f, false);
             }
             for (var i = 0; i < rows; i++)
