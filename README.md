@@ -3,7 +3,7 @@
        alt="VikingSettlements — a pixel-art village of moss-roofed cabins at the forest's edge">
 </p>
 
-# VikingSettlements
+# Viking Settlements
 
 A [Jötunn](https://github.com/Valheim-Modding/Jotunn)-based Valheim mod that
 adds **inhabited NPC settlements** to world generation, lets you **recruit
