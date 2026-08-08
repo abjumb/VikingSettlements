@@ -92,7 +92,7 @@ A settlement holds **10 settlers** by default.
 
 Press `E` on a settled villager again to cycle their job (or use the banner's
 management panel to do it from one screen). Keep pressing to scroll through
-all ten:
+all twelve:
 
 | Job | Every work tick (60 s) | Needs before they start |
 |---|---|---|
@@ -106,6 +106,8 @@ all ten:
 | **Miner** | **2–4 stone**; **15% chance** of 1 copper or tin ore | A chest with space |
 | **Hunter** | **1–2 raw meat**; **40% chance** of a deer hide; **20% chance** of 2 feathers | A chest with space |
 | **Brewer** | One brew: **2 honey → minor healing mead**, else **2 barley → barley wine** | A **fermenter** in the radius; the ingredients **and room in the same chest** |
+| **Courier** | Hauls up to **8 surplus goods** to another settlement and walks back | A second settlement within **300 m**; more than 10 of something in your chests |
+| **Herder** | Feeds pen animals, **culls the herd above 4**, tidies loose drops into chests | Tamed animals in the radius; carrots/turnips for feed |
 
 They work roughly **once a minute**, whether or not you're watching, as long as
 the area is loaded — and only while **fed** (see Step 7). Note the smelting,
@@ -212,7 +214,7 @@ Settle a follower ............. E          (inside banner radius)
 Post / bring a follower ....... E          (away from any banner)
 Party: follow / hold all ...... G
 Party: fall back! ............. H          (they disengage and run to you)
-Change a settler's job ........ E          (cycles all ten)
+Change a settler's job ........ E          (cycles all twelve)
 Unassign a settler ............ Shift + E
 Talk to a settler ............. T          (health, hunger, job needs)
 Order a building .............. T on a builder, stand where it goes

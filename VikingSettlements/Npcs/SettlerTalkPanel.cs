@@ -375,6 +375,20 @@ namespace VikingSettlements.Npcs
                 lines.Add(Line($"$vs_talk_health: {percent}%", percent < 50 ? bad : Color.white));
             }
 
+            // Mood, for assigned settlers with morale enabled.
+            if (_settler.State == SettlerState.Assigned && ModConfig.MoraleEnabled.Value)
+            {
+                var morale = _settler.GetComponent<SettlerMorale>();
+                if (morale != null)
+                {
+                    var value = morale.Morale;
+                    var color = value >= SettlerMorale.CheerfulAt ? ok
+                        : value < SettlerMorale.MiserableBelow ? bad
+                        : Color.white;
+                    lines.Add(Line($"$vs_talk_mood: {SettlerMorale.MoodToken(value)}", color));
+                }
+            }
+
             // Hunger, for settlers that are somebody's dependent.
             if (_settler.State == SettlerState.Assigned && ModConfig.FoodUpkeep.Value)
             {

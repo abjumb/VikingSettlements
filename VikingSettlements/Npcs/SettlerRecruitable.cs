@@ -23,6 +23,8 @@ namespace VikingSettlements.Npcs
         Miner = 7,
         Hunter = 8,
         Brewer = 9,
+        Courier = 10,
+        Herder = 11,
     }
 
     /// <summary>
@@ -455,7 +457,7 @@ namespace VikingSettlements.Npcs
             return true;
         }
 
-        internal const int JobCount = 10;
+        internal const int JobCount = 12;
 
         /// <summary>Assigns a job directly (used by interact cycling and the management panel).</summary>
         internal void SetJob(SettlerJob job)
@@ -465,6 +467,15 @@ namespace VikingSettlements.Npcs
                 return;
             }
             _nview.ClaimOwnership();
+            // A courier pulled off the road drops what they were hauling.
+            if (Job == SettlerJob.Courier && job != SettlerJob.Courier)
+            {
+                var courier = GetComponent<SettlerCourier>();
+                if (courier != null && courier.HasCargo)
+                {
+                    courier.DropCargo();
+                }
+            }
             Job = job;
             if (_ai != null)
             {
@@ -496,6 +507,8 @@ namespace VikingSettlements.Npcs
                 case SettlerJob.Miner: return "$vs_job_miner";
                 case SettlerJob.Hunter: return "$vs_job_hunter";
                 case SettlerJob.Brewer: return "$vs_job_brewer";
+                case SettlerJob.Courier: return "$vs_job_courier";
+                case SettlerJob.Herder: return "$vs_job_herder";
                 default: return "$vs_job_villager";
             }
         }

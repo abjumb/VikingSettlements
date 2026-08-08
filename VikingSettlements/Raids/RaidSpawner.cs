@@ -86,6 +86,19 @@ namespace VikingSettlements.Raids
                 }
             }
 
+            // Raids leave a mark on the people, not just the walls.
+            if (ModConfig.MoraleEnabled.Value)
+            {
+                foreach (var settler in settlement.GetSettlers())
+                {
+                    var morale = settler.GetComponent<Npcs.SettlerMorale>();
+                    if (morale != null)
+                    {
+                        morale.AddMorale(-20);
+                    }
+                }
+            }
+
             // The counterweight to clearing camps: the clanless eventually
             // send a warlord. Kill him and the settlement earns real peace.
             if (ModConfig.WarlordEnabled.Value

@@ -48,6 +48,15 @@ namespace VikingSettlements.Settlements
             },
             new Blueprint
             {
+                Id = "pen",
+                NameToken = "$vs_bp_pen",
+                WoodCost = 30,
+                StoneCost = 0,
+                MinTier = 2,
+                Layout = Layouts.BlueprintPen,
+            },
+            new Blueprint
+            {
                 Id = "greathall",
                 NameToken = "$vs_bp_greathall",
                 WoodCost = 60,

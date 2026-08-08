@@ -224,6 +224,27 @@ namespace VikingSettlements.World
 
         public static SettlementLayout BlueprintGreatHall() => Hall("stone_wall_2x1", true, "piece_chest_wood");
 
+        /// <summary>A fenced 6x4m livestock pen with two tame boars. Gate at +Z.</summary>
+        public static SettlementLayout BlueprintPen()
+        {
+            var l = new SettlementLayout("pen");
+            foreach (var x in new[] { -2f, 0f, 2f })
+            {
+                l.Add("wood_fence", x, 0f, -2f);
+            }
+            l.Add("wood_fence", -2f, 0f, 2f);
+            l.Add("wood_fence", 2f, 0f, 2f);
+            l.Add("wood_gate", 0f, 0f, 2f);
+            foreach (var z in new[] { -1f, 1f })
+            {
+                l.Add("wood_fence", -3f, 0f, z, 90f);
+                l.Add("wood_fence", 3f, 0f, z, 90f);
+            }
+            l.Add(SettlerPrefabs.PenBoar, -0.9f, 0f, 0f, 70f);
+            l.Add(SettlerPrefabs.PenBoar, 0.9f, 0f, -0.6f, 250f);
+            return l;
+        }
+
         public static SettlementLayout BlueprintWatchtower() => Watchtower();
 
         /// <summary>

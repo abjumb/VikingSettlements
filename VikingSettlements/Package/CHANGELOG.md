@@ -1,5 +1,27 @@
 # Changelog
 
+### 1.10.0
+
+- Settler morale: assigned settlers track a mood (shown in the talk
+  panel) adjusted daily by housing, food and company, and knocked down
+  when their settlement is raided. Cheerful settlers produce an extra
+  item per tick, miserable ones skip half their work ticks, and a
+  settler left at rock bottom for days packs up and leaves the
+  settlement - becoming a wild villager again, levels and all.
+- Courier job + caravans: with a second settlement within range
+  (default 300 m), a Courier loads up to 8 surplus goods (whatever the
+  settlement has more than 10 of) and physically walks them to the
+  partner settlement's chests, then walks home. On the open road they
+  can draw a clanless ambush - and a courier that dies drops
+  everything they carried. Journeys progress while the area is loaded.
+- Herder job + Livestock Pen: a new Village-tier blueprint raises a
+  fenced pen with two tame boars (VS_PenBoar spawns tamed). Herders
+  keep feed on the ground for the animals (carrots/turnips from your
+  chests, so vanilla breeding runs), cull the herd above four head for
+  the larder, and carry loose drops in the settlement to storage.
+- Twelve jobs total. New config: Economy/MoraleEnabled, and a Trade
+  section with CourierRange and CourierAmbushChance.
+
 ### 1.9.0
 
 - Settler equipment: open a recruited settler's talk panel and press

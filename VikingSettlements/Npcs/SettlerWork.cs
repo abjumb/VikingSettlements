@@ -82,19 +82,27 @@ namespace VikingSettlements.Npcs
             {
                 return; // no roof over their head: half the ticks are lost
             }
+            var morale = GetComponent<SettlerMorale>();
+            var moraleValue = ModConfig.MoraleEnabled.Value && morale != null ? morale.Morale : 50;
+            if (moraleValue < SettlerMorale.MiserableBelow && Random.value < 0.5f)
+            {
+                return; // the miserable drag their feet
+            }
+            // Cheerful settlers put in a little extra.
+            var bonus = moraleValue >= SettlerMorale.CheerfulAt ? 1 : 0;
 
             var gated = ModConfig.RequireWorkstations.Value;
             switch (_settler.Job)
             {
                 case SettlerJob.Lumberjack:
-                    var wood = Random.Range(2, 5);
+                    var wood = Random.Range(2, 5) + bonus;
                     if (!TrySupplyConstruction("Wood", wood))
                     {
                         Produce("Wood", wood);
                     }
                     break;
                 case SettlerJob.Farmer:
-                    Produce(Random.value < 0.5f ? "Carrot" : "Turnip", Random.Range(1, 3));
+                    Produce(Random.value < 0.5f ? "Carrot" : "Turnip", Random.Range(1, 3) + bonus);
                     if (Random.value < 0.2f && (!gated || HasBeehive()))
                     {
                         Produce("Honey", 1);
@@ -128,7 +136,7 @@ namespace VikingSettlements.Npcs
                     }
                     break;
                 case SettlerJob.Miner:
-                    var stone = Random.Range(2, 5);
+                    var stone = Random.Range(2, 5) + bonus;
                     if (!TrySupplyConstruction("Stone", stone))
                     {
                         Produce("Stone", stone);
@@ -139,7 +147,7 @@ namespace VikingSettlements.Npcs
                     }
                     break;
                 case SettlerJob.Hunter:
-                    Produce("RawMeat", Random.Range(1, 3));
+                    Produce("RawMeat", Random.Range(1, 3) + bonus);
                     if (Random.value < 0.4f)
                     {
                         Produce("DeerHide", 1);
@@ -155,7 +163,206 @@ namespace VikingSettlements.Npcs
                         Convert(BrewingRecipes);
                     }
                     break;
+                case SettlerJob.Courier:
+                    TryDepartWithCargo();
+                    break;
+                case SettlerJob.Herder:
+                    HerdPen();
+                    break;
             }
+        }
+
+        // ---- Courier departures (the journey itself runs in SettlerCourier) ----
+
+        // Goods a courier considers surplus worth hauling.
+        private static readonly string[] TradeGoods =
+        {
+            "Wood", "Stone", "Coal", "Copper", "Tin", "Bronze", "Iron",
+            "DeerHide", "LeatherScraps", "Carrot", "Turnip", "Honey", "RawMeat",
+        };
+
+        private void TryDepartWithCargo()
+        {
+            var courier = GetComponent<SettlerCourier>();
+            if (courier == null || courier.TravelState != 0 || courier.HasCargo)
+            {
+                return;
+            }
+            var partner = SettlerCourier.FindPartner(_settler.Home);
+            if (partner == null)
+            {
+                return;
+            }
+
+            // Haul the most-stocked trade good, leaving a reserve of 10 behind.
+            string bestName = null;
+            var bestCount = 0;
+            foreach (var prefabName in TradeGoods)
+            {
+                var count = CountItemAround(_settler.Home, prefabName);
+                if (count > bestCount)
+                {
+                    bestCount = count;
+                    bestName = prefabName;
+                }
+            }
+            if (bestName == null || bestCount <= 10)
+            {
+                return;
+            }
+            var haul = Mathf.Min(8, bestCount - 10);
+            if (TakeItemsAround(_settler.Home, bestName, haul) < haul)
+            {
+                return;
+            }
+            courier.Depart(partner.transform.position, bestName, haul);
+        }
+
+        // ---- Herding ----
+
+        private void HerdPen()
+        {
+            var radius = ModConfig.SettlementRadius.Value;
+            var home = _settler.Home;
+            var animals = new List<Character>();
+            foreach (var tameable in FindObjectsOfType<Tameable>())
+            {
+                var animal = tameable.GetComponent<Character>();
+                if (animal != null && animal.IsTamed() && !animal.IsDead()
+                    && Vector3.Distance(animal.transform.position, home) <= radius)
+                {
+                    animals.Add(animal);
+                }
+            }
+            if (animals.Count == 0)
+            {
+                return;
+            }
+
+            // Feed: drop one vegetable by an animal, unless feed already lies out.
+            if (!LooseFeedAround(home, radius))
+            {
+                foreach (var feed in new[] { "Carrot", "Turnip" })
+                {
+                    if (TakeItemsAround(home, feed, 1) == 1)
+                    {
+                        var item = MakeItem(feed, 1);
+                        if (item != null)
+                        {
+                            ItemDrop.DropItem(item, 1,
+                                animals[0].transform.position + Vector3.up * 0.5f,
+                                Quaternion.identity);
+                        }
+                        break;
+                    }
+                }
+            }
+
+            // Cull: past four head, one goes to the larder (vanilla drops).
+            if (animals.Count > 4)
+            {
+                animals[animals.Count - 1].SetHealth(0f);
+            }
+
+            // Collect: carry loose non-food drops in the pen area to storage.
+            var collected = 0;
+            foreach (var drop in FindObjectsOfType<ItemDrop>())
+            {
+                if (collected >= 3
+                    || drop.m_itemData == null
+                    || drop.m_itemData.m_shared.m_itemType == ItemDrop.ItemData.ItemType.Consumable
+                    || drop.m_itemData.m_shared.m_food > 0f
+                    || Vector3.Distance(drop.transform.position, home) > radius)
+                {
+                    continue;
+                }
+                var container = FindStorageAround(home,
+                    inventory => inventory.CanAddItem(drop.m_itemData));
+                if (container == null)
+                {
+                    break;
+                }
+                container.GetInventory().AddItem(drop.m_itemData.Clone());
+                var view = drop.GetComponent<ZNetView>();
+                if (view != null && view.IsValid() && ZNetScene.instance != null)
+                {
+                    view.ClaimOwnership();
+                    ZNetScene.instance.Destroy(drop.gameObject);
+                }
+                collected++;
+            }
+        }
+
+        private static bool LooseFeedAround(Vector3 center, float radius)
+        {
+            foreach (var drop in FindObjectsOfType<ItemDrop>())
+            {
+                if (drop.m_itemData != null
+                    && drop.m_itemData.m_shared.m_food > 0f
+                    && drop.m_itemData.m_shared.m_itemType == ItemDrop.ItemData.ItemType.Consumable
+                    && Vector3.Distance(drop.transform.position, center) <= radius)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>Total of the item across all settlement chests.</summary>
+        internal static int CountItemAround(Vector3 center, string prefabName)
+        {
+            var sharedName = SharedName(prefabName);
+            if (sharedName == null)
+            {
+                return 0;
+            }
+            var radius = ModConfig.SettlementRadius.Value;
+            var count = 0;
+            foreach (var container in FindObjectsOfType<Container>())
+            {
+                if (Vector3.Distance(container.transform.position, center) > radius)
+                {
+                    continue;
+                }
+                var inventory = container.GetInventory();
+                if (inventory != null)
+                {
+                    count += inventory.CountItems(sharedName);
+                }
+            }
+            return count;
+        }
+
+        /// <summary>Removes up to the amount from settlement chests; returns what was taken.</summary>
+        internal static int TakeItemsAround(Vector3 center, string prefabName, int amount)
+        {
+            var sharedName = SharedName(prefabName);
+            if (sharedName == null || amount <= 0)
+            {
+                return 0;
+            }
+            var radius = ModConfig.SettlementRadius.Value;
+            var taken = 0;
+            foreach (var container in FindObjectsOfType<Container>())
+            {
+                if (taken >= amount
+                    || Vector3.Distance(container.transform.position, center) > radius)
+                {
+                    continue;
+                }
+                var inventory = container.GetInventory();
+                if (inventory == null)
+                {
+                    continue;
+                }
+                var here = Mathf.Min(inventory.CountItems(sharedName), amount - taken);
+                if (here > 0)
+                {
+                    inventory.RemoveItem(sharedName, here);
+                    taken += here;
+                }
+            }
+            return taken;
         }
 
         // ---- Meals ----
