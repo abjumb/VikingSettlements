@@ -49,6 +49,10 @@ That's it — the page goes live at
 `https://thunderstore.io/c/valheim/p/<team>/VikingSettlements/` immediately.
 Verify the three tabs: Details (README), Changelog (CHANGELOG.md), Versions.
 
+Promo art for posts and embeds lives in `docs/brand/`: the pixel banner
+(three sizes), the VS shield logo (32–512 px), and a composed
+`promo-1200x630.png` social card.
+
 ## Updating later
 
 Every update is the same two steps: tag `vX.Y.Z` on GitHub (CI builds and

@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="docs/brand/banner-800x296.png" width="800"
+       alt="VikingSettlements — a pixel-art village of moss-roofed cabins at the forest's edge">
+</p>
+
 # VikingSettlements
 
 A [Jötunn](https://github.com/Valheim-Modding/Jotunn)-based Valheim mod that
@@ -210,6 +215,11 @@ wild settlements:
 Jobs need somewhere to put their output: place **chests inside the settlement
 radius** or lumberjacks, farmers and blacksmiths will have nothing to work
 with.
+
+<p align="center">
+  <img src="docs/jobs.svg" width="900"
+       alt="The ten settler jobs: what each one does every work tick and the workstation it needs first">
+</p>
 
 All settler state (recruiter, job, home) lives in the creature's ZDO, so it
 persists across sessions and syncs to every client.

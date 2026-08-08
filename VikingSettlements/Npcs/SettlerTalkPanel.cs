@@ -189,7 +189,7 @@ namespace VikingSettlements.Npcs
                 "“" + Localization.instance.Localize(greeting) + "”",
                 _panel.transform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f),
                 new Vector2(0f, -68f),
-                GUIManager.Instance.AveriaSerif, 16, Color.gray,
+                GUIManager.Instance.AveriaSerif, 16, Settlements.UiPalette.SecondaryOnWood,
                 true, Color.black, 500f, 26f, false);
 
             for (var i = 0; i < lines.Count; i++)
@@ -288,8 +288,8 @@ namespace VikingSettlements.Npcs
         private static List<PanelLine> ComposeLines(Character character)
         {
             var lines = new List<PanelLine>();
-            var ok = new Color(0.65f, 1f, 0.65f);
-            var bad = new Color(1f, 0.65f, 0.4f);
+            var ok = Settlements.UiPalette.NeedMet;
+            var bad = Settlements.UiPalette.Warning;
 
             // Who they are right now.
             string role;
@@ -368,13 +368,13 @@ namespace VikingSettlements.Npcs
             switch (_settler.State)
             {
                 case SettlerState.Following:
-                    lines.Add(Line("$vs_talk_party_hint", Color.gray));
+                    lines.Add(Line("$vs_talk_party_hint", Settlements.UiPalette.SecondaryOnWood));
                     break;
                 case SettlerState.Assigned when _settler.Job == SettlerJob.Villager:
-                    lines.Add(Line("$vs_talk_villager_none", Color.gray));
+                    lines.Add(Line("$vs_talk_villager_none", Settlements.UiPalette.SecondaryOnWood));
                     break;
                 case SettlerState.Assigned when _settler.Job == SettlerJob.Guard:
-                    lines.Add(Line("$vs_talk_guard_none", Color.gray));
+                    lines.Add(Line("$vs_talk_guard_none", Settlements.UiPalette.SecondaryOnWood));
                     break;
             }
             return lines;
