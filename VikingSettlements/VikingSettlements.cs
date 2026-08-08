@@ -55,6 +55,7 @@ namespace VikingSettlements
             // bandit raid registered in it.
             Raids.RaidEvents.EnsureRegistered();
             Party.PartySystem.OnUpdate();
+            Npcs.SettlerTalkPanel.OnUpdate();
         }
 
         private void AddLocalizations()
@@ -131,6 +132,32 @@ namespace VikingSettlements
                 { "vs_party_fallen", "has fallen" },
                 { "vs_party_aboard", "Your party travels with you" },
                 { "vs_party_ashore", "Your party regroups around you" },
+                { "vs_joined_hint", "They fight at your side — settle them at your banner (E) to put them to work" },
+                { "vs_talk_wild", "A free villager" },
+                { "vs_talk_party", "In your party" },
+                { "vs_talk_party_hint", "Settle them at your settlement banner to give them a job" },
+                { "vs_talk_health", "Health" },
+                { "vs_talk_fed", "Well fed" },
+                { "vs_talk_hungry", "Hungry — nothing to eat! Put food in a settlement chest" },
+                { "vs_talk_nextmeal", "next meal in" },
+                { "vs_talk_needs", "What I need" },
+                { "vs_talk_villager_none", "No duties — press E on me to assign a job" },
+                { "vs_talk_guard_none", "I keep watch. I need nothing more" },
+                { "vs_need_chest", "A chest with room in the settlement" },
+                { "vs_need_food", "Food in a settlement chest" },
+                { "vs_need_workbench", "A workbench in the settlement" },
+                { "vs_need_forge", "A forge in the settlement" },
+                { "vs_need_cookstation", "A cooking station in the settlement" },
+                { "vs_need_fermenter", "A fermenter in the settlement" },
+                { "vs_need_beehive", "A beehive, for honey" },
+                { "vs_need_ore", "Copper ore, tin ore or iron scraps in one chest (wood becomes coal)" },
+                { "vs_need_rawfood", "Raw meat or fish in one chest" },
+                { "vs_need_brewing", "2 honey or 2 barley together in one chest" },
+                { "vs_need_damage", "Damaged structures to repair" },
+                { "vs_talk_g1", "What do you need, chief?" },
+                { "vs_talk_g2", "The fire is warm tonight." },
+                { "vs_talk_g3", "Odin watches over us." },
+                { "vs_talk_g4", "Good hunting lately, eh?" },
             });
         }
     }

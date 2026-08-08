@@ -77,6 +77,10 @@ the same way; world and raid settings are admin-only and sync from the server.
   what they find in them, builders repair damage, guards keep watch.
   The jobs chain: hunters bring raw meat, cooks turn it into the food that
   keeps the whole settlement fed. Shift+E unassigns/dismisses.
+- **Talk to your settlers**: press T while looking at any settler for a
+  panel with their health, hunger and next mealtime, plus a live checklist
+  of everything their job still needs — the workstation, the ingredients,
+  the chest space — so an idle settler is never a mystery.
 - **Food & growth**: settlers eat from your chests (cheapest food first) about
   once per game day; a hungry settler stops working. A well-fed settlement
   below its cap, with a spare bed, attracts newcomers on its own.
@@ -114,6 +118,7 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Settlers / EnableTrader | true | Meadows villages include a trader |
 | Settlers / Chatter | true | Settlers greet nearby players (client-side) |
 | Settlers / ChatterIntervalSeconds | 25 | Minimum time between chatter lines |
+| Settlers / TalkHotkey | T | Talk to the settler you're looking at: health, hunger, job needs (client-side) |
 | Recruiting / RecruitCostCoins | 50 | Coins to recruit a settler |
 | Settlement / MaxSettlers | 10 | Max settlers per settlement banner |
 | Settlement / SettlementRadius | 32 | Settlement area radius in meters |
@@ -172,6 +177,12 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
   Existing already-collapsed villages are not retroactively rebuilt; newly
   generated (or vs_spawn-ed) ones spawn intact. Raids can still damage the
   buildings and builders still repair them.
+- Talk to settlers: a new hotkey (T, configurable) opens a talk panel for
+  the settler you are looking at - health, hunger and next mealtime, and
+  a live checklist of everything their job still needs (workstation,
+  ingredients, chest space) evaluated with the same checks the work loop
+  uses. Recruiting now also hints that followers must be settled at your
+  banner before they take a job.
 
 ### 1.7.0
 

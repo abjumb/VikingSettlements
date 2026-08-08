@@ -39,6 +39,7 @@ namespace VikingSettlements
         public static ConfigEntry<float> PartyRegenPerSecond;
         public static ConfigEntry<KeyboardShortcut> PartyStanceKey;
         public static ConfigEntry<KeyboardShortcut> PartyFallbackKey;
+        public static ConfigEntry<KeyboardShortcut> TalkHotkey;
 
         public static void Init(ConfigFile config)
         {
@@ -263,6 +264,12 @@ namespace VikingSettlements
                 new KeyboardShortcut(KeyCode.H),
                 "Orders the whole party to fall back: they stop fighting, run to you and " +
                 "take greatly reduced damage. Press again to resume following. Client-side.");
+
+            TalkHotkey = config.Bind("Settlers", "TalkHotkey",
+                new KeyboardShortcut(KeyCode.T),
+                "Talk to the settler you are looking at (or the nearest within 5 m): opens " +
+                "a panel with their health, hunger and everything their job still needs " +
+                "before they will work. Client-side.");
         }
     }
 }

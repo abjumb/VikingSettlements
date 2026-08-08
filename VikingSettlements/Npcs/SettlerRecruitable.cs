@@ -331,6 +331,8 @@ namespace VikingSettlements.Npcs
             }
             player.Message(MessageHud.MessageType.Center,
                 Localization.instance.Localize($"{GetHoverName()} $vs_joined"));
+            player.Message(MessageHud.MessageType.TopLeft,
+                Localization.instance.Localize("$vs_joined_hint"));
             return true;
         }
 

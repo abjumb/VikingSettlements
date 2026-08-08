@@ -146,21 +146,30 @@ wild settlements:
    from one screen. `Shift+E` (or the panel's Rename button) **names your
    settlement** with the same text dialog signs use.
 3. **Assign** — with a follower inside the banner's area, press `E` to settle
-   them there. Press `E` again to cycle their job, `Shift+E` to unassign:
-   - **Lumberjack** — periodically deposits wood into your settlement chests
-   - **Farmer** — deposits carrots/turnips; with a beehive in the settlement,
-     the occasional honey
-   - **Builder** — repairs damaged build pieces (needs a workbench in the
-     settlement)
-   - **Blacksmith** — smelts ore found in settlement chests (needs a forge;
-     copper, tin, iron scraps, wood to coal otherwise)
-   - **Guard** — sharper senses, holds position at the settlement
-   - **Cook** — cooks raw meat and fish from your chests (needs a cooking
-     station)
-   - **Miner** — deposits stone and the occasional copper or tin ore
-   - **Hunter** — deposits raw meat, deer hide, sometimes feathers
-   - **Brewer** — ferments honey into minor healing mead and barley into
-     barley wine (needs a fermenter)
+   them there. Press `E` again to cycle their job, `Shift+E` to unassign.
+   Every job runs on the work tick (default every 60 s) and needs the settler
+   fed; producers need a chest with room in the radius, converters need
+   input *and* output space **in the same chest**:
+   - **Lumberjack** — 2–4 wood per tick into the nearest chest with room
+   - **Farmer** — 1–2 carrots or turnips per tick; 20% chance of a honey
+     (needs a beehive in the settlement)
+   - **Builder** — repairs up to 3 damaged build pieces per tick, free of
+     materials (needs a workbench in the settlement)
+   - **Blacksmith** — one smelt per tick from your chests: copper ore →
+     copper, tin ore → tin, iron scrap → iron, or wood → coal as fallback
+     (needs a forge in the settlement)
+   - **Guard** — no production; 60% wider alert range, holds position
+   - **Cook** — one cook per tick: raw meat, deer meat, neck tail, raw
+     fish, wolf or lox meat into its cooked form (needs a cooking station)
+   - **Miner** — 2–4 stone per tick; 15% chance of a copper or tin ore
+   - **Hunter** — 1–2 raw meat per tick; 40% chance of a deer hide, 20%
+     chance of 2 feathers
+   - **Brewer** — one brew per tick: 2 honey → minor healing mead or
+     2 barley → barley wine (needs a fermenter)
+
+   **Press `T` while looking at any settler to talk to them**: a panel shows
+   their health, hunger and next mealtime, and a live ✓/✗ checklist of what
+   their job still needs before they'll work.
 4. **Sustain** — settlers eat one food item from your chests roughly once
    per in-game day, cheapest food first. A settler that finds nothing goes
    hungry and stops working until its next meal. Keep the chests stocked and
@@ -229,6 +238,7 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Settlers / EnableTrader | true | Meadows villages include a trader |
 | Settlers / Chatter | true | Settlers greet nearby players (client-side) |
 | Settlers / ChatterIntervalSeconds | 25 | Minimum time between chatter lines |
+| Settlers / TalkHotkey | T | Talk to the settler you're looking at: health, hunger, job needs (client-side) |
 | Recruiting / RecruitCostCoins | 50 | Coins to recruit a settler |
 | Settlement / MaxSettlers | 10 | Max settlers per settlement banner |
 | Settlement / SettlementRadius | 32 | Settlement area radius in meters |

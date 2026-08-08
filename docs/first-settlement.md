@@ -94,21 +94,29 @@ Press `E` on a settled villager again to cycle their job (or use the banner's
 management panel to do it from one screen). Keep pressing to scroll through
 all ten:
 
-| Job | What they do | Needs |
+| Job | Every work tick (60 s) | Needs before they start |
 |---|---|---|
 | **Villager** | Nothing. The default — just lives there | — |
-| **Lumberjack** | Drops **2–4 wood** into a settlement chest | — |
-| **Farmer** | Drops **1–2 carrots or turnips**, with a 1-in-5 chance of honey | A **beehive** for the honey |
-| **Builder** | Repairs up to **3 damaged structures** in the settlement | A **workbench** in the radius |
-| **Blacksmith** | Smelts ore sitting in your chests | A **forge** in the radius |
+| **Lumberjack** | **2–4 wood** into the nearest chest with room | A chest with space |
+| **Farmer** | **1–2 carrots or turnips** (50/50); **20% chance of 1 honey** | A chest with space; a **beehive** in the radius for the honey |
+| **Builder** | Repairs up to **3 damaged structures** — free, no materials consumed | A **workbench** in the radius, and something actually damaged |
+| **Blacksmith** | One smelt: 1 copper ore → copper, else 1 tin ore → tin, else 1 iron scrap → iron, else **1 wood → coal** | A **forge** in the radius; the ore (or wood) **and room for the result in the same chest** |
 | **Guard** | No production — patrols with **60% wider awareness** for threats | — |
-| **Cook** | Cooks raw meat and fish found in your chests | A **cooking station** in the radius |
-| **Miner** | Drops **2–4 stone**, with a rare piece of copper or tin ore | — |
-| **Hunter** | Drops **1–2 raw meat**, often deer hide, sometimes feathers | — |
-| **Brewer** | Turns 2 honey into a minor healing mead, 2 barley into barley wine | A **fermenter** in the radius |
+| **Cook** | One cook: raw meat, deer meat, neck tail, raw fish, wolf or lox meat → its cooked version | A **cooking station** in the radius; the raw food **and room in the same chest** |
+| **Miner** | **2–4 stone**; **15% chance** of 1 copper or tin ore | A chest with space |
+| **Hunter** | **1–2 raw meat**; **40% chance** of a deer hide; **20% chance** of 2 feathers | A chest with space |
+| **Brewer** | One brew: **2 honey → minor healing mead**, else **2 barley → barley wine** | A **fermenter** in the radius; the ingredients **and room in the same chest** |
 
 They work roughly **once a minute**, whether or not you're watching, as long as
-the area is loaded.
+the area is loaded — and only while **fed** (see Step 7). Note the smelting,
+cooking and brewing jobs are *converters*: they need their input **and** space
+for the output **in one chest**, so don't scatter one-of-everything across ten
+full boxes.
+
+**Not sure why someone's idle? Ask them.** Press **`T`** while looking at any
+settler (or standing next to one) to talk: a panel shows their health, their
+hunger and next mealtime, and a live ✓/✗ checklist of everything their job
+still needs before they'll work.
 
 The jobs feed each other: a **hunter** fills chests with raw meat, a **cook**
 turns it into proper food, and that food is what keeps everyone fed (Step 7) —
@@ -187,8 +195,9 @@ Settle a follower ............. E          (inside banner radius)
 Post / bring a follower ....... E          (away from any banner)
 Party: follow / hold all ...... G
 Party: fall back! ............. H          (they disengage and run to you)
-Change a settler's job ........ E          (cycles through six)
+Change a settler's job ........ E          (cycles all ten)
 Unassign a settler ............ Shift + E
+Talk to a settler ............. T          (health, hunger, job needs)
 
 Settlement Banner ............. Hammer -> Misc  (10 wood, 4 fine wood, 20 coins)
 Settlement radius ............. 32 m
