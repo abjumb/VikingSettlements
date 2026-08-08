@@ -32,6 +32,17 @@ jobs:
       - name: Fetch reference assemblies
         run: ./scripts/fetch-libs.sh
 
+      - name: Verify build environment
+        run: |
+          dotnet --version
+          test -f Environment.props || { echo "::error::Environment.props missing - fetch-libs.sh did not complete."; exit 1; }
+          for f in UnityEngine.dll UnityEngine.CoreModule.dll UnityEngine.UI.dll assembly_valheim.dll; do
+            test -f "vendor/valheim/valheim_Data/Managed/$f" \
+              || { echo "::error::vendor/valheim/valheim_Data/Managed/$f missing."; exit 1; }
+          done
+          test -f vendor/valheim/BepInEx/core/BepInEx.dll \
+            || { echo "::error::BepInEx core assemblies missing."; exit 1; }
+
       - name: Build release package
         run: dotnet build VikingSettlements.sln -c Release
 
