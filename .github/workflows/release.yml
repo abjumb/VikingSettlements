@@ -161,15 +161,33 @@ jobs:
             echo "No THUNDERSTORE_API_KEY secret configured - skipping the Thunderstore publish."
           fi
 
-      - name: Download the release package
+      # Thunderstore versions are immutable, so a re-run of an already
+      # published release must skip rather than fail.
+      - name: Check whether this version is already on Thunderstore
+        id: published
         if: ${{ steps.token.outputs.present == 'true' }}
+        env:
+          TAG: ${{ needs.release.outputs.tag }}
+        run: |
+          version="${TAG#v}"
+          code=$(curl -s -o /dev/null -w "%{http_code}" \
+            "https://thunderstore.io/api/experimental/package/morosmods/VikingSettlements/$version/")
+          if [ "$code" = "200" ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "morosmods-VikingSettlements-$version is already on Thunderstore - nothing to publish."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Download the release package
+        if: ${{ steps.token.outputs.present == 'true' && steps.published.outputs.exists != 'true' }}
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ needs.release.outputs.tag }}
         run: gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "VikingSettlements-$TAG.zip"
 
       - name: Publish to Thunderstore
-        if: ${{ steps.token.outputs.present == 'true' }}
+        if: ${{ steps.token.outputs.present == 'true' && steps.published.outputs.exists != 'true' }}
         uses: GreenTF/upload-thunderstore-package@aef20d7e07a0858d0decae64872aa5526662ab8d # v4.3
         with:
           token: ${{ secrets.THUNDERSTORE_API_KEY }}

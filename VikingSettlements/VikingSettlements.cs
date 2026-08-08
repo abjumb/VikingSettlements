@@ -15,7 +15,7 @@ namespace VikingSettlements
     {
         public const string PluginGUID = "com.abjumb.vikingsettlements";
         public const string PluginName = "VikingSettlements";
-        public const string PluginVersion = "1.8.1";
+        public const string PluginVersion = "1.8.2";
 
         public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
