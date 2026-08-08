@@ -1,0 +1,135 @@
+name: Release
+
+# Builds the Thunderstore package on every pull request and master push
+# (uploading it as a build artifact), and publishes a GitHub release when a
+# version tag is pushed or the workflow is dispatched manually. On dispatch
+# the tag is derived from the manifest version and created at the exact
+# commit that was built.
+on:
+  push:
+    branches: ["master"]
+    tags: ["v[0-9]+.[0-9]+.[0-9]+", "v[0-9]+.[0-9]+.[0-9]+-*"]
+  pull_request:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Nothing after checkout uses git; don't leave a write-scoped
+          # credential on disk while third-party build code runs.
+          persist-credentials: false
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Fetch reference assemblies
+        run: ./scripts/fetch-libs.sh
+
+      - name: Verify build environment
+        run: |
+          dotnet --version
+          test -f Environment.props || { echo "::error::Environment.props missing - fetch-libs.sh did not complete."; exit 1; }
+          for f in UnityEngine.dll UnityEngine.CoreModule.dll UnityEngine.UI.dll assembly_valheim.dll; do
+            test -f "vendor/valheim/valheim_Data/Managed/$f" \
+              || { echo "::error::vendor/valheim/valheim_Data/Managed/$f missing."; exit 1; }
+          done
+          test -f vendor/valheim/BepInEx/core/BepInEx.dll \
+            || { echo "::error::BepInEx core assemblies missing."; exit 1; }
+
+      - name: Build release package
+        run: dotnet build VikingSettlements.sln -c Release
+
+      - name: Resolve tag and verify version consistency
+        id: tag
+        run: |
+          manifest_version=$(python3 -c "import json; print(json.load(open('VikingSettlements/Package/manifest.json'))['version_number'])")
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            tag="$GITHUB_REF_NAME"
+            if [[ "$tag" != "v$manifest_version" && "$tag" != "v$manifest_version-"* ]]; then
+              echo "::error::Tag $tag does not match manifest version_number $manifest_version (expected v$manifest_version)."
+              exit 1
+            fi
+          else
+            tag="v$manifest_version"
+          fi
+          # The manifest is what Thunderstore shows; PluginVersion is what
+          # Jotunn's multiplayer handshake compares. Keep all three in step.
+          if ! grep -q "PluginVersion = \"$manifest_version\"" VikingSettlements/VikingSettlements.cs; then
+            echo "::error::PluginVersion in VikingSettlements.cs does not match manifest version_number $manifest_version."
+            exit 1
+          fi
+          if ! grep -q "^### $manifest_version\$" VikingSettlements/README.md; then
+            echo "::error::No '### $manifest_version' changelog section in VikingSettlements/README.md."
+            exit 1
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+      - name: Extract changelog section for the release notes
+        env:
+          TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          python3 - "$TAG" <<'EOF'
+          import re
+          import sys
+
+          version = sys.argv[1].lstrip("v").split("-")[0]
+          text = open("VikingSettlements/README.md", encoding="utf-8").read()
+          match = re.search(rf"### {re.escape(version)}\n(.*?)(?=\n### |\Z)", text, re.S)
+          notes = match.group(1).strip() if match else ""
+          open("release-notes.md", "w", encoding="utf-8").write(notes)
+          print(notes or "(no changelog section found - will fall back to generated notes)")
+          EOF
+
+      - name: Upload build artifact (non-release runs)
+        if: ${{ !startsWith(github.ref, 'refs/tags/') && github.event_name != 'workflow_dispatch' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: VikingSettlements-${{ steps.tag.outputs.tag }}-${{ github.sha }}
+          path: VikingSettlements/VikingSettlements.zip
+
+      - name: Publish GitHub release with the package attached
+        if: ${{ startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          # Two copies: the versioned name for humans downloading multiple
+          # releases, and the stable basename that keeps the
+          # releases/latest/download/VikingSettlements.zip URL working.
+          cp VikingSettlements/VikingSettlements.zip "VikingSettlements-$TAG.zip"
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG already exists - updating it instead of failing."
+            edit_args=(--title "VikingSettlements $TAG")
+            # gh release edit has no --generate-notes; only override notes
+            # when a changelog section was actually extracted.
+            if [ -s release-notes.md ]; then
+              edit_args+=(--notes-file release-notes.md)
+            fi
+            gh release edit "$TAG" "${edit_args[@]}"
+            gh release upload "$TAG" \
+              "VikingSettlements-$TAG.zip" \
+              VikingSettlements/VikingSettlements.zip \
+              --clobber
+          else
+            if [ -s release-notes.md ]; then
+              notes_args=(--notes-file release-notes.md)
+            else
+              notes_args=(--generate-notes)
+            fi
+            # --target pins a dispatch-created tag to the commit that was
+            # actually built; it is ignored when the tag already exists.
+            gh release create "$TAG" \
+              "VikingSettlements-$TAG.zip" \
+              VikingSettlements/VikingSettlements.zip \
+              --title "VikingSettlements $TAG" \
+              --target "$GITHUB_SHA" \
+              "${notes_args[@]}"
+          fi
