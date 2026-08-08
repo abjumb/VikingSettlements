@@ -1,0 +1,68 @@
+name: Release
+
+# Builds the Thunderstore package and publishes it as a GitHub release.
+# Fires when a version tag is pushed (the normal path), or manually via
+# workflow_dispatch, in which case the tag is derived from the manifest
+# version and created at the current default-branch HEAD.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Fetch reference assemblies
+        run: ./scripts/fetch-libs.sh
+
+      - name: Build release package
+        run: dotnet build VikingSettlements.sln -c Release
+
+      - name: Resolve tag
+        id: tag
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            echo "tag=$GITHUB_REF_NAME" >> "$GITHUB_OUTPUT"
+          else
+            version=$(python3 -c "import json; print(json.load(open('VikingSettlements/Package/manifest.json'))['version_number'])")
+            echo "tag=v$version" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Extract changelog section for the release notes
+        run: |
+          python3 - "${{ steps.tag.outputs.tag }}" <<'EOF'
+          import re
+          import sys
+
+          tag = sys.argv[1].lstrip("v")
+          text = open("VikingSettlements/README.md", encoding="utf-8").read()
+          match = re.search(rf"### {re.escape(tag)}\n(.*?)(?=\n### |\Z)", text, re.S)
+          notes = match.group(1).strip() if match else ""
+          open("release-notes.md", "w", encoding="utf-8").write(notes)
+          print(notes or "(no changelog section found - will fall back to generated notes)")
+          EOF
+
+      - name: Create GitHub release with the package attached
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="${{ steps.tag.outputs.tag }}"
+          if [ -s release-notes.md ]; then
+            notes_args=(--notes-file release-notes.md)
+          else
+            notes_args=(--generate-notes)
+          fi
+          gh release create "$tag" \
+            "VikingSettlements/VikingSettlements.zip#VikingSettlements-$tag.zip" \
+            --title "VikingSettlements $tag" \
+            "${notes_args[@]}"
