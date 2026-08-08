@@ -115,6 +115,10 @@ Hugin's boss hints:
 vs_find [village|outpost|steading|camp]
 ```
 
+The full console reference — both mod commands, every spawnable `VS_*`
+prefab, and the vanilla dev commands that exercise each system — lives in
+**[docs/commands.md](docs/commands.md)**.
+
 ## Player settlements
 
 > New here? **[Building Your First Settlement](docs/first-settlement.md)** walks
