@@ -4,7 +4,8 @@ name: Release
 # (uploading it as a build artifact), and publishes a GitHub release when a
 # version tag is pushed or the workflow is dispatched manually. On dispatch
 # the tag is derived from the manifest version and created at the exact
-# commit that was built.
+# commit that was built. When the THUNDERSTORE_API_KEY secret is configured,
+# the released zip is then published to Thunderstore as well.
 on:
   push:
     branches: ["master"]
@@ -18,6 +19,8 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -133,3 +136,50 @@ jobs:
               --target "$GITHUB_SHA" \
               "${notes_args[@]}"
           fi
+
+  # Pushes the same zip the GitHub release carries to Thunderstore as a new
+  # version of morosmods-VikingSettlements. Requires the THUNDERSTORE_API_KEY
+  # secret (a service-account token from the morosmods team); without it the
+  # job skips gracefully so releases keep working for manual uploads.
+  # Note: Thunderstore versions are immutable - re-running a release that
+  # already published will fail here; bump the version instead.
+  thunderstore:
+    name: Publish to Thunderstore
+    needs: release
+    if: ${{ startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for the publish token
+        id: token
+        env:
+          TS_TOKEN: ${{ secrets.THUNDERSTORE_API_KEY }}
+        run: |
+          if [ -n "$TS_TOKEN" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "No THUNDERSTORE_API_KEY secret configured - skipping the Thunderstore publish."
+          fi
+
+      - name: Download the release package
+        if: ${{ steps.token.outputs.present == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.release.outputs.tag }}
+        run: gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "VikingSettlements-$TAG.zip"
+
+      - name: Publish to Thunderstore
+        if: ${{ steps.token.outputs.present == 'true' }}
+        uses: GreenTF/upload-thunderstore-package@aef20d7e07a0858d0decae64872aa5526662ab8d # v4.3
+        with:
+          token: ${{ secrets.THUNDERSTORE_API_KEY }}
+          community: valheim
+          namespace: morosmods
+          name: VikingSettlements
+          version: ${{ needs.release.outputs.tag }}
+          description: "NPC settlements: wild villages, recruitable settlers, your own settlement with jobs, raids and rival clans."
+          website: https://github.com/abjumb/VikingSettlements
+          file: VikingSettlements-${{ needs.release.outputs.tag }}.zip
+          # The action's default repository selection is buggy when this is
+          # unset; always pass it explicitly.
+          repo: "https://thunderstore.io"

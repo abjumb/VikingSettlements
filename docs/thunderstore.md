@@ -62,11 +62,28 @@ The dependency pins in `manifest.json`
 mean mod managers install both requirements alongside the mod — players
 never need to hunt for BepInEx or Jötunn themselves.
 
-## Optional: fully automated publishing
+## Automated publishing (wired into CI)
 
-Thunderstore supports API-token publishing (used with the `tcli` tool or a
-CI action), which would let the release workflow push new versions with no
-browser step: create a service account under *Team → Service accounts*,
-store its token as a GitHub Actions secret (e.g. `THUNDERSTORE_API_KEY`),
-and say the word — the release workflow can then get a publish job wired to
-it. Manual uploads are perfectly fine at this cadence, though.
+The release workflow has a **Publish to Thunderstore** job that pushes the
+exact zip the GitHub release carries to Thunderstore as a new version of
+`morosmods-VikingSettlements`. It activates itself once a single secret
+exists; until then it skips with a note and manual uploads keep working.
+
+One-time activation:
+
+1. On Thunderstore: *Teams → morosmods → Service Accounts → Add service
+   account* (name it e.g. `github-actions`). Copy the token it shows — it
+   is displayed only once.
+2. On GitHub: *VikingSettlements → Settings → Secrets and variables →
+   Actions → New repository secret*, name `THUNDERSTORE_API_KEY`, paste
+   the token.
+
+From then on, every release (tag push or workflow dispatch) publishes to
+Thunderstore automatically after the GitHub release is created. Two
+properties worth knowing:
+
+- **Thunderstore versions are immutable.** Re-running a release whose
+  version already published will fail the Thunderstore job (the GitHub
+  release job still succeeds) — bump the version for any fix.
+- The version gate upstream guarantees the zip's manifest version matches
+  the tag, so CI can never publish a mismatched version.
