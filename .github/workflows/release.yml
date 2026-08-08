@@ -65,8 +65,8 @@ jobs:
             echo "::error::PluginVersion in VikingSettlements.cs does not match manifest version_number $manifest_version."
             exit 1
           fi
-          if ! grep -q "^### $manifest_version\$" VikingSettlements/README.md; then
-            echo "::error::No '### $manifest_version' changelog section in VikingSettlements/README.md."
+          if ! grep -q "^### $manifest_version\$" VikingSettlements/CHANGELOG.md; then
+            echo "::error::No '### $manifest_version' changelog section in VikingSettlements/CHANGELOG.md."
             exit 1
           fi
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
@@ -80,7 +80,7 @@ jobs:
           import sys
 
           version = sys.argv[1].lstrip("v").split("-")[0]
-          text = open("VikingSettlements/README.md", encoding="utf-8").read()
+          text = open("VikingSettlements/CHANGELOG.md", encoding="utf-8").read()
           match = re.search(rf"### {re.escape(version)}\n(.*?)(?=\n### |\Z)", text, re.S)
           notes = match.group(1).strip() if match else ""
           open("release-notes.md", "w", encoding="utf-8").write(notes)

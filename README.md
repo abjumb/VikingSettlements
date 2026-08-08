@@ -333,6 +333,12 @@ them out like a Valheim install under `vendor/valheim`, and writes
 `Environment.props` so the Jötunn build props pick them up. Don't run it if
 you have a real install — you want to build against the real assemblies.
 
+**Releasing:** pushing a `vX.Y.Z` tag makes CI build, version-check and
+publish a GitHub release with the Thunderstore-ready zip attached.
+Publishing that zip to Thunderstore is a drag-and-drop —
+**[docs/thunderstore.md](docs/thunderstore.md)** walks through the one-time
+account/team setup and each release upload.
+
 ## Testing in game
 
 Enable the console with `F5` and type `devcommands` first; everything below
