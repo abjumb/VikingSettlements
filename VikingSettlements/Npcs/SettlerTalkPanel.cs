@@ -389,6 +389,16 @@ namespace VikingSettlements.Npcs
                 }
             }
 
+            // Family, for the settled.
+            if (_settler.State == SettlerState.Assigned && ModConfig.FamiliesEnabled.Value)
+            {
+                var family = _settler.GetComponent<SettlerFamily>();
+                if (family != null && !string.IsNullOrEmpty(family.Partner))
+                {
+                    lines.Add(Line($"$vs_talk_married {family.Partner}", Color.white));
+                }
+            }
+
             // Hunger, for settlers that are somebody's dependent.
             if (_settler.State == SettlerState.Assigned && ModConfig.FoodUpkeep.Value)
             {

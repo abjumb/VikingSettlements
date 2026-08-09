@@ -73,9 +73,9 @@ the same way; world and raid settings are admin-only and sync from the server.
   a party member can only die to a monster **in a fight you are standing
   in**, after loud low-health warnings and an auto-retreat you can override.
   When one falls, they are gone.
-- **Thirteen jobs**: press E on an assigned settler to cycle — Villager,
+- **Fifteen jobs**: press E on an assigned settler to cycle — Villager,
   Lumberjack, Farmer, Builder, Blacksmith, Guard, Cook, Miner, Hunter,
-  Brewer, Courier, Herder, Engineer. Producers fill your settlement's chests, cooks and brewers refine
+  Brewer, Courier, Herder, Engineer, Innkeeper, Fisher. Producers fill your settlement's chests, cooks and brewers refine
   what they find in them, builders repair damage, guards keep watch.
   The jobs chain: hunters bring raw meat, cooks turn it into the food that
   keeps the whole settlement fed. Shift+E unassigns/dismisses.
@@ -85,8 +85,9 @@ the same way; world and raid settings are admin-only and sync from the server.
   the chest space — so an idle settler is never a mystery.
 - **Builder projects**: order construction through a builder's talk menu —
   stand where the building should go, talk to a builder, pick a blueprint:
-  cabins, watchtowers and longhouses up to livestock pens, palisade rings,
-  ballista towers and the Town-only stone great-hall. Builders raise it
+  cabins, watchtowers, fishing docks and longhouses up to livestock pens,
+  palisade rings, ballista towers, the mead hall and the Town-only stone
+  great-hall. Builders raise it
   from materials in the new
   **Builders' Supply Chest**; you get warned when supplies run dry, and
   your lumberjacks and miners automatically redirect their haul to the
@@ -108,6 +109,16 @@ the same way; world and raid settings are admin-only and sync from the server.
 - **Morale**: settlers have moods — housing, food, company and raids all
   count. Cheerful settlers work extra, miserable ones drag their feet,
   and a settler neglected for days walks out on you.
+- **The mead hall**: a Village-tier blueprint with seating, a fermenter
+  and hall banners. An **Innkeeper** pours a daily round from the
+  brewer's stock — morale for every settler present, and players in the
+  settlement get their Rested buff refreshed.
+- **Families**: two housed, happy settlers can marry. Couples gain morale
+  together, settlements with couples grow faster — sometimes the
+  newcomer is a child of the settlement come of age — and a partner's
+  confirmed death leaves real grief. Absence never fakes a widowing.
+- **Seer ward-keeping**: an assigned seer heals hurt settlers every work
+  tick, and foresees rival raids one night before they land.
 - **Caravans**: give a settler the Courier job and they haul surplus
   goods to your other settlement on foot — and can be ambushed by the
   clanless on the way.
@@ -188,6 +199,7 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Economy / RequireWorkstations | true | Blacksmith needs a forge, builder a workbench, honey a beehive |
 | Economy / HomesMatter | true | Settlers without an assigned home (talk key on a door) work at half speed |
 | Economy / MoraleEnabled | true | Settler moods affect output; rock-bottom morale makes settlers leave |
+| Economy / FamiliesEnabled | true | Settlers can marry: morale together, faster growth, grief on a confirmed loss |
 | Trade / CourierRange | 300 | Max distance to a partner settlement for the Courier job |
 | Trade / CourierAmbushChance | 0.02 | Chance a travelling courier draws a clanless ambush |
 | Progression / TiersEnabled | true | Settlements grow Hamlet -> Village -> Town with tier caps and blueprint gates |

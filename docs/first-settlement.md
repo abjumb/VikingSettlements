@@ -92,7 +92,7 @@ A settlement holds **10 settlers** by default.
 
 Press `E` on a settled villager again to cycle their job (or use the banner's
 management panel to do it from one screen). Keep pressing to scroll through
-all thirteen:
+all fifteen:
 
 | Job | Every work tick (60 s) | Needs before they start |
 |---|---|---|
@@ -109,6 +109,8 @@ all thirteen:
 | **Courier** | Hauls up to **8 surplus goods** to another settlement and walks back | A second settlement within **300 m**; more than 10 of something in your chests |
 | **Herder** | Feeds pen animals, **culls the herd above 4**, tidies loose drops into chests | Tamed animals in the radius; carrots/turnips for feed |
 | **Engineer** | Loads the emptiest **ballista tower** with up to 5 bolts from your chests; fletches **4 bolts from 2 wood** when all are full | A **workbench**; a ballista in the radius; wood or bolts in a chest |
+| **Innkeeper** | Once per day, pours a round: 1 mead/barley wine from your chests → **morale for every settler present**, Rested refreshed for players | A **mead hall** in the radius; a mead in a chest |
+| **Fisher** | **1–2 raw fish** per tick | **Open water** at the settlement's edge; a chest with space |
 
 They work roughly **once a minute**, whether or not you're watching, as long as
 the area is loaded — and only while **fed** (see Step 7). Note the smelting,
@@ -124,9 +126,10 @@ still needs before they'll work.
 **Builders can construct whole buildings.** Build a **Builders' Supply
 Chest** (hammer → Misc, 10 wood) and fill it with wood. Then stand exactly
 where the new building should go, talk to a builder (`T`), and pick a
-blueprint: **cabin** (40 wood) and **watchtower** (30 wood) from the start;
-**longhouse** (100 wood + 10 stone), **livestock pen** (30 wood),
-**palisade ring** (80 wood) and **ballista tower** (60 wood + 20 stone)
+blueprint: **cabin** (40 wood), **watchtower** (30 wood) and **fishing
+dock** (40 wood) from the start; **longhouse** (100 wood + 10 stone),
+**livestock pen** (30 wood), **palisade ring** (80 wood), **ballista
+tower** (60 wood + 20 stone) and **mead hall** (120 wood + 20 stone)
 once the settlement reaches Village tier; the **stone great-hall** (60 wood
 + 40 stone) at Town tier. A construction site appears at your feet; each work
 tick your builders carry materials from the supply chest into it, and the
@@ -179,6 +182,14 @@ in the chests to spare (consumed when they arrive). Rarely, the newcomer is a
 seer. Build beds ahead of your population and the village grows on its own,
 which also means raid losses heal with time instead of being forever.
 
+Well-run settlements become homes in the fullest sense: two **housed,
+happy settlers can marry**. Couples keep each other's spirits up,
+settlements with couples grow **50% faster**, and sometimes the newcomer
+is a **child of the settlement come of age**. Careful, though — if a
+settler's partner dies, the widow grieves hard. An **Innkeeper** with a
+**mead hall** helps everyone's mood along, one poured round per day —
+and refreshes *your* Rested buff while you're in the settlement.
+
 ## Step 8 — Expect trouble
 
 A settlement is a target. Two things can come for it:
@@ -209,6 +220,10 @@ stand, and the **ballista tower** mounts a Settlement Ballista that shoots
 only enemies — it can't hit you, your settlers or your animals. Give someone
 the **Engineer** job and the towers stay loaded without you touching them.
 
+A **Village Seer** earns their keep in war too: assigned to your settlement,
+a seer heals hurt settlers every work tick and **senses raids a night before
+they land**, turning ambushes into appointments.
+
 Settlers who stick around get better at this: a day of service earns 1 XP and
 every battle survived earns 2, promoting them to **Veteran** (1 star) at 20 XP
 and **Elite** (2 stars) at 60. Stars mean vanilla stat scaling — an Elite guard
@@ -233,7 +248,7 @@ Settle a follower ............. E          (inside banner radius)
 Post / bring a follower ....... E          (away from any banner)
 Party: follow / hold all ...... G
 Party: fall back! ............. H          (they disengage and run to you)
-Change a settler's job ........ E          (cycles all thirteen)
+Change a settler's job ........ E          (cycles all fifteen)
 Unassign a settler ............ Shift + E
 Talk to a settler ............. T          (health, hunger, job needs)
 Order a building .............. T on a builder, stand where it goes

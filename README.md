@@ -178,6 +178,16 @@ wild settlements:
    - **Engineer** — keeps the settlement's ballista towers loaded with
      bolts from your chests, and fletches 4 wood turret bolts from 2 wood
      when everything is topped up (needs a workbench)
+   - **Innkeeper** — once per day pours a round from the brewer's stock:
+     one mead or barley wine from the chests gives every present settler
+     morale, and players in the settlement get Rested refreshed (needs
+     a mead hall)
+   - **Fisher** — 1–2 raw fish per tick (needs open water at the
+     settlement's edge)
+
+   A **Village Seer** needs no job for her calling: an assigned seer heals
+   every hurt settler in the radius each work tick, and foresees rival
+   raids one night before they land.
 
    **Press `T` while looking at any settler to talk to them**: a panel shows
    their health, hunger and next mealtime, and a live ✓/✗ checklist of what
@@ -185,11 +195,12 @@ wild settlements:
 
    **Builders take construction orders** through that same talk menu: stand
    where the new building should go, talk to a builder, and pick a blueprint
-   — *cabin* (40 wood), *watchtower* (30 wood), *longhouse* (100 wood,
-   10 stone, Village tier), *livestock pen* (30 wood, Village tier),
-   *palisade ring* (80 wood, Village tier), *ballista tower* (60 wood,
-   20 stone, Village tier) or *stone great-hall* (60 wood, 40 stone,
-   Town tier).
+   — *cabin* (40 wood), *watchtower* (30 wood), *fishing dock* (40 wood),
+   *longhouse* (100 wood, 10 stone, Village tier), *livestock pen*
+   (30 wood, Village tier), *palisade ring* (80 wood, Village tier),
+   *ballista tower* (60 wood, 20 stone, Village tier), *mead hall*
+   (120 wood, 20 stone, Village tier) or *stone great-hall* (60 wood,
+   40 stone, Town tier).
    A construction site is marked out on the spot; builders carry materials
    into it each work tick from the **Builders' Supply Chest** (hammer →
    Misc, 10 wood) and raise the finished building when the cost is paid.
@@ -206,6 +217,12 @@ wild settlements:
    hungry and stops working until its next meal. Keep the chests stocked and
    your settlement *grows*: each night a settlement below its cap with a
    spare unclaimed bed and food to spare has a chance to attract a newcomer.
+   Settlers put down roots, too: two housed, happy settlers can **marry**
+   (rolled nightly) — couples gain morale while together, settlements
+   with couples grow 50% faster, and sometimes the newcomer is a child
+   of the settlement come of age. A partner's confirmed death — in
+   battle, or lost to an abduction deadline — leaves real grief; mere
+   absence never does, so caravans and travel can't fake a widowing.
    Long-serving settlers become **veterans**: 1 XP per day of service and
    2 XP per battle survived earn them star levels with real stat scaling —
    hover text shows their rank (Veteran, Elite).
@@ -242,7 +259,7 @@ with.
 
 <p align="center">
   <img src="docs/jobs.svg" width="900"
-       alt="The thirteen settler jobs: what each one does every work tick and the workstation it needs first">
+       alt="The fifteen settler jobs: what each one does every work tick and the workstation it needs first">
 </p>
 
 All settler state (recruiter, job, home) lives in the creature's ZDO, so it
@@ -309,6 +326,7 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Economy / RequireWorkstations | true | Blacksmith needs a forge, builder a workbench, honey a beehive |
 | Economy / HomesMatter | true | Settlers without an assigned home (talk key on a door) work at half speed |
 | Economy / MoraleEnabled | true | Settler moods affect output; rock-bottom morale makes settlers leave |
+| Economy / FamiliesEnabled | true | Settlers can marry: morale together, faster growth, grief on a confirmed loss |
 | Trade / CourierRange | 300 | Max distance to a partner settlement for the Courier job |
 | Trade / CourierAmbushChance | 0.02 | Chance a travelling courier draws a clanless ambush |
 | Progression / TiersEnabled | true | Settlements grow Hamlet -> Village -> Town with tier caps and blueprint gates |
@@ -401,6 +419,9 @@ To keep iteration bearable, temporarily set `WorkIntervalSeconds = 10` and
 | Abduction & rescue | Set `AbductionChance = 1.0`, trigger a rival raid, watch the banner hover for the captive, then destroy the totem at the camp `vs_find camp` points to |
 | Ballista + Engineer | Order a *Ballista Tower* through a builder, set a settler to Engineer with wood in a chest, wait a couple of ticks, then `spawn VS_Raider` |
 | Broken clan | Kill a raid's warlord (needs 3+ camps cleared) — `listkeys` should show a `vs_clan_broken_*` key and that clan stops raiding |
+| Innkeeper feast | Order a *Mead Hall*, set an Innkeeper, `spawn MeadHealthMinor` into a chest, wait a tick — morale up, Rested refreshed |
+| Families | Two housed settlers at 60+ morale, `skiptime` a few nights — expect a wedding message; talk (`T`) shows "Married to …" |
+| Seer forewarning | Assign a seer (`spawn VS_Seer`, recruit, assign), raid chance 1.0 — the raid announces itself a night early |
 
 If a feature is silently missing, check `BepInEx/LogOutput.log` — every vanilla
 prefab the mod cannot find is logged as a `not found, skipped` warning rather
@@ -426,6 +447,7 @@ VikingSettlements/
 │   ├── SettlerMorale.cs        # moods from housing, food, company and raids
 │   ├── SettlerCourier.cs       # caravan journeys between settlements
 │   ├── SettlerVeterancy.cs     # XP and star levels
+│   ├── SettlerFamily.cs        # marriages, grief, together-bonuses
 │   ├── SettlerReputation.cs    # wild-village standing hooks
 │   ├── VillageHeart.cs         # wild village reputation anchor
 │   └── RaiderDespawn.cs        # cleans up unbeaten raiders
@@ -441,6 +463,7 @@ VikingSettlements/
 │   ├── ConstructionSite.cs     # material tracking + build completion
 │   ├── BuildChest.cs           # the builders' supply chest
 │   ├── HomeAssignPanel.cs      # who-lives-here door UI
+│   ├── MeadHallMarker.cs       # the marker the Innkeeper job gates on
 │   ├── SettlerGearPanel.cs     # the equipment hand-over UI
 │   └── UiPalette.cs            # shared UI colors
 ├── Raids/

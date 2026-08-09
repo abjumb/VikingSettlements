@@ -45,12 +45,14 @@ namespace VikingSettlements.Npcs
         private SettlerRecruitable _settler;
         private Character _character;
         private float _timer;
+        private bool _isSeer;
 
         private void Awake()
         {
             _nview = GetComponent<ZNetView>();
             _settler = GetComponent<SettlerRecruitable>();
             _character = GetComponent<Character>();
+            _isSeer = gameObject.name.StartsWith(SettlerPrefabs.Seer);
         }
 
         private void Update()
@@ -175,7 +177,150 @@ namespace VikingSettlements.Npcs
                         EngineerTick(bonus);
                     }
                     break;
+                case SettlerJob.Innkeeper:
+                    if (!gated || HasNearby<Settlements.MeadHallMarker>())
+                    {
+                        HostFeast();
+                    }
+                    break;
+                case SettlerJob.Fisher:
+                    if (HasWaterAround(_settler.Home))
+                    {
+                        Produce("FishRaw", Random.Range(1, 3) + bonus);
+                    }
+                    break;
             }
+
+            // Ward-keeping is who a seer is, not a job they hold: any assigned
+            // seer closes wounds around the settlement on their work tick.
+            if (_isSeer)
+            {
+                HealPulse();
+            }
+        }
+
+        // ---- The seer's ward ----
+
+        private const float SeerHealAmount = 15f;
+
+        private void HealPulse()
+        {
+            var radius = ModConfig.SettlementRadius.Value;
+            var home = _settler.Home;
+            foreach (var other in SettlerRecruitable.Instances)
+            {
+                if (other.State != SettlerState.Assigned)
+                {
+                    continue;
+                }
+                var character = other.GetComponent<Character>();
+                if (character == null || character.IsDead()
+                    || character.GetHealthPercentage() >= 1f
+                    || Vector3.Distance(other.transform.position, home) > radius)
+                {
+                    continue;
+                }
+                character.Heal(SeerHealAmount);
+            }
+        }
+
+        // ---- Innkeeping ----
+
+        private const string FeastDayKey = "vs_lastfeast";
+        private static readonly string[] FeastMeads = { "MeadHealthMinor", "BarleyWine" };
+
+        /// <summary>
+        /// Once per in-game day, the innkeeper pours a round from the brewer's
+        /// stock: one mead from the chests lifts every present settler's
+        /// spirits, and players in the settlement get their Rested refreshed.
+        /// </summary>
+        private void HostFeast()
+        {
+            if (EnvMan.instance == null)
+            {
+                return;
+            }
+            var day = EnvMan.instance.GetCurrentDay();
+            var zdo = _nview.GetZDO();
+            if (zdo.GetInt(FeastDayKey, -1) >= day)
+            {
+                return;
+            }
+            var home = _settler.Home;
+            var found = false;
+            foreach (var mead in FeastMeads)
+            {
+                if (TakeItemsAround(home, mead, 1) == 1)
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+            {
+                return;
+            }
+            zdo.Set(FeastDayKey, day);
+
+            var radius = ModConfig.SettlementRadius.Value;
+            if (ModConfig.MoraleEnabled.Value)
+            {
+                foreach (var other in SettlerRecruitable.Instances)
+                {
+                    if (other.State != SettlerState.Assigned
+                        || Vector3.Distance(other.transform.position, home) > radius)
+                    {
+                        continue;
+                    }
+                    var morale = other.GetComponent<SettlerMorale>();
+                    if (morale != null)
+                    {
+                        morale.AddMorale(5);
+                    }
+                }
+            }
+            foreach (var player in Player.GetAllPlayers())
+            {
+                if (Vector3.Distance(player.transform.position, home) > radius)
+                {
+                    continue;
+                }
+                var seman = player.GetSEMan();
+                if (seman != null)
+                {
+                    seman.AddStatusEffect("Rested".GetStableHashCode(), true);
+                }
+                if (player == Player.m_localPlayer)
+                {
+                    player.Message(MessageHud.MessageType.TopLeft,
+                        Localization.instance.Localize("$vs_feast"));
+                }
+            }
+        }
+
+        /// <summary>Open water (deep enough to fish) at the settlement's edge.</summary>
+        internal static bool HasWaterAround(Vector3 center)
+        {
+            if (ZoneSystem.instance == null)
+            {
+                return false;
+            }
+            var waterLevel = ZoneSystem.instance.m_waterLevel;
+            var radius = ModConfig.SettlementRadius.Value;
+            for (var i = 0; i < 16; i++)
+            {
+                var angle = Mathf.PI * 2f * i / 16f;
+                foreach (var reach in new[] { radius * 0.5f, radius })
+                {
+                    var point = center + new Vector3(
+                        Mathf.Sin(angle) * reach, 0f, Mathf.Cos(angle) * reach);
+                    if (ZoneSystem.instance.GetGroundHeight(point) < waterLevel - 1.5f)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         // ---- Engineering ----

@@ -15,7 +15,7 @@ namespace VikingSettlements
     {
         public const string PluginGUID = "com.abjumb.vikingsettlements";
         public const string PluginName = "VikingSettlements";
-        public const string PluginVersion = "1.11.0";
+        public const string PluginVersion = "1.12.0";
 
         public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
@@ -247,6 +247,21 @@ namespace VikingSettlements
                 { "vs_captive_days", "days to save them" },
                 { "vs_rescued", "is free and comes home!" },
                 { "vs_captive_lost", "will never come home. The settlement mourns" },
+                { "vs_job_innkeeper", "Innkeeper" },
+                { "vs_job_fisher", "Fisher" },
+                { "vs_bp_meadhall", "Mead Hall" },
+                { "vs_bp_dock", "Fishing Dock" },
+                { "vs_hallbanner", "Mead Hall Banner" },
+                { "vs_need_meadhall", "A mead hall in the settlement" },
+                { "vs_need_mead", "A mead or barley wine in a chest" },
+                { "vs_need_water", "Open water at the settlement's edge" },
+                { "vs_feast", "The innkeeper pours a round — spirits lift, and you feel rested" },
+                { "vs_and", "and" },
+                { "vs_wedding", "have married!" },
+                { "vs_grief", "mourns the loss of" },
+                { "vs_talk_married", "Married to" },
+                { "vs_child", "A child of the settlement has come of age and joins you!" },
+                { "vs_seer_warning", "The seer senses a war party gathering — they strike tomorrow night!" },
             });
         }
     }

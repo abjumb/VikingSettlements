@@ -1,5 +1,32 @@
 # Changelog
 
+### 1.12.0
+
+- Mead Hall + Innkeeper job: a new Village-tier blueprint (120 wood,
+  20 stone) raises a common hall with extra seating, a fermenter and
+  the hall banners the new Innkeeper job (the fourteenth) gates on.
+  Once per day the innkeeper pours a round from the brewer's stock -
+  one mead or barley wine from your chests lifts every present
+  settler's morale, and players in the settlement get their Rested
+  buff refreshed on the spot.
+- Fisher job + Fishing Dock: the fifteenth job needs open water at the
+  settlement's edge and brings in 1-2 raw fish per tick. The Fishing
+  Dock blueprint (40 wood, any tier) runs a torch-lit pier out over
+  the water with a chest at its foot.
+- Families: two housed, happy settlers can marry (rolled nightly).
+  Couples gain morale while together, settlements with couples grow
+  50% faster, and sometimes the newcomer is a child of the settlement
+  come of age. A partner's confirmed death - in battle, or lost to an
+  abduction deadline - leaves real grief: a heavy morale blow and a
+  mourning message. Absence never triggers grief, so travel and
+  caravans can't fake a widowing. Talk to a settler to see who they
+  married. Config: Economy/FamiliesEnabled.
+- Seer ward-keeping: an assigned seer now tends the settlement - each
+  work tick they close wounds on every hurt settler in the radius, and
+  they see raids coming: with a seer present, a rival raid is foretold
+  one night ahead ("they strike tomorrow night!") instead of landing
+  unannounced.
+
 ### 1.11.0
 
 - Named rival clans: every clanless camp now belongs to one of eight

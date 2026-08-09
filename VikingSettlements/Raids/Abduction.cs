@@ -141,6 +141,9 @@ namespace VikingSettlements.Raids
                         }
                     }
                 }
+                // A spouse lost to the clanless is a confirmed loss: the
+                // widowed partner grieves on top of the settlement's sorrow.
+                SettlerFamily.GrieveFor(name, settlement.transform.position);
             }
         }
 

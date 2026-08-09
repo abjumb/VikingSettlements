@@ -261,6 +261,39 @@ namespace VikingSettlements.World
             return l;
         }
 
+        /// <summary>
+        /// The longhouse dressed as a common room: extra seating, a fermenter
+        /// for the brewer, and the hall banner the Innkeeper job gates on.
+        /// </summary>
+        public static SettlementLayout BlueprintMeadHall()
+        {
+            var l = Hall("wood_wall_full", false, "piece_chest_wood");
+            l.Add("piece_table", 0f, 0f, 2f);
+            l.Add("piece_chair", 1.2f, 0f, 2f, 270f);
+            l.Add("piece_chair", -1.2f, 0f, 2f, 90f);
+            l.Add("fermenter", -2f, 0f, -2f);
+            l.Add(SettlerPrefabs.HallBanner, -2.2f, 0f, -3.5f);
+            l.Add(SettlerPrefabs.HallBanner, 2.2f, 0f, -3.5f);
+            return l;
+        }
+
+        /// <summary>A single-file pier running out over the water, torch at the end.</summary>
+        public static SettlementLayout BlueprintDock()
+        {
+            var l = new SettlementLayout("dock");
+            foreach (var z in new[] { 1f, 3f, 5f, 7f })
+            {
+                l.Add("wood_floor", 0f, 0f, z);
+                l.Add("wood_fence", -1f, 0f, z, 90f);
+                l.Add("wood_fence", 1f, 0f, z, 90f);
+            }
+            l.Add("wood_pole2", -1f, -2f, 7f);
+            l.Add("wood_pole2", 1f, -2f, 7f);
+            l.Add("piece_groundtorch_wood", 0f, 0f, 7f);
+            l.Add("piece_chest_wood", 0f, 0f, 1f, 90f);
+            return l;
+        }
+
         /// <summary>The watchtower platform crowned with a settlement ballista.</summary>
         public static SettlementLayout BlueprintBallistaTower()
         {

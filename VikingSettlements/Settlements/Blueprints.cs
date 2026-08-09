@@ -75,6 +75,23 @@ namespace VikingSettlements.Settlements
             },
             new Blueprint
             {
+                Id = "dock",
+                NameToken = "$vs_bp_dock",
+                WoodCost = 40,
+                StoneCost = 0,
+                Layout = Layouts.BlueprintDock,
+            },
+            new Blueprint
+            {
+                Id = "meadhall",
+                NameToken = "$vs_bp_meadhall",
+                WoodCost = 120,
+                StoneCost = 20,
+                MinTier = 2,
+                Layout = Layouts.BlueprintMeadHall,
+            },
+            new Blueprint
+            {
                 Id = "greathall",
                 NameToken = "$vs_bp_greathall",
                 WoodCost = 60,
