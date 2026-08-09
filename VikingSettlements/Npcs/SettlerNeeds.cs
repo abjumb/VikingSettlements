@@ -184,6 +184,30 @@ namespace VikingSettlements.Npcs
                             || SettlerWork.CountItemAround(home, SettlerWork.BoltPrefab) > 0,
                     });
                     break;
+                case SettlerJob.Innkeeper:
+                    if (gated)
+                    {
+                        lines.Add(new Line
+                        {
+                            Token = "$vs_need_meadhall",
+                            Met = SettlerWork.HasAround<Settlements.MeadHallMarker>(home),
+                        });
+                    }
+                    lines.Add(new Line
+                    {
+                        Token = "$vs_need_mead",
+                        Met = SettlerWork.CountItemAround(home, "MeadHealthMinor") > 0
+                            || SettlerWork.CountItemAround(home, "BarleyWine") > 0,
+                    });
+                    break;
+                case SettlerJob.Fisher:
+                    lines.Add(new Line
+                    {
+                        Token = "$vs_need_water",
+                        Met = SettlerWork.HasWaterAround(home),
+                    });
+                    lines.Add(Storage(home, "FishRaw"));
+                    break;
             }
             return lines;
         }

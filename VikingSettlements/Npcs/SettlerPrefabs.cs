@@ -27,6 +27,7 @@ namespace VikingSettlements.Npcs
         public const string CampTotem = "VS_CampTotem";
         public const string Heart = "VS_VillageHeart";
         public const string Ballista = "VS_Ballista";
+        public const string HallBanner = "VS_HallBanner";
 
         private static bool _created;
 
@@ -48,6 +49,7 @@ namespace VikingSettlements.Npcs
             CreateCampTotem();
             CreateVillageHeart();
             CreateBallista();
+            CreateHallBanner();
         }
 
         private static GameObject CloneFirstAvailable(string newName, IEnumerable<string> baseCandidates)
@@ -118,6 +120,7 @@ namespace VikingSettlements.Npcs
             clone.AddComponent<SettlerEquipment>();
             clone.AddComponent<SettlerMorale>();
             clone.AddComponent<SettlerCourier>();
+            clone.AddComponent<SettlerFamily>();
 
             PrefabManager.Instance.AddPrefab(new CustomPrefab(clone, false));
             Jotunn.Logger.LogInfo($"Created settlement NPC prefab {name}");
@@ -342,6 +345,28 @@ namespace VikingSettlements.Npcs
 
             PrefabManager.Instance.AddPrefab(new CustomPrefab(clone, false));
             Jotunn.Logger.LogInfo("Created settlement ballista prefab VS_Ballista");
+        }
+
+        /// <summary>
+        /// The mead hall's banner: a standing banner carrying the marker the
+        /// Innkeeper job gates on. Raised by the mead hall blueprint.
+        /// </summary>
+        private static void CreateHallBanner()
+        {
+            var clone = CloneFirstAvailable(HallBanner, new[] { "piece_banner01", "piece_banner02" });
+            if (clone == null)
+            {
+                Jotunn.Logger.LogWarning("Could not create VS_HallBanner: no banner prefab found");
+                return;
+            }
+            var piece = clone.GetComponent<Piece>();
+            if (piece != null)
+            {
+                piece.m_name = "$vs_hallbanner";
+            }
+            clone.AddComponent<Settlements.MeadHallMarker>();
+            PrefabManager.Instance.AddPrefab(new CustomPrefab(clone, false));
+            Jotunn.Logger.LogInfo("Created mead hall banner prefab VS_HallBanner");
         }
 
         private static void CreateTrader()

@@ -44,6 +44,7 @@ namespace VikingSettlements
         public static ConfigEntry<KeyboardShortcut> TalkHotkey;
         public static ConfigEntry<bool> HomesMatter;
         public static ConfigEntry<bool> MoraleEnabled;
+        public static ConfigEntry<bool> FamiliesEnabled;
         public static ConfigEntry<float> CourierRange;
         public static ConfigEntry<float> CourierAmbushChance;
         public static ConfigEntry<bool> TiersEnabled;
@@ -302,6 +303,14 @@ namespace VikingSettlements
                     "Settlers track morale from housing, food, company and raids. " +
                     "Cheerful settlers produce extra, miserable ones slow down, and a " +
                     "settler at rock bottom leaves the settlement.",
+                    null,
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            FamiliesEnabled = config.Bind("Economy", "FamiliesEnabled", true,
+                new ConfigDescription(
+                    "Two housed, happy settlers of a settlement can marry: couples gain " +
+                    "morale while together, grieve a partner's confirmed death, speed up " +
+                    "settlement growth, and sometimes a newcomer is a child come of age.",
                     null,
                     new ConfigurationManagerAttributes { IsAdminOnly = true }));
 

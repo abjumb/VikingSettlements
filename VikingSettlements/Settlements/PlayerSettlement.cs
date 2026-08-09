@@ -13,6 +13,7 @@ namespace VikingSettlements.Settlements
     public class PlayerSettlement : MonoBehaviour, Hoverable, Interactable, TextReceiver
     {
         private const string LastRaidDayKey = "vs_lastraid";
+        private const string PendingRaidKey = "vs_nextraid";
         private const string NameKey = "vs_name";
         public const string TierKey = "vs_tier";
         public const string PeaceDayKey = "vs_peaceday";
@@ -206,13 +207,66 @@ namespace VikingSettlements.Settlements
             }
             _nview.GetZDO().Set(LastRaidDayKey, day);
 
-            if (ModConfig.EnableRaids.Value && !InPeace(day)
-                && Random.value < Raids.RaidSpawner.EffectiveRaidChance())
-            {
-                Raids.RaidSpawner.SpawnRivalRaid(this);
-            }
+            RollRaid(day);
             TryGrow();
             TryPromote();
+            Npcs.SettlerFamily.NightlyTick(this);
+        }
+
+        // With a seer in the settlement, a successful raid roll is foreseen a
+        // night ahead: tonight the warning, tomorrow the war party. Without
+        // one, the raid lands the night it is rolled, as ever.
+        private void RollRaid(int day)
+        {
+            if (!ModConfig.EnableRaids.Value)
+            {
+                return;
+            }
+            var zdo = _nview.GetZDO();
+            var pending = zdo.GetInt(PendingRaidKey, -1);
+            if (InPeace(day))
+            {
+                if (pending >= 0)
+                {
+                    zdo.Set(PendingRaidKey, -1); // a warlord's peace unmakes omens
+                }
+                return;
+            }
+            if (pending >= 0 && pending <= day)
+            {
+                zdo.Set(PendingRaidKey, -1);
+                Raids.RaidSpawner.SpawnRivalRaid(this);
+                return;
+            }
+            if (pending >= 0 || Random.value >= Raids.RaidSpawner.EffectiveRaidChance())
+            {
+                return;
+            }
+            if (!HasSeer())
+            {
+                Raids.RaidSpawner.SpawnRivalRaid(this);
+                return;
+            }
+            zdo.Set(PendingRaidKey, day + 1);
+            var player = Player.m_localPlayer;
+            if (player != null
+                && Vector3.Distance(player.transform.position, transform.position) < 60f)
+            {
+                player.Message(MessageHud.MessageType.Center,
+                    Localization.instance.Localize("$vs_seer_warning"));
+            }
+        }
+
+        private bool HasSeer()
+        {
+            foreach (var settler in GetSettlers())
+            {
+                if (settler.gameObject.name.StartsWith(SettlerPrefabs.Seer))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         // Promotion is a head-count and infrastructure check, once per night:
@@ -265,7 +319,11 @@ namespace VikingSettlements.Settlements
             {
                 return;
             }
-            if (Random.value >= ModConfig.GrowthChancePerDay.Value)
+            // Families put down roots: settlements with couples grow faster,
+            // and their newcomers are sometimes children come of age.
+            var couples = SettlerFamily.CountCouples(this);
+            var chance = ModConfig.GrowthChancePerDay.Value * (couples > 0 ? 1.5f : 1f);
+            if (Random.value >= chance)
             {
                 return;
             }
@@ -283,7 +341,7 @@ namespace VikingSettlements.Settlements
                 return; // not enough food to attract anyone
             }
 
-            SpawnNewcomer();
+            SpawnNewcomer(couples > 0 && Random.value < 0.5f);
         }
 
         private int CountUnclaimedBeds()
@@ -301,7 +359,7 @@ namespace VikingSettlements.Settlements
             return count;
         }
 
-        private void SpawnNewcomer()
+        private void SpawnNewcomer(bool bornHere = false)
         {
             // Seers are rare arrivals.
             var prefabName = Random.value < 0.15f ? SettlerPrefabs.Seer : SettlerPrefabs.Settler;
@@ -339,7 +397,19 @@ namespace VikingSettlements.Settlements
                 ai.SetPatrolPoint(center);
             }
 
-            Jotunn.Logger.LogInfo($"A newcomer joined the settlement at {center}");
+            if (bornHere)
+            {
+                var player = Player.m_localPlayer;
+                if (player != null
+                    && Vector3.Distance(player.transform.position, center) < 50f)
+                {
+                    player.Message(MessageHud.MessageType.Center,
+                        Localization.instance.Localize("$vs_child"));
+                }
+            }
+            Jotunn.Logger.LogInfo(bornHere
+                ? $"A settlement child came of age at {center}"
+                : $"A newcomer joined the settlement at {center}");
         }
 
         public string GetHoverName()
