@@ -41,6 +41,7 @@ Usable with vanilla `spawn <prefab> [count] [stars]` (cheat):
 | `VS_Raider` | A hostile clanless bandit — instant raid practice |
 | `VS_Warlord` | The clanless warlord mini-boss — spawns unscaled; raids scale him by boss progression |
 | `VS_PenBoar` | A boar that spawns already tamed — the livestock pen blueprint uses these |
+| `VS_Ballista` | The Settlement Ballista — a vanilla turret that targets only enemies (never players, tamed animals or settlers). The ballista tower blueprint mounts one; Engineers keep it loaded with `TurretBoltWood` |
 | `VS_Trader` | The village trader (static NPC; opens his store on interact) |
 | `VS_CampTotem` | A destructible war totem — smashing it counts as clearing a camp |
 | `VS_SettlementBanner` | The settlement banner piece (normally built with the hammer) |
@@ -87,7 +88,7 @@ randomevent              -- let the game roll a random event naturally
 Raid scaling reads these too: `setkey defeated_gdking` makes rival raiders
 eligible for 1 star, `setkey defeated_bonemass` for 2.
 
-### Clanless camps
+### Clanless camps & clans
 
 The mod tracks cleared camps with global keys `vs_camp_cleared_1` through
 `vs_camp_cleared_10` — each reduces rival raid chance 5%, and setting all ten
@@ -98,6 +99,13 @@ listkeys                     -- see which are set
 setkey vs_camp_cleared_1     -- fake a cleared camp
 resetkeys                    -- ⚠ wipes ALL global keys, including boss kills
 ```
+
+Two more key families joined in 1.11: destroying a totem also stamps a
+`vs_camp_cleared_at_<x>_<z>` position key (how a settlement learns its
+abducted settler's camp fell — don't fake these unless you want a free
+rescue), and killing a clan's warlord sets `vs_clan_broken_1` … `8`, which
+permanently stops that clan's raids. `setkey vs_clan_broken_3` silences the
+clan whose index is 3 — hover a camp totem to see which clan owns it.
 
 ### Cleanup after testing
 

@@ -30,6 +30,14 @@ namespace VikingSettlements.Raids
                 return;
             }
 
+            // Raids come from the nearest camp's clan; a clan whose warlord
+            // has fallen is broken and raids no more.
+            var clanIndex = ClanNames.IndexNear(settlement.transform.position, out _);
+            if (ClanNames.IsBroken(clanIndex))
+            {
+                return;
+            }
+
             var center = settlement.transform.position;
             var count = Random.Range(3, 6);
             var maxLevel = 1;
@@ -99,19 +107,35 @@ namespace VikingSettlements.Raids
                 }
             }
 
+            var player = Player.m_localPlayer;
+            if (player != null
+                && Vector3.Distance(player.transform.position, center) < 80f)
+            {
+                player.Message(MessageHud.MessageType.Center,
+                    Localization.instance.Localize($"{ClanNames.Token(clanIndex)} $vs_clan_attack"));
+            }
+
             // The counterweight to clearing camps: the clanless eventually
             // send a warlord. Kill him and the settlement earns real peace.
             if (ModConfig.WarlordEnabled.Value
                 && CampTotem.ClearedCampCount() >= 3
                 && Random.value < ModConfig.WarlordChance.Value)
             {
-                SpawnWarlord(center, angle, distance);
+                SpawnWarlord(center, angle, distance, clanIndex);
+            }
+
+            // A raid can carry someone off - rescue them by breaking the
+            // clan's camp before the deadline. Rolled last so its message
+            // (the actionable one) isn't overwritten by the announcements.
+            if (EnvMan.instance != null)
+            {
+                Abduction.TryAbduct(settlement, EnvMan.instance.GetCurrentDay());
             }
 
             Jotunn.Logger.LogInfo($"Rival clan raid: {count} raiders assault the settlement at {center}");
         }
 
-        private static void SpawnWarlord(Vector3 center, float angle, float distance)
+        private static void SpawnWarlord(Vector3 center, float angle, float distance, int clanIndex)
         {
             var prefab = PrefabManager.Instance.GetPrefab(SettlerPrefabs.Warlord);
             if (prefab == null)
@@ -131,6 +155,8 @@ namespace VikingSettlements.Raids
             if (view != null && view.IsValid())
             {
                 view.GetZDO().Set(Npcs.RaiderDespawn.WarPartyKey, true);
+                // He carries his clan: felling him breaks it (see WarlordFall).
+                view.GetZDO().Set(ClanNames.ClanKey, clanIndex);
             }
 
             // Scale to boss progression, like starred raiders.

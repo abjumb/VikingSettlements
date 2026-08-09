@@ -175,6 +175,9 @@ wild settlements:
      within range and walks back; can be ambushed on the road
    - **Herder** — keeps pen animals fed from your chests, culls the herd
      above four head, and carries loose drops into storage
+   - **Engineer** — keeps the settlement's ballista towers loaded with
+     bolts from your chests, and fletches 4 wood turret bolts from 2 wood
+     when everything is topped up (needs a workbench)
 
    **Press `T` while looking at any settler to talk to them**: a panel shows
    their health, hunger and next mealtime, and a live ✓/✗ checklist of what
@@ -182,8 +185,11 @@ wild settlements:
 
    **Builders take construction orders** through that same talk menu: stand
    where the new building should go, talk to a builder, and pick a blueprint
-   — *cabin* (40 wood), *watchtower* (30 wood) or *longhouse* (100 wood,
-   10 stone), the same wooden buildings wild meadows villages are made of.
+   — *cabin* (40 wood), *watchtower* (30 wood), *longhouse* (100 wood,
+   10 stone, Village tier), *livestock pen* (30 wood, Village tier),
+   *palisade ring* (80 wood, Village tier), *ballista tower* (60 wood,
+   20 stone, Village tier) or *stone great-hall* (60 wood, 40 stone,
+   Town tier).
    A construction site is marked out on the spot; builders carry materials
    into it each work tick from the **Builders' Supply Chest** (hammer →
    Misc, 10 wood) and raise the finished building when the cost is paid.
@@ -211,10 +217,24 @@ wild settlements:
    your settlers — being on your faction — fight off natively. War parties
    scale with your settlement's population, and gain star levels once The
    Elder and Bonemass have fallen.
+   Every camp belongs to one of **eight named clans**, and your settlement
+   is raided by the clan of its nearest camp — raid messages name your
+   enemy, and each war totem shows whose camp it is. Raids can also
+   **abduct** one assigned settler (20% by default, one captive at a time):
+   the banner shows who was taken and the days left to save them — break
+   the clan's camp totem before the deadline and they walk home with name,
+   stars and gear intact; fail and they're gone for good, and the whole
+   settlement mourns (morale). Party members are never abducted.
+   The *palisade ring* and *ballista tower* blueprints exist for exactly
+   these nights — the Settlement Ballista targets only enemies, and no
+   turret bolt (even from vanilla ballistas you built) can hit recruited
+   settlers, players or tamed animals.
 6. **Strike back** — the raiders come from somewhere: *clanless camps* dot
    the world. Destroy a camp's war totem and the rival raid chance drops
    permanently (5% per camp); break ten camps and the native bandit raid
-   event stops firing altogether.
+   event stops firing altogether. And when a raid brings a clan's
+   **warlord**, felling him doesn't just buy peace days — it **breaks his
+   clan permanently**: that clan never raids your lands again.
 
 Jobs need somewhere to put their output: place **chests inside the settlement
 radius** or lumberjacks, farmers and blacksmiths will have nothing to work
@@ -222,7 +242,7 @@ with.
 
 <p align="center">
   <img src="docs/jobs.svg" width="900"
-       alt="The ten settler jobs: what each one does every work tick and the workstation it needs first">
+       alt="The thirteen settler jobs: what each one does every work tick and the workstation it needs first">
 </p>
 
 All settler state (recruiter, job, home) lives in the creature's ZDO, so it
@@ -279,6 +299,8 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Raids / ClanlessCamps | 60 | Bandit camp placement attempts in world gen (0 disables) |
 | Raids / ScaleRaids | true | War parties scale with population and boss progression |
 | Raids / CampClearRaidReduction | 0.05 | Rival raid chance reduction per cleared camp (max 10) |
+| Raids / AbductionChance | 0.2 | Chance a rival raid carries one settler off to the raiders' camp |
+| Raids / AbductionDeadlineDays | 7 | Days to break the camp's totem before a captive is lost forever |
 | Economy / FoodUpkeep | true | Settlers eat from settlement chests; hungry settlers stop working |
 | Economy / MealIntervalSeconds | 1800 | In-game seconds between settler meals (~1 per game day) |
 | Economy / GrowthEnabled | true | Settlements attract newcomers when beds and food allow |
@@ -375,7 +397,10 @@ To keep iteration bearable, temporarily set `WorkIntervalSeconds = 10` and
 | Settlement banner | `spawn Wood 50`, `spawn FineWood 20`, stand near a workbench, hammer → Misc |
 | Jobs | Assign a settler, place a chest in the radius, set them to Lumberjack, wait a tick |
 | Native raid event | `setkey defeated_eikthyr`, then `event vs_banditraid` (`stopevent` to end it) |
-| Rival clan raid | With chance at 1.0, `skiptime` until night while standing in your settlement |
+| Rival clan raid | With chance at 1.0, `skiptime` until night while standing in your settlement — the message names the attacking clan |
+| Abduction & rescue | Set `AbductionChance = 1.0`, trigger a rival raid, watch the banner hover for the captive, then destroy the totem at the camp `vs_find camp` points to |
+| Ballista + Engineer | Order a *Ballista Tower* through a builder, set a settler to Engineer with wood in a chest, wait a couple of ticks, then `spawn VS_Raider` |
+| Broken clan | Kill a raid's warlord (needs 3+ camps cleared) — `listkeys` should show a `vs_clan_broken_*` key and that clan stops raiding |
 
 If a feature is silently missing, check `BepInEx/LogOutput.log` — every vanilla
 prefab the mod cannot find is logged as a `not found, skipped` warning rather
@@ -385,29 +410,55 @@ than throwing.
 
 ```
 VikingSettlements/
-├── VikingSettlements.cs        # plugin entry point, config + manager wiring
+├── VikingSettlements.cs        # plugin entry point, localization + manager wiring
 ├── ModConfig.cs                # BepInEx config entries (server-synced)
 ├── Npcs/
-│   ├── SettlerPrefabs.cs       # clones vanilla humanoids into settler/trader/raider prefabs
+│   ├── SettlerPrefabs.cs       # clones vanilla prefabs into settler/trader/raider/ballista prefabs
 │   ├── SettlerIdentity.cs      # deterministic personal names
 │   ├── SettlerChatter.cs       # proximity greetings
 │   ├── SettlerHome.cs          # pins AI patrol point to the settlement
+│   ├── SettlerHousing.cs       # door-based home assignment
 │   ├── SettlerRecruitable.cs   # recruit/follow/assign state machine + job cycling
-│   ├── SettlerWork.cs          # job effects (produce, smelt, repair)
+│   ├── SettlerWork.cs          # job effects (produce, convert, repair, engineer)
+│   ├── SettlerNeeds.cs         # live job-requirement checks for the talk panel
+│   ├── SettlerTalkPanel.cs     # the T-hotkey talk UI (needs, moods, blueprints)
+│   ├── SettlerEquipment.cs     # player-given weapons and armor
+│   ├── SettlerMorale.cs        # moods from housing, food, company and raids
+│   ├── SettlerCourier.cs       # caravan journeys between settlements
+│   ├── SettlerVeterancy.cs     # XP and star levels
+│   ├── SettlerReputation.cs    # wild-village standing hooks
+│   ├── VillageHeart.cs         # wild village reputation anchor
 │   └── RaiderDespawn.cs        # cleans up unbeaten raiders
+├── Party/
+│   ├── PartySystem.cs          # roster, hotkeys, traversal stow/unstow
+│   ├── PartyMember.cs          # stances, regen, auto-retreat
+│   └── PartyPatches.cs         # the permadeath-contract damage patch
 ├── Settlements/
-│   ├── PlayerSettlement.cs     # banner behavior: population, rival raid rolls
-│   └── SettlementPieces.cs     # buildable Settlement Banner piece
+│   ├── PlayerSettlement.cs     # banner behavior: population, tiers, raid rolls, captives
+│   ├── SettlementPieces.cs     # buildable banner + supply chest pieces
+│   ├── SettlementPanel.cs      # the banner management UI
+│   ├── Blueprints.cs           # orderable builder blueprints
+│   ├── ConstructionSite.cs     # material tracking + build completion
+│   ├── BuildChest.cs           # the builders' supply chest
+│   ├── HomeAssignPanel.cs      # who-lives-here door UI
+│   ├── SettlerGearPanel.cs     # the equipment hand-over UI
+│   └── UiPalette.cs            # shared UI colors
 ├── Raids/
 │   ├── RaidEvents.cs           # native RandEventSystem integration
-│   └── RaidSpawner.cs          # rival clan war parties
+│   ├── RaidSpawner.cs          # rival clan war parties + warlords
+│   ├── ClanNames.cs            # the eight named clans + broken-clan keys
+│   ├── Abduction.cs            # captive records, rescues and deadlines
+│   ├── CampTotem.cs            # camp-clear keys + clan hover
+│   └── WarlordFall.cs          # peace days + clan breaking on warlord death
 ├── World/
 │   ├── SettlementLayout.cs     # data-driven blueprint DSL
 │   ├── Layouts.cs              # the actual settlement blueprints
 │   ├── LayoutBuilder.cs        # instantiates blueprints (locations & command)
 │   └── SettlementLocations.cs  # ZoneManager registration
 └── Commands/
-    └── SpawnSettlementCommand.cs
+    ├── SpawnSettlementCommand.cs
+    ├── FindSettlementCommand.cs
+    └── PartyCommand.cs
 ```
 
 All vanilla prefab references are resolved defensively — after a game update

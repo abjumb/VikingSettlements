@@ -21,6 +21,10 @@ namespace VikingSettlements.Settlements
         public static readonly List<PlayerSettlement> Instances = new List<PlayerSettlement>();
 
         private ZNetView _nview;
+        private float _captiveTimer;
+
+        /// <summary>The banner's network view, for systems that keep state on it (abductions).</summary>
+        internal ZNetView View => _nview;
 
         private void Awake()
         {
@@ -177,6 +181,15 @@ namespace VikingSettlements.Settlements
             if (EnvMan.instance == null)
             {
                 return;
+            }
+
+            // Captives don't wait for nightfall: rescue (or loss) resolves
+            // within moments of the totem falling or the deadline passing.
+            _captiveTimer += Time.deltaTime;
+            if (_captiveTimer >= 5f)
+            {
+                _captiveTimer = 0f;
+                Raids.Abduction.CheckCaptive(this, EnvMan.instance.GetCurrentDay());
             }
 
             // One tick per settlement per night while loaded: roll a rival
@@ -362,6 +375,7 @@ namespace VikingSettlements.Settlements
             return Localization.instance.Localize(
                 $"{DisplayName} ({TierToken(Tier)})"
                 + $"\n$vs_settlers: {total}/{SettlerCap}{breakdown}{hungryLine}"
+                + Raids.Abduction.HoverLine(this)
                 + "\n[<color=yellow><b>$KEY_Use</b></color>] $vs_manage"
                 + "\n[<color=yellow><b>$KEY_AltPlace + $KEY_Use</b></color>] $vs_rename");
         }

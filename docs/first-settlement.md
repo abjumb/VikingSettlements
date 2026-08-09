@@ -92,7 +92,7 @@ A settlement holds **10 settlers** by default.
 
 Press `E` on a settled villager again to cycle their job (or use the banner's
 management panel to do it from one screen). Keep pressing to scroll through
-all twelve:
+all thirteen:
 
 | Job | Every work tick (60 s) | Needs before they start |
 |---|---|---|
@@ -108,6 +108,7 @@ all twelve:
 | **Brewer** | One brew: **2 honey → minor healing mead**, else **2 barley → barley wine** | A **fermenter** in the radius; the ingredients **and room in the same chest** |
 | **Courier** | Hauls up to **8 surplus goods** to another settlement and walks back | A second settlement within **300 m**; more than 10 of something in your chests |
 | **Herder** | Feeds pen animals, **culls the herd above 4**, tidies loose drops into chests | Tamed animals in the radius; carrots/turnips for feed |
+| **Engineer** | Loads the emptiest **ballista tower** with up to 5 bolts from your chests; fletches **4 bolts from 2 wood** when all are full | A **workbench**; a ballista in the radius; wood or bolts in a chest |
 
 They work roughly **once a minute**, whether or not you're watching, as long as
 the area is loaded — and only while **fed** (see Step 7). Note the smelting,
@@ -123,8 +124,11 @@ still needs before they'll work.
 **Builders can construct whole buildings.** Build a **Builders' Supply
 Chest** (hammer → Misc, 10 wood) and fill it with wood. Then stand exactly
 where the new building should go, talk to a builder (`T`), and pick a
-blueprint: **cabin** (40 wood), **watchtower** (30 wood) or **longhouse**
-(100 wood + 10 stone). A construction site appears at your feet; each work
+blueprint: **cabin** (40 wood) and **watchtower** (30 wood) from the start;
+**longhouse** (100 wood + 10 stone), **livestock pen** (30 wood),
+**palisade ring** (80 wood) and **ballista tower** (60 wood + 20 stone)
+once the settlement reaches Village tier; the **stone great-hall** (60 wood
++ 40 stone) at Town tier. A construction site appears at your feet; each work
 tick your builders carry materials from the supply chest into it, and the
 finished building — beds, door, chest and all — goes up when the cost is
 paid. If the supply chest runs dry you'll get a warning, and any
@@ -183,12 +187,27 @@ A settlement is a target. Two things can come for it:
   base for the game's own raid system. You'll get the message *"The clanless are
   raiding!"* the same way you'd get "The forest is moving."
 - **Rival clans** — each night there's a **15% chance** a war party of three to
-  five bandits attacks a settlement directly.
+  five bandits attacks a settlement directly. The attackers have names: every
+  bandit camp belongs to one of **eight clans**, and your settlement is raided
+  by the clan of its nearest camp — the raid message tells you who came.
+
+Raids can also **carry someone off**: about one raid in five abducts an
+assigned settler to the clan's camp. The banner shows who was taken and how
+many days you have (7 by default) — destroy that camp's **war totem** in time
+and they walk home with their name, stars and gear; wait too long and they're
+gone forever, and the whole settlement's morale takes the blow. Party members
+travelling with you are never abducted.
 
 Your settlers fight back on your side automatically. A couple of **Guards**, a
 palisade, and a few workbench-repairable walls go a long way. Builders will
 patch up the damage afterwards — and a fed settlement regrows lost settlers
 over time.
+
+From Village tier your builders can raise real **defense works**: the
+**palisade ring** blueprint plants a wall of stakes around wherever you
+stand, and the **ballista tower** mounts a Settlement Ballista that shoots
+only enemies — it can't hit you, your settlers or your animals. Give someone
+the **Engineer** job and the towers stay loaded without you touching them.
 
 Settlers who stick around get better at this: a day of service earns 1 XP and
 every battle survived earns 2, promoting them to **Veteran** (1 star) at 20 XP
@@ -214,7 +233,7 @@ Settle a follower ............. E          (inside banner radius)
 Post / bring a follower ....... E          (away from any banner)
 Party: follow / hold all ...... G
 Party: fall back! ............. H          (they disengage and run to you)
-Change a settler's job ........ E          (cycles all twelve)
+Change a settler's job ........ E          (cycles all thirteen)
 Unassign a settler ............ Shift + E
 Talk to a settler ............. T          (health, hunger, job needs)
 Order a building .............. T on a builder, stand where it goes

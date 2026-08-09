@@ -169,7 +169,111 @@ namespace VikingSettlements.Npcs
                 case SettlerJob.Herder:
                     HerdPen();
                     break;
+                case SettlerJob.Engineer:
+                    if (!gated || HasStation("$piece_workbench"))
+                    {
+                        EngineerTick(bonus);
+                    }
+                    break;
             }
+        }
+
+        // ---- Engineering ----
+
+        internal const string BoltPrefab = "TurretBoltWood";
+        private const int BoltStockpileCap = 40;
+
+        /// <summary>
+        /// One act per tick: the emptiest ballista in the settlement gets up
+        /// to five bolts from the chests; with every ballista topped up (or
+        /// no bolts to load), the engineer fletches new bolts from wood.
+        /// </summary>
+        private void EngineerTick(int bonus)
+        {
+            var radius = ModConfig.SettlementRadius.Value;
+            var home = _settler.Home;
+            Turret neediest = null;
+            var neediestFraction = 1f;
+            foreach (var turret in FindObjectsOfType<Turret>())
+            {
+                if (turret.m_maxAmmo <= 0
+                    || Vector3.Distance(turret.transform.position, home) > radius)
+                {
+                    continue;
+                }
+                var view = turret.m_nview;
+                if (view == null || !view.IsValid())
+                {
+                    continue;
+                }
+                // Never mix ammo: a turret the player loaded with something
+                // else is theirs to manage.
+                var loadedType = view.GetZDO().GetString(ZDOVars.s_ammoType);
+                if (!string.IsNullOrEmpty(loadedType) && loadedType != BoltPrefab
+                    && view.GetZDO().GetInt(ZDOVars.s_ammo) > 0)
+                {
+                    continue;
+                }
+                var fraction = (float)turret.GetAmmo() / turret.m_maxAmmo;
+                if (fraction < neediestFraction)
+                {
+                    neediest = turret;
+                    neediestFraction = fraction;
+                }
+            }
+            if (neediest != null && LoadTurret(neediest))
+            {
+                return;
+            }
+            FletchBolts(bonus);
+        }
+
+        private bool LoadTurret(Turret turret)
+        {
+            var view = turret.m_nview;
+            var space = turret.m_maxAmmo - turret.GetAmmo();
+            var taken = TakeItemsAround(_settler.Home, BoltPrefab, Mathf.Min(5, space));
+            if (taken <= 0)
+            {
+                return false;
+            }
+            // Direct ZDO write with ownership, the same pattern the rest of
+            // the mod uses; the turret's own logic reads ammo from the ZDO.
+            view.ClaimOwnership();
+            var zdo = view.GetZDO();
+            zdo.Set(ZDOVars.s_ammo, zdo.GetInt(ZDOVars.s_ammo) + taken);
+            if (string.IsNullOrEmpty(zdo.GetString(ZDOVars.s_ammoType)))
+            {
+                zdo.Set(ZDOVars.s_ammoType, BoltPrefab);
+            }
+            return true;
+        }
+
+        /// <summary>Two wood become four bolts (six when cheerful), single-chest rule.</summary>
+        private void FletchBolts(int bonus)
+        {
+            if (!HasNearby<Turret>())
+            {
+                return; // no ballista anywhere: no point filling chests with bolts
+            }
+            if (CountItemAround(_settler.Home, BoltPrefab) >= BoltStockpileCap)
+            {
+                return;
+            }
+            var woodName = SharedName("Wood");
+            var bolts = MakeItem(BoltPrefab, 4 + bonus * 2);
+            if (woodName == null || bolts == null)
+            {
+                return;
+            }
+            var container = FindStorage(inventory =>
+                inventory.CountItems(woodName) >= 2 && inventory.CanAddItem(bolts));
+            if (container == null)
+            {
+                return;
+            }
+            container.GetInventory().RemoveItem(woodName, 2);
+            container.GetInventory().AddItem(bolts);
         }
 
         // ---- Courier departures (the journey itself runs in SettlerCourier) ----

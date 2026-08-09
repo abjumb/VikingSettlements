@@ -73,9 +73,9 @@ the same way; world and raid settings are admin-only and sync from the server.
   a party member can only die to a monster **in a fight you are standing
   in**, after loud low-health warnings and an auto-retreat you can override.
   When one falls, they are gone.
-- **Twelve jobs**: press E on an assigned settler to cycle — Villager,
+- **Thirteen jobs**: press E on an assigned settler to cycle — Villager,
   Lumberjack, Farmer, Builder, Blacksmith, Guard, Cook, Miner, Hunter,
-  Brewer, Courier, Herder. Producers fill your settlement's chests, cooks and brewers refine
+  Brewer, Courier, Herder, Engineer. Producers fill your settlement's chests, cooks and brewers refine
   what they find in them, builders repair damage, guards keep watch.
   The jobs chain: hunters bring raw meat, cooks turn it into the food that
   keeps the whole settlement fed. Shift+E unassigns/dismisses.
@@ -84,9 +84,10 @@ the same way; world and raid settings are admin-only and sync from the server.
   of everything their job still needs — the workstation, the ingredients,
   the chest space — so an idle settler is never a mystery.
 - **Builder projects**: order construction through a builder's talk menu —
-  stand where the building should go, talk to a builder, pick a blueprint
-  (cabin, watchtower or longhouse — the same wooden buildings wild meadows
-  villages are made of). Builders raise it from materials in the new
+  stand where the building should go, talk to a builder, pick a blueprint:
+  cabins, watchtowers and longhouses up to livestock pens, palisade rings,
+  ballista towers and the Town-only stone great-hall. Builders raise it
+  from materials in the new
   **Builders' Supply Chest**; you get warned when supplies run dry, and
   your lumberjacks and miners automatically redirect their haul to the
   supply chest while a project needs it.
@@ -128,6 +129,22 @@ the same way; world and raid settings are admin-only and sync from the server.
   event system — a new "The clanless are raiding!" event sends bandits
   against it. Rival clans may also assault your settlement at night, with war
   parties that scale with your population and the bosses you've killed.
+- **Named rival clans**: every bandit camp belongs to one of eight named
+  clans — your settlement is raided by the clan of its nearest camp, raid
+  messages name your enemy, and each war totem shows whose camp it is.
+  A raiding warlord carries his clan's banner: fell him and that clan is
+  **broken for good** — its raids on your lands end permanently.
+- **Abductions & rescues**: a rival raid can carry one of your settlers
+  off to the clan's camp. The banner shows who was taken and the days
+  remaining — destroy that camp's war totem before the deadline and they
+  walk home with their name, stars and gear intact. Fail, and they are
+  lost forever. Party members are never abducted.
+- **Defense works**: two Village-tier blueprints — the Palisade Ring
+  (a stake ring with a gate, raised around wherever you stand) and the
+  Ballista Tower, crowned with a Settlement Ballista that targets only
+  enemies and can never hit players, tamed animals or your people. The
+  new **Engineer** job keeps every ballista loaded and fletches turret
+  bolts from wood.
 - **Clanless camps**: the raiders have homes — bandit camps in world gen.
   Destroy a camp's war totem to permanently weaken rival raids; break ten
   and the native raid event goes silent.
@@ -161,6 +178,8 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Raids / ClanlessCamps | 60 | Bandit camp placement attempts in world gen (0 disables) |
 | Raids / ScaleRaids | true | War parties scale with population and boss progression |
 | Raids / CampClearRaidReduction | 0.05 | Rival raid chance reduction per cleared camp (max 10) |
+| Raids / AbductionChance | 0.2 | Chance a rival raid carries one settler off to the raiders' camp |
+| Raids / AbductionDeadlineDays | 7 | Days to break the camp's totem before a captive is lost forever |
 | Economy / FoodUpkeep | true | Settlers eat from settlement chests; hungry settlers stop working |
 | Economy / MealIntervalSeconds | 1800 | In-game seconds between settler meals (~1 per game day) |
 | Economy / GrowthEnabled | true | Settlements attract newcomers when beds and food allow |

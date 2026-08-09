@@ -26,6 +26,7 @@ namespace VikingSettlements.Npcs
         public const string PenBoar = "VS_PenBoar";
         public const string CampTotem = "VS_CampTotem";
         public const string Heart = "VS_VillageHeart";
+        public const string Ballista = "VS_Ballista";
 
         private static bool _created;
 
@@ -46,6 +47,7 @@ namespace VikingSettlements.Npcs
             CreatePenBoar();
             CreateCampTotem();
             CreateVillageHeart();
+            CreateBallista();
         }
 
         private static GameObject CloneFirstAvailable(string newName, IEnumerable<string> baseCandidates)
@@ -310,6 +312,36 @@ namespace VikingSettlements.Npcs
 
             PrefabManager.Instance.AddPrefab(new CustomPrefab(clone, false));
             Jotunn.Logger.LogInfo("Created village heart prefab VS_VillageHeart");
+        }
+
+        /// <summary>
+        /// The settlement ballista, for the ballista tower blueprint: the
+        /// vanilla turret re-aimed for defense work. The stock piece shoots
+        /// everything that moves - players, settlers and livestock included;
+        /// this clone targets enemies only, and the damage contract patch
+        /// additionally guarantees no turret bolt from any ballista can hurt
+        /// a recruited settler.
+        /// </summary>
+        private static void CreateBallista()
+        {
+            var clone = CloneFirstAvailable(Ballista, new[] { "piece_turret" });
+            if (clone == null)
+            {
+                Jotunn.Logger.LogWarning("Could not create VS_Ballista: piece_turret prefab not found");
+                return;
+            }
+
+            var turret = clone.GetComponent<Turret>();
+            if (turret != null)
+            {
+                turret.m_name = "$vs_ballista";
+                turret.m_targetPlayers = false;
+                turret.m_targetTamed = false;
+                turret.m_targetEnemies = true;
+            }
+
+            PrefabManager.Instance.AddPrefab(new CustomPrefab(clone, false));
+            Jotunn.Logger.LogInfo("Created settlement ballista prefab VS_Ballista");
         }
 
         private static void CreateTrader()
