@@ -13,6 +13,11 @@ namespace VikingSettlements.Raids
         public const int MaxCountedCamps = 10;
         private const string KeyPrefix = "vs_camp_cleared_";
 
+        // Resolved through the location registry on first hover (the totem
+        // sits a few meters off the camp center, so its own position must
+        // not be hashed directly). -2 = not yet resolved.
+        private int _clanIndex = -2;
+
         private void Awake()
         {
             var wearNTear = GetComponent<WearNTear>();
@@ -43,6 +48,9 @@ namespace VikingSettlements.Raids
                     break;
                 }
             }
+            // Position stamp for the abduction system: a settlement holding
+            // a captive from this camp can see it fell, from anywhere.
+            ZoneSystem.instance.SetGlobalKey(Abduction.CampClearedKeyAt(transform.position));
 
             var player = Player.m_localPlayer;
             if (player != null
@@ -80,7 +88,14 @@ namespace VikingSettlements.Raids
 
         public string GetHoverText()
         {
-            return Localization.instance.Localize("$vs_camp_totem\n<color=orange>$vs_camp_totem_hint</color>");
+            if (_clanIndex == -2)
+            {
+                _clanIndex = ClanNames.IndexNear(transform.position, out _);
+            }
+            var clan = ClanNames.Token(_clanIndex);
+            var broken = ClanNames.IsBroken(_clanIndex) ? " — $vs_clan_broken_note" : "";
+            return Localization.instance.Localize(
+                $"$vs_camp_totem ({clan}{broken})\n<color=orange>$vs_camp_totem_hint</color>");
         }
     }
 }

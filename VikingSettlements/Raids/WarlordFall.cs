@@ -44,12 +44,27 @@ namespace VikingSettlements.Raids
                     EnvMan.instance.GetCurrentDay() + ModConfig.WarlordPeaceDays.Value);
             }
 
+            // A warlord is his clan's spine: his death breaks the clan for
+            // good, permanently ending its raids (the nightly roll checks).
+            var clanIndex = _nview.GetZDO().GetInt(ClanNames.ClanKey, -1);
+            var shattered = clanIndex >= 0 && !ClanNames.IsBroken(clanIndex);
+            if (shattered)
+            {
+                ClanNames.MarkBroken(clanIndex);
+            }
+
             var player = Player.m_localPlayer;
             if (player != null
                 && Vector3.Distance(player.transform.position, transform.position) < 80f)
             {
                 player.Message(MessageHud.MessageType.Center,
                     Localization.instance.Localize("$vs_warlord_slain"));
+                if (shattered)
+                {
+                    player.Message(MessageHud.MessageType.TopLeft,
+                        Localization.instance.Localize(
+                            $"{ClanNames.Token(clanIndex)} $vs_clan_shattered"));
+                }
             }
         }
     }

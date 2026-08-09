@@ -248,6 +248,42 @@ namespace VikingSettlements.World
         public static SettlementLayout BlueprintWatchtower() => Watchtower();
 
         /// <summary>
+        /// A defensive stake ring, 10m radius, with a gate and torches at the
+        /// opening. Placed around whatever the player stands in front of.
+        /// </summary>
+        public static SettlementLayout BlueprintPalisade()
+        {
+            var l = new SettlementLayout("palisade");
+            AddStakeRing(l, 10f, 22, 26f);
+            l.Add("wood_gate", 0f, 0f, 10f);
+            l.Add("piece_groundtorch_wood", -1.8f, 0f, 9.4f);
+            l.Add("piece_groundtorch_wood", 1.8f, 0f, 9.4f);
+            return l;
+        }
+
+        /// <summary>The watchtower platform crowned with a settlement ballista.</summary>
+        public static SettlementLayout BlueprintBallistaTower()
+        {
+            var l = new SettlementLayout("ballistatower");
+            foreach (var x in new[] { -1f, 1f })
+            {
+                foreach (var z in new[] { -1f, 1f })
+                {
+                    l.Add("wood_pole2", x, 0f, z);
+                    l.Add("wood_pole2", x, 2f, z);
+                    l.Add("wood_pole2", x, 4f, z);
+                }
+            }
+            l.Add("wood_floor", 0f, 6f, 0f);
+            l.Add("wood_fence", 0f, 6f, 1f);
+            l.Add("wood_fence", 0f, 6f, -1f);
+            l.Add("wood_fence", 1f, 6f, 0f, 90f);
+            l.Add("wood_fence", -1f, 6f, 0f, 90f);
+            l.Add(SettlerPrefabs.Ballista, 0f, 6f, 0f);
+            return l;
+        }
+
+        /// <summary>
         /// The large meadows village: fire plaza, three cabins, a longhouse,
         /// a farm, a trader stall, a watchtower and eight villagers.
         /// </summary>

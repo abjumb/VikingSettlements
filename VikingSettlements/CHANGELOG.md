@@ -1,5 +1,36 @@
 # Changelog
 
+### 1.11.0
+
+- Named rival clans: every clanless camp now belongs to one of eight
+  named clans (the Ashwolves, the Blood Ravens, the Rime Serpents...).
+  Your settlement is raided by the clan of its nearest camp - raid
+  messages name them, and each camp's war totem shows whose it is.
+  A raiding warlord carries his clan's banner: fell him and that clan
+  is broken for good - its raids on your lands end permanently, on top
+  of the existing temporary peace.
+- Abductions & rescues: a rival raid can carry one assigned settler off
+  to the clan's camp (20% of raids by default, one captive at a time).
+  The banner shows who was taken and how many days remain - destroy
+  that camp's war totem before the deadline (7 days by default) and
+  they walk home with their name, stars and gear intact. Fail, and
+  they are lost forever and the settlement mourns. Party members are
+  never abducted - their fate stays under the party's permadeath
+  contract.
+- Defense works: two new Village-tier builder blueprints. The Palisade
+  Ring (80 wood) raises a 10 m ring of sharp stakes with a gate and
+  torches around wherever you stand; the Ballista Tower (60 wood, 20
+  stone) is the watchtower crowned with a Settlement Ballista - a
+  turret that targets only enemies and can never hit players, tamed
+  animals or your people (bolts from any ballista, including vanilla
+  ones you built, no longer damage recruited settlers).
+- Engineer job (the thirteenth): needs a workbench. Each work tick the
+  engineer keeps the settlement's ballista towers loaded from bolts in
+  your chests (topping up the emptiest first, never mixing ammo types),
+  and fletches 4 wood turret bolts from 2 wood when everything is
+  loaded - up to a stockpile of 40.
+- New config: Raids/AbductionChance and Raids/AbductionDeadlineDays.
+
 ### 1.10.0
 
 - Settler morale: assigned settlers track a mood (shown in the talk

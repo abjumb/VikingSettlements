@@ -15,7 +15,7 @@ namespace VikingSettlements
     {
         public const string PluginGUID = "com.abjumb.vikingsettlements";
         public const string PluginName = "VikingSettlements";
-        public const string PluginVersion = "1.10.0";
+        public const string PluginVersion = "1.11.0";
 
         public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
@@ -224,6 +224,29 @@ namespace VikingSettlements
                 { "vs_need_animals", "Tamed animals in the settlement" },
                 { "vs_need_feed", "Carrots or turnips in a chest, for feed" },
                 { "vs_courier_ambush", "A courier is ambushed on the road!" },
+                { "vs_job_engineer", "Engineer" },
+                { "vs_ballista", "Settlement Ballista" },
+                { "vs_bp_palisade", "Palisade Ring" },
+                { "vs_bp_ballista", "Ballista Tower" },
+                { "vs_need_ballista", "A ballista tower to keep loaded" },
+                { "vs_need_boltwood", "Wood in a chest, for fletching bolts" },
+                { "vs_clan0", "The Clanless" },
+                { "vs_clan1", "The Ashwolves" },
+                { "vs_clan2", "The Saltborn" },
+                { "vs_clan3", "The Blood Ravens" },
+                { "vs_clan4", "The Grey Hounds" },
+                { "vs_clan5", "The Oathbreakers" },
+                { "vs_clan6", "The Night Axes" },
+                { "vs_clan7", "The Rime Serpents" },
+                { "vs_clan8", "The Broken Shields" },
+                { "vs_clan_attack", "are attacking the settlement!" },
+                { "vs_clan_shattered", "are broken — their raids on this land are over" },
+                { "vs_clan_broken_note", "clan broken" },
+                { "vs_abducted", "has been carried off by the clanless! Destroy their camp's war totem to free them" },
+                { "vs_captive", "Captive" },
+                { "vs_captive_days", "days to save them" },
+                { "vs_rescued", "is free and comes home!" },
+                { "vs_captive_lost", "will never come home. The settlement mourns" },
             });
         }
     }

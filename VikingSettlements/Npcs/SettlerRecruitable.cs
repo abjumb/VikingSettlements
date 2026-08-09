@@ -25,6 +25,7 @@ namespace VikingSettlements.Npcs
         Brewer = 9,
         Courier = 10,
         Herder = 11,
+        Engineer = 12,
     }
 
     /// <summary>
@@ -457,7 +458,7 @@ namespace VikingSettlements.Npcs
             return true;
         }
 
-        internal const int JobCount = 12;
+        internal const int JobCount = 13;
 
         /// <summary>Assigns a job directly (used by interact cycling and the management panel).</summary>
         internal void SetJob(SettlerJob job)
@@ -509,6 +510,7 @@ namespace VikingSettlements.Npcs
                 case SettlerJob.Brewer: return "$vs_job_brewer";
                 case SettlerJob.Courier: return "$vs_job_courier";
                 case SettlerJob.Herder: return "$vs_job_herder";
+                case SettlerJob.Engineer: return "$vs_job_engineer";
                 default: return "$vs_job_villager";
             }
         }

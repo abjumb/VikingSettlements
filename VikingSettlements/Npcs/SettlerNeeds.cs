@@ -163,6 +163,27 @@ namespace VikingSettlements.Npcs
                         Met = SettlerWork.CanConvertAround(home, SettlerWork.BrewingRecipes),
                     });
                     break;
+                case SettlerJob.Engineer:
+                    if (gated)
+                    {
+                        lines.Add(new Line
+                        {
+                            Token = "$vs_need_workbench",
+                            Met = SettlerWork.HasStationAround(home, "$piece_workbench"),
+                        });
+                    }
+                    lines.Add(new Line
+                    {
+                        Token = "$vs_need_ballista",
+                        Met = SettlerWork.HasAround<Turret>(home),
+                    });
+                    lines.Add(new Line
+                    {
+                        Token = "$vs_need_boltwood",
+                        Met = SettlerWork.CountItemAround(home, "Wood") >= 2
+                            || SettlerWork.CountItemAround(home, SettlerWork.BoltPrefab) > 0,
+                    });
+                    break;
             }
             return lines;
         }

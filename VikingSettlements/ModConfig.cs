@@ -23,6 +23,8 @@ namespace VikingSettlements
         public static ConfigEntry<int> ClanlessCamps;
         public static ConfigEntry<bool> ScaleRaids;
         public static ConfigEntry<float> CampClearRaidReduction;
+        public static ConfigEntry<float> AbductionChance;
+        public static ConfigEntry<int> AbductionDeadlineDays;
         public static ConfigEntry<bool> FoodUpkeep;
         public static ConfigEntry<float> MealIntervalSeconds;
         public static ConfigEntry<bool> GrowthEnabled;
@@ -160,6 +162,21 @@ namespace VikingSettlements
                     "(destroyed war totem), up to 10 camps. Clearing 10 camps also disables " +
                     "the native bandit raid event.",
                     new AcceptableValueRange<float>(0f, 0.1f),
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            AbductionChance = config.Bind("Raids", "AbductionChance", 0.2f,
+                new ConfigDescription(
+                    "Chance that a rival raid carries one assigned settler off to the " +
+                    "raiders' camp. Destroy that camp's war totem before the deadline " +
+                    "and they come home - name, stars and gear intact. 0 disables " +
+                    "abductions.",
+                    new AcceptableValueRange<float>(0f, 1f),
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            AbductionDeadlineDays = config.Bind("Raids", "AbductionDeadlineDays", 7,
+                new ConfigDescription(
+                    "In-game days before an abducted settler is lost forever.",
+                    new AcceptableValueRange<int>(1, 50),
                     new ConfigurationManagerAttributes { IsAdminOnly = true }));
 
             FoodUpkeep = config.Bind("Economy", "FoodUpkeep", true,

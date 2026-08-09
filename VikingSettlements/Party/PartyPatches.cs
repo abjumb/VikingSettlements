@@ -9,8 +9,9 @@ namespace VikingSettlements.Party
     /// character, and NetworkCompatibility guarantees that machine has this
     /// patch):
     ///
-    ///  - players can never damage a recruited villager, so a stray swing
-    ///    cannot kill (or even aggro) your own people;
+    ///  - players can never damage a recruited villager - by hand or by
+    ///    ballista bolt - so a stray swing (or a misjudged turret) cannot
+    ///    kill or even aggro your own people;
     ///  - party members take no environmental damage (falls, drowning,
     ///    smoke, fire spread) - traversal and jank cannot kill them;
     ///  - party members are untouchable while their owner is away - fate
@@ -39,6 +40,13 @@ namespace VikingSettlements.Party
 
             var attacker = hit.GetAttacker();
             if (attacker is Player)
+            {
+                return false;
+            }
+            // No ballista - the settlement's own or a player-built one - can
+            // hit recruited people: friendly fire from automated defenses is
+            // the player accidentally hurting their own, in slow motion.
+            if (hit.m_hitType == HitData.HitType.Turret)
             {
                 return false;
             }
