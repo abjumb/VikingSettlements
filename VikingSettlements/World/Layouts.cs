@@ -342,6 +342,9 @@ namespace VikingSettlements.World
             v.Place(Farm("Pickable_Carrot", "Pickable_Turnip"), -11f, 10f, 0f);
             v.Place(TraderStall(), 10f, 9f, 225f);
             v.Place(Watchtower(), 10f, -9f);
+            // The bounty board hangs on a post by the plaza.
+            v.Add("wood_pole2", 5.5f, 0f, 2.5f);
+            v.Add(SettlerPrefabs.BountyBoard, 5.5f, 1.4f, 2.25f, 180f);
 
             foreach (var pos in new[]
             {

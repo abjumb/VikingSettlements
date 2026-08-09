@@ -90,6 +90,7 @@ namespace VikingSettlements.Raids
                 victimView.ClaimOwnership();
                 ZNetScene.instance.Destroy(victim.gameObject);
             }
+            settlement.RecordSaga($"{name} $vs_saga_taken");
             Message(settlement, $"{name} $vs_abducted");
             Jotunn.Logger.LogInfo($"Raiders abducted {name} to the camp at {campPosition}");
         }
@@ -120,6 +121,7 @@ namespace VikingSettlements.Raids
                 if (SpawnCaptive(record, settlement))
                 {
                     ClearCaptive(zdo);
+                    settlement.RecordSaga($"{name} $vs_saga_rescued");
                     Message(settlement, $"{name} $vs_rescued");
                 }
                 return;
@@ -144,6 +146,7 @@ namespace VikingSettlements.Raids
                 // A spouse lost to the clanless is a confirmed loss: the
                 // widowed partner grieves on top of the settlement's sorrow.
                 SettlerFamily.GrieveFor(name, settlement.transform.position);
+                settlement.RecordSaga($"{name} $vs_saga_lost");
             }
         }
 
@@ -175,7 +178,8 @@ namespace VikingSettlements.Raids
 
         // Matching is by proximity, not exact key: the stamped position is
         // the totem's, a few meters off the camp center the banner recorded.
-        private static bool CampClearedNear(Vector3 campPosition)
+        // Also used by bounty boards to check camp-breaking bounties.
+        internal static bool CampClearedNear(Vector3 campPosition)
         {
             if (ZoneSystem.instance == null)
             {

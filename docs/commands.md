@@ -43,6 +43,8 @@ Usable with vanilla `spawn <prefab> [count] [stars]` (cheat):
 | `VS_PenBoar` | A boar that spawns already tamed — the livestock pen blueprint uses these |
 | `VS_Ballista` | The Settlement Ballista — a vanilla turret that targets only enemies (never players, tamed animals or settlers). The ballista tower blueprint mounts one; Engineers keep it loaded with `TurretBoltWood` |
 | `VS_HallBanner` | The Mead Hall Banner — the marker the Innkeeper job gates on. The mead hall blueprint raises two; spawn one to declare any building a mead hall |
+| `VS_BountyBoard` | A village bounty board — E cycles postings (deliveries, camp-breaking) that pay coins and standing. Wild meadows villages have one by the plaza |
+| `VS_RallyBanner` | The Rally Standard piece (normally built with the hammer) — E rallies your war party to it, Shift+E releases them |
 | `VS_Trader` | The village trader (static NPC; opens his store on interact) |
 | `VS_CampTotem` | A destructible war totem — smashing it counts as clearing a camp |
 | `VS_SettlementBanner` | The settlement banner piece (normally built with the hammer) |

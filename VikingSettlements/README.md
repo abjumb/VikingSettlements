@@ -66,8 +66,11 @@ the same way; world and raid settings are admin-only and sync from the server.
   banner to assign them.
 - **A war party you can lose**: up to 4 recruited villagers fight at your
   side as a persistent party. Command them with hotkeys — G toggles
-  follow/hold, H orders a protected fall-back — or E on a member to post
-  them somewhere. They ride boats and take portals with you (stowed safely
+  follow/hold, H orders a protected fall-back, Y focus-fires the enemy
+  under your crosshair — or E on a member to post
+  them somewhere. Plant the cheap **Rally Standard** ahead of a fight and
+  the party holds there instead of at your heels. They ride boats and take
+  portals with you (stowed safely
   into your character save) and survive logout. You can never hurt your own
   people, and no fall, fire or forgotten corner of the map can kill them:
   a party member can only die to a monster **in a fight you are standing
@@ -134,6 +137,13 @@ the same way; world and raid settings are admin-only and sync from the server.
 - **Village standing**: wild villages remember how you treat them. Defend
   and donate to recruit at a discount; rob and murder and they refuse to
   deal with you.
+- **Village bounty boards**: wild meadows villages post work by the
+  plaza — deliver goods, or break a named clan's camp. Bounties pay
+  coins and standing, one posting per day.
+- **The Settlement Saga**: your banner chronicles everything — raids and
+  who sent them, warlords slain, weddings, losses, rescues — in a Saga
+  panel. Settlers who stand through three raids earn a permanent
+  epithet: *Astrid the Unbroken*.
 - **Workstations matter**: blacksmiths need a forge in the settlement,
   builders a workbench, and honey production a beehive.
 - **Raids**: your settlement counts as a base for Valheim's native random
@@ -216,6 +226,7 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Party / OutOfCombatRegenPerSecond | 2 | Member health regen after 10s without damage (0 disables) |
 | Party / StanceHotkey | G | Toggle party follow/hold (client-side) |
 | Party / FallbackHotkey | H | Order a protected fall-back (client-side) |
+| Party / FocusFireHotkey | Y | Order the party onto the enemy under your crosshair (client-side) |
 
 ## Changelog
 

@@ -28,6 +28,7 @@ namespace VikingSettlements.Npcs
         public const string Heart = "VS_VillageHeart";
         public const string Ballista = "VS_Ballista";
         public const string HallBanner = "VS_HallBanner";
+        public const string BountyBoard = "VS_BountyBoard";
 
         private static bool _created;
 
@@ -50,6 +51,7 @@ namespace VikingSettlements.Npcs
             CreateVillageHeart();
             CreateBallista();
             CreateHallBanner();
+            CreateBountyBoard();
         }
 
         private static GameObject CloneFirstAvailable(string newName, IEnumerable<string> baseCandidates)
@@ -367,6 +369,39 @@ namespace VikingSettlements.Npcs
             clone.AddComponent<Settlements.MeadHallMarker>();
             PrefabManager.Instance.AddPrefab(new CustomPrefab(clone, false));
             Jotunn.Logger.LogInfo("Created mead hall banner prefab VS_HallBanner");
+        }
+
+        /// <summary>
+        /// The village bounty board: a sign stripped of its text-editing and
+        /// given the BountyBoard behavior. Hardened against support wear so
+        /// it can stand free in a village.
+        /// </summary>
+        private static void CreateBountyBoard()
+        {
+            var clone = CloneFirstAvailable(BountyBoard, new[] { "sign" });
+            if (clone == null)
+            {
+                Jotunn.Logger.LogWarning("Could not create VS_BountyBoard: sign prefab not found");
+                return;
+            }
+            var sign = clone.GetComponent<Sign>();
+            if (sign != null)
+            {
+                Object.DestroyImmediate(sign);
+            }
+            var wear = clone.GetComponent<WearNTear>();
+            if (wear != null)
+            {
+                wear.m_noSupportWear = true;
+            }
+            var piece = clone.GetComponent<Piece>();
+            if (piece != null)
+            {
+                Object.DestroyImmediate(piece);
+            }
+            clone.AddComponent<Raids.BountyBoard>();
+            PrefabManager.Instance.AddPrefab(new CustomPrefab(clone, false));
+            Jotunn.Logger.LogInfo("Created bounty board prefab VS_BountyBoard");
         }
 
         private static void CreateTrader()

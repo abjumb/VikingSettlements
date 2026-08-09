@@ -1,5 +1,29 @@
 # Changelog
 
+### 1.13.0
+
+- Village bounty boards: wild meadows villages now post work on a board
+  by the plaza - either goods the village needs delivered, or a call to
+  break the war totem of the nearest clanless camp. Completing a bounty
+  pays coins on the spot and raises the village's standing (the same
+  standing that discounts recruits), one posting per day. Camp bounties
+  name the clan and give the distance.
+- The Settlement Saga: your banner now chronicles the settlement's
+  story - raids weathered (and by whom), warlords slain, weddings,
+  abductions, rescues, losses and promotions. Open it with the new Saga
+  button on the management panel. And settlers who stand through three
+  raids earn a permanent saga epithet: Astrid the Unbroken, Leif
+  Shieldheart - shown wherever their name appears.
+- Rally Standard: a cheap plantable banner (hammer -> Misc, 6 wood +
+  2 leather scraps). Press E and your war party walks to the standard
+  and holds there, alert and fighting - an aggressive hold point you
+  can place ahead of a fight. Shift+E (or the stance key) releases
+  them back to your side.
+- Party focus-fire: a new hotkey (default Y) orders the whole party
+  onto the enemy under your crosshair. Members falling back stay out
+  of it - the rescue command outranks the kill order. New config:
+  Party/FocusFireHotkey.
+
 ### 1.12.0
 
 - Mead Hall + Innkeeper job: a new Village-tier blueprint (120 wood,

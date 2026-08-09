@@ -258,6 +258,32 @@ namespace VikingSettlements.Party
             }
         }
 
+        /// <summary>Hold at a rally standard instead of in place: walk there, guard there.</summary>
+        internal void RallyTo(Vector3 position, Player owner)
+        {
+            SetStance(PartyStance.Hold, owner);
+            if (_ai != null)
+            {
+                _ai.SetPatrolPoint(position);
+                _ai.Alert();
+            }
+        }
+
+        /// <summary>The focus-fire command: drop everything, attack this one.</summary>
+        internal void OrderAttack(Character target)
+        {
+            if (_ai == null || target == null || target.IsDead())
+            {
+                return;
+            }
+            if (_nview != null && _nview.IsValid())
+            {
+                _nview.ClaimOwnership();
+            }
+            _ai.m_targetCreature = target;
+            _ai.Alert();
+        }
+
         internal void MarkMember(Player owner)
         {
             if (_nview == null || !_nview.IsValid())

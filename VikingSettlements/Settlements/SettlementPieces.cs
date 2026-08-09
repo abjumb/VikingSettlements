@@ -16,6 +16,7 @@ namespace VikingSettlements.Settlements
         public const string Banner = "VS_SettlementBanner";
         public const string SupplyChest = "VS_BuildChest";
         public const string BuildSite = "VS_BuildSite";
+        public const string RallyBanner = "VS_RallyBanner";
 
         private static bool _created;
 
@@ -29,6 +30,7 @@ namespace VikingSettlements.Settlements
 
             CreateSupplyChest();
             CreateBuildSite();
+            CreateRallyBanner();
 
             if (PrefabManager.Instance.GetPrefab("guard_stone") == null)
             {
@@ -92,6 +94,32 @@ namespace VikingSettlements.Settlements
                 },
             }));
             Jotunn.Logger.LogInfo("Created buildable piece VS_BuildChest");
+        }
+
+        // The rally standard: a cheap plantable banner the war party can be
+        // ordered to hold at (see Party.RallyPoint).
+        private static void CreateRallyBanner()
+        {
+            if (PrefabManager.Instance.GetPrefab("piece_banner01") == null)
+            {
+                Jotunn.Logger.LogWarning("Could not create VS_RallyBanner: piece_banner01 prefab not found");
+                return;
+            }
+            var clone = PrefabManager.Instance.CreateClonedPrefab(RallyBanner, "piece_banner01");
+            clone.AddComponent<Party.RallyPoint>();
+            PieceManager.Instance.AddPiece(new CustomPiece(clone, false, new PieceConfig
+            {
+                Name = "$vs_rally",
+                Description = "$vs_rally_desc",
+                PieceTable = "Hammer",
+                Category = "Misc",
+                Requirements = new[]
+                {
+                    new RequirementConfig("Wood", 6, 0, true),
+                    new RequirementConfig("LeatherScraps", 2, 0, true),
+                },
+            }));
+            Jotunn.Logger.LogInfo("Created buildable piece VS_RallyBanner");
         }
 
         // The construction site marker is spawned by code (via a builder's

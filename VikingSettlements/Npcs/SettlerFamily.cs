@@ -58,6 +58,17 @@ namespace VikingSettlements.Npcs
             {
                 GrieveFor(_character.m_name, transform.position);
             }
+            // A settled defender's death goes into the settlement's saga.
+            var settler = GetComponent<SettlerRecruitable>();
+            if (settler != null && settler.State == SettlerState.Assigned && _character != null)
+            {
+                var settlement = PlayerSettlement.FindNearest(
+                    transform.position, ModConfig.SettlementRadius.Value * 2f);
+                if (settlement != null)
+                {
+                    settlement.RecordSaga($"{_character.m_name} $vs_saga_fell");
+                }
+            }
         }
 
         /// <summary>
@@ -174,6 +185,7 @@ namespace VikingSettlements.Npcs
             }
             var second = candidates[Random.Range(0, candidates.Count)];
             Marry(first, second);
+            settlement.RecordSaga($"{NameOf(first)} $vs_and {NameOf(second)} $vs_saga_wed");
         }
 
         /// <summary>Married pairs currently present in the settlement.</summary>

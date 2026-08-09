@@ -59,7 +59,7 @@ namespace VikingSettlements.Npcs
                 SettlerGearPanel.Close();
                 return;
             }
-            if (PartySystem.UiHasFocus() || SettlementPanel.IsOpen)
+            if (PartySystem.UiHasFocus() || SettlementPanel.IsOpen || SagaPanel.IsOpen)
             {
                 return;
             }

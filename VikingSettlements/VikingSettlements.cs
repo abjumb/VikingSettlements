@@ -15,7 +15,7 @@ namespace VikingSettlements
     {
         public const string PluginGUID = "com.abjumb.vikingsettlements";
         public const string PluginName = "VikingSettlements";
-        public const string PluginVersion = "1.12.0";
+        public const string PluginVersion = "1.13.0";
 
         public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
@@ -262,6 +262,42 @@ namespace VikingSettlements
                 { "vs_talk_married", "Married to" },
                 { "vs_child", "A child of the settlement has come of age and joins you!" },
                 { "vs_seer_warning", "The seer senses a war party gathering — they strike tomorrow night!" },
+                { "vs_bounty_board", "Village Bounty Board" },
+                { "vs_bounty_none", "No postings today" },
+                { "vs_bounty_use", "Check the postings" },
+                { "vs_bounty_camp_txt", "Break the war totem of" },
+                { "vs_bounty_deliver", "Bring the village" },
+                { "vs_bounty_reward", "Reward" },
+                { "vs_bounty_new", "The village posts a bounty" },
+                { "vs_bounty_notdone", "The task is not yet done" },
+                { "vs_bounty_done", "The village is grateful!" },
+                { "vs_bounty_tomorrow", "Nothing new today — check back tomorrow" },
+                { "vs_bounty_needitems", "You don't have the goods with you" },
+                { "vs_saga", "Saga" },
+                { "vs_saga_title", "The Settlement Saga" },
+                { "vs_saga_empty", "No deeds recorded yet — the saga writes itself" },
+                { "vs_saga_day", "Day" },
+                { "vs_saga_raid", "Raided by" },
+                { "vs_saga_warlord", "warlord slain beneath these walls" },
+                { "vs_saga_wed", "were wed" },
+                { "vs_saga_taken", "was carried off by raiders" },
+                { "vs_saga_rescued", "was rescued from the clanless" },
+                { "vs_saga_lost", "was lost to the clanless" },
+                { "vs_saga_fell", "fell defending the settlement" },
+                { "vs_saga_promoted", "The settlement grew into a" },
+                { "vs_ep1", "the Unbroken" },
+                { "vs_ep2", "the Steadfast" },
+                { "vs_ep3", "Shieldheart" },
+                { "vs_ep4", "the Grim" },
+                { "vs_ep5", "Ravenfriend" },
+                { "vs_ep6", "Stormstood" },
+                { "vs_rally", "Rally Standard" },
+                { "vs_rally_desc", "Plant it where the line must hold. Press E and your war party rallies to the standard and fights there; Shift+E (or your stance key) calls them back to your side." },
+                { "vs_rally_order", "Party! To the standard!" },
+                { "vs_rally_order_hint", "Rally the party here" },
+                { "vs_rally_release_hint", "Release them to your side" },
+                { "vs_party_none", "No party members nearby" },
+                { "vs_party_focus", "Party: strike the" },
             });
         }
     }
