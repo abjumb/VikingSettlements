@@ -55,6 +55,10 @@ directly sets the recruit price:
 - **Defend** — when a monster attacks a villager and you're within 40 m,
   the village credits you **+1** (at most once a minute). Hang around during
   a greydwarf rush and your name improves on its own.
+- **Work the bounty board** — meadows villages post one job per day on the
+  board by the plaza: a delivery pays **+5** standing plus 30–40 coins,
+  breaking a clan camp's war totem pays **+15** plus 150 coins. The only
+  method that *earns* coins instead of spending them.
 
 **Lowering it:**
 

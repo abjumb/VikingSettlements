@@ -238,6 +238,17 @@ namespace VikingSettlements.Settlements
                 13, UiPalette.SecondaryOnWood, 420f, 20f);
             hint.alignment = TextAnchor.MiddleLeft;
 
+            var sagaButton = GUIManager.Instance.CreateButton(
+                Localization.instance.Localize("$vs_saga"),
+                _panel.transform, new Vector2(1f, 0f), new Vector2(1f, 0f),
+                new Vector2(-26f - 140f - 12f - 55f, 38f), 110f, 38f);
+            sagaButton.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                var settlement = _settlement;
+                Close();
+                SagaPanel.Open(settlement);
+            });
+
             var closeButton = GUIManager.Instance.CreateButton(
                 Localization.instance.Localize("$vs_close"),
                 _panel.transform, new Vector2(1f, 0f), new Vector2(1f, 0f),

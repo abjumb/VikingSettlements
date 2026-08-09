@@ -168,6 +168,121 @@ namespace VikingSettlements.Party
                 var anyNotFalling = AnyLiveMemberNotIn(PartyStance.Fallback);
                 CommandAll(player, anyNotFalling ? PartyStance.Fallback : PartyStance.Follow);
             }
+            if (ModConfig.PartyFocusKey.Value.IsDown())
+            {
+                FocusFire(player);
+            }
+        }
+
+        // ---- focus-fire ---------------------------------------------------
+
+        /// <summary>
+        /// Orders every live member (except those falling back - the rescue
+        /// command outranks the kill order) onto the enemy under the
+        /// crosshair.
+        /// </summary>
+        private static void FocusFire(Player player)
+        {
+            var target = FindFocusTarget(player);
+            if (target == null)
+            {
+                return;
+            }
+            var ordered = 0;
+            foreach (var entry in _entries)
+            {
+                if (entry.Stowed != null)
+                {
+                    continue;
+                }
+                var member = PartyMember.FindById(entry.Id);
+                if (member == null || member.IsDead || member.Stance == PartyStance.Fallback)
+                {
+                    continue;
+                }
+                member.OrderAttack(target);
+                ordered++;
+            }
+            if (ordered > 0)
+            {
+                player.Message(MessageHud.MessageType.Center,
+                    Localization.instance.Localize($"$vs_party_focus {target.m_name}!"));
+            }
+        }
+
+        private static Character FindFocusTarget(Player player)
+        {
+            var camera = GameCamera.instance;
+            if (camera == null)
+            {
+                return null;
+            }
+            var mask = LayerMask.GetMask("character", "character_net");
+            if (mask == 0)
+            {
+                return null;
+            }
+            var hits = Physics.RaycastAll(
+                camera.transform.position, camera.transform.forward, 80f, mask);
+            System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+            foreach (var hit in hits)
+            {
+                var character = hit.collider.GetComponentInParent<Character>();
+                if (character == null || character == player || character.IsDead())
+                {
+                    continue;
+                }
+                // Only genuine enemies: no players, no tamed animals, and
+                // never a settler of any allegiance.
+                if (character.IsPlayer() || character.IsTamed()
+                    || character.GetComponent<SettlerRecruitable>() != null)
+                {
+                    continue;
+                }
+                if (!BaseAI.IsEnemy(player, character))
+                {
+                    continue;
+                }
+                return character;
+            }
+            return null;
+        }
+
+        // ---- the rally standard -------------------------------------------
+
+        /// <summary>Members walk to the standard and hold there. Returns how many obeyed.</summary>
+        internal static int RallyParty(Player player, Vector3 position)
+        {
+            if (player == null || player != Player.m_localPlayer)
+            {
+                return 0;
+            }
+            var rallied = 0;
+            foreach (var entry in _entries)
+            {
+                if (entry.Stowed != null)
+                {
+                    continue;
+                }
+                var member = PartyMember.FindById(entry.Id);
+                if (member == null || member.IsDead)
+                {
+                    continue;
+                }
+                member.RallyTo(position, player);
+                rallied++;
+            }
+            return rallied;
+        }
+
+        /// <summary>Releases the party from the standard back to your side.</summary>
+        internal static void ReleaseParty(Player player)
+        {
+            if (player == null || player != Player.m_localPlayer)
+            {
+                return;
+            }
+            CommandAll(player, PartyStance.Follow);
         }
 
         internal static bool UiHasFocus()

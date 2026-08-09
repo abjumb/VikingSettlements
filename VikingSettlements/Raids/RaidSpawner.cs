@@ -94,10 +94,11 @@ namespace VikingSettlements.Raids
                 }
             }
 
-            // Raids leave a mark on the people, not just the walls.
-            if (ModConfig.MoraleEnabled.Value)
+            // Raids leave a mark on the people, not just the walls - and on
+            // the record: survivors of enough raids earn a saga epithet.
+            foreach (var settler in settlement.GetSettlers())
             {
-                foreach (var settler in settlement.GetSettlers())
+                if (ModConfig.MoraleEnabled.Value)
                 {
                     var morale = settler.GetComponent<Npcs.SettlerMorale>();
                     if (morale != null)
@@ -105,7 +106,15 @@ namespace VikingSettlements.Raids
                         morale.AddMorale(-20);
                     }
                 }
+                var settlerView = settler.GetComponent<ZNetView>();
+                if (settlerView != null && settlerView.IsValid())
+                {
+                    settlerView.ClaimOwnership();
+                    settlerView.GetZDO().Set(Npcs.SettlerVeterancy.RaidsKey,
+                        settlerView.GetZDO().GetInt(Npcs.SettlerVeterancy.RaidsKey) + 1);
+                }
             }
+            settlement.RecordSaga($"$vs_saga_raid {ClanNames.Token(clanIndex)}");
 
             var player = Player.m_localPlayer;
             if (player != null

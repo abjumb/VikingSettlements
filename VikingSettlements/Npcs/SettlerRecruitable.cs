@@ -184,7 +184,9 @@ namespace VikingSettlements.Npcs
                 return "";
             }
             return Localization.instance.Localize(
-                _character.m_name + SettlerVeterancy.RankToken(_character));
+                _character.m_name
+                + SettlerVeterancy.EpithetToken(_nview, _character)
+                + SettlerVeterancy.RankToken(_character));
         }
 
         public string GetHoverText()

@@ -56,6 +56,10 @@ hover text. Donate 10 coins with `Shift+E` to raise it, defend the village
 when monsters attack, and recruits get cheaper (half price at Honored).
 Attack or kill villagers and prices climb until they refuse you entirely.
 
+The fastest honest coin-and-standing combo is the **village bounty board**
+by the plaza: press `E` for the day's posting — bring the village goods, or
+break a named clan's camp — and get paid on the spot, standing included.
+
 Recruit two or three to start. They follow you like a tamed wolf, so you can
 walk them home. Don't march them through a swamp at night — they fight, but
 they can die, and **dead settlers don't come back**.
@@ -224,6 +228,15 @@ A **Village Seer** earns their keep in war too: assigned to your settlement,
 a seer heals hurt settlers every work tick and **senses raids a night before
 they land**, turning ambushes into appointments.
 
+None of it is forgotten: the banner keeps a **Settlement Saga** (Saga
+button in the management panel) — every raid and who sent it, every
+warlord slain, wedding, loss and rescue. Settlers who stand through
+**three raids** earn a permanent epithet like *the Unbroken* next to
+their name. Fighting alongside them, plant a **Rally Standard** (hammer →
+Misc, 6 wood + 2 leather scraps) where the line must hold — `E` sends
+your war party to fight at the standard, and `Y` focus-fires the enemy
+under your crosshair.
+
 Settlers who stick around get better at this: a day of service earns 1 XP and
 every battle survived earns 2, promoting them to **Veteran** (1 star) at 20 XP
 and **Elite** (2 stars) at 60. Stars mean vanilla stat scaling — an Elite guard
@@ -248,6 +261,8 @@ Settle a follower ............. E          (inside banner radius)
 Post / bring a follower ....... E          (away from any banner)
 Party: follow / hold all ...... G
 Party: fall back! ............. H          (they disengage and run to you)
+Party: focus-fire ............. Y          (strike the enemy under your crosshair)
+Rally the party ............... E          (on a built Rally Standard)
 Change a settler's job ........ E          (cycles all fifteen)
 Unassign a settler ............ Shift + E
 Talk to a settler ............. T          (health, hunger, job needs)

@@ -15,6 +15,8 @@ namespace VikingSettlements.Settlements
         private const string LastRaidDayKey = "vs_lastraid";
         private const string PendingRaidKey = "vs_nextraid";
         private const string NameKey = "vs_name";
+        private const string SagaKey = "vs_saga";
+        private const int SagaMaxEntries = 12;
         public const string TierKey = "vs_tier";
         public const string PeaceDayKey = "vs_peaceday";
         private const int NameCharLimit = 30;
@@ -126,6 +128,51 @@ namespace VikingSettlements.Settlements
             }
             _nview.ClaimOwnership();
             _nview.GetZDO().Set(PeaceDayKey, untilDay);
+        }
+
+        /// <summary>
+        /// Appends a line to the settlement's saga - the chronicle of raids,
+        /// weddings, losses and triumphs shown in the Saga panel. Entries are
+        /// "day|text" lines, oldest dropped past the cap.
+        /// </summary>
+        internal void RecordSaga(string text)
+        {
+            if (_nview == null || !_nview.IsValid() || EnvMan.instance == null
+                || string.IsNullOrEmpty(text))
+            {
+                return;
+            }
+            _nview.ClaimOwnership();
+            var zdo = _nview.GetZDO();
+            var entries = new List<string>(
+                zdo.GetString(SagaKey).Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries));
+            entries.Add($"{EnvMan.instance.GetCurrentDay()}|{text.Replace('\n', ' ').Replace('|', '/')}");
+            while (entries.Count > SagaMaxEntries)
+            {
+                entries.RemoveAt(0);
+            }
+            zdo.Set(SagaKey, string.Join("\n", entries));
+        }
+
+        /// <summary>The saga entries, oldest first, as (day, text) pairs.</summary>
+        internal List<(int Day, string Text)> SagaEntries()
+        {
+            var result = new List<(int, string)>();
+            if (_nview == null || !_nview.IsValid())
+            {
+                return result;
+            }
+            foreach (var line in _nview.GetZDO().GetString(SagaKey)
+                .Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries))
+            {
+                var split = line.IndexOf('|');
+                if (split <= 0 || !int.TryParse(line.Substring(0, split), out var day))
+                {
+                    continue;
+                }
+                result.Add((day, line.Substring(split + 1)));
+            }
+            return result;
         }
 
         private Dictionary<SettlerJob, int> CountJobs()
@@ -299,6 +346,7 @@ namespace VikingSettlements.Settlements
                 return;
             }
             _nview.GetZDO().Set(TierKey, tier);
+            RecordSaga($"$vs_saga_promoted {TierToken(tier)}");
             var player = Player.m_localPlayer;
             if (player != null
                 && Vector3.Distance(player.transform.position, transform.position) < 50f)

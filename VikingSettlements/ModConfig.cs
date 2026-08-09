@@ -41,6 +41,7 @@ namespace VikingSettlements
         public static ConfigEntry<float> PartyRegenPerSecond;
         public static ConfigEntry<KeyboardShortcut> PartyStanceKey;
         public static ConfigEntry<KeyboardShortcut> PartyFallbackKey;
+        public static ConfigEntry<KeyboardShortcut> PartyFocusKey;
         public static ConfigEntry<KeyboardShortcut> TalkHotkey;
         public static ConfigEntry<bool> HomesMatter;
         public static ConfigEntry<bool> MoraleEnabled;
@@ -290,6 +291,11 @@ namespace VikingSettlements
                 new KeyboardShortcut(KeyCode.H),
                 "Orders the whole party to fall back: they stop fighting, run to you and " +
                 "take greatly reduced damage. Press again to resume following. Client-side.");
+
+            PartyFocusKey = config.Bind("Party", "FocusFireHotkey",
+                new KeyboardShortcut(KeyCode.Y),
+                "Orders the whole party onto the enemy under your crosshair. Members " +
+                "falling back stay out of it. Client-side.");
 
             HomesMatter = config.Bind("Economy", "HomesMatter", true,
                 new ConfigDescription(

@@ -143,6 +143,10 @@ wild settlements:
    settler) raise it, attacking or killing them tanks it, and each recruit
    drains it slightly. Honored villages recruit at half price; hated ones
    refuse to deal with you at all.
+   The honest road to standing is the **village bounty board** by the
+   plaza of every meadows village: one posting per day — deliver goods
+   the village needs, or break the war totem of a named clan's camp —
+   paying coins on the spot plus standing.
 2. **Found a settlement** — build the *Settlement Banner* (hammer → Misc,
    near a workbench; wood, fine wood and coins). The banner defines a
    settlement area (default 32 m radius) and shows its population on hover.
@@ -236,7 +240,11 @@ wild settlements:
    Elder and Bonemass have fallen.
    Every camp belongs to one of **eight named clans**, and your settlement
    is raided by the clan of its nearest camp — raid messages name your
-   enemy, and each war totem shows whose camp it is. Raids can also
+   enemy, and each war totem shows whose camp it is. It all goes into the
+   **Settlement Saga** — a chronicle on the banner (Saga button in the
+   management panel) of raids, warlords slain, weddings, losses and
+   rescues — and settlers who stand through **three raids** earn a
+   permanent epithet (*Astrid the Unbroken*) shown with their name. Raids can also
    **abduct** one assigned settler (20% by default, one captive at a time):
    the banner shows who was taken and the days left to save them — break
    the clan's camp totem before the deadline and they walk home with name,
@@ -274,9 +282,16 @@ real bet.
 
 - **Commands** — `G` toggles the whole party between following and holding
   position; `H` orders a fall-back (they stop fighting, run to you, and take
-  75% less damage — the rescue button). `E` on a member posts them where
+  75% less damage — the rescue button); `Y` **focus-fires** the enemy under
+  your crosshair (members falling back stay out of it — the rescue command
+  outranks the kill order). `E` on a member posts them where
   they stand or brings them along; near your banner `E` still settles them
   in, and `Shift+E` dismisses. `vs_party` in the console lists the roster.
+- **The Rally Standard** — a cheap plantable banner (hammer → Misc, 6 wood
+  + 2 leather scraps). Press `E` on it and the party walks to the standard
+  and holds there, alert and fighting: an aggressive hold point you place
+  ahead of the fight instead of ordering everyone in place. `Shift+E` (or
+  `G`) releases them back to your side.
 - **They survive the game's traversal systems** — boarding a boat or
   stepping into a portal stows the party into your character save; they
   step out with you at the other end. Logging out pockets them the same
@@ -343,6 +358,7 @@ Edit `BepInEx/config/com.abjumb.vikingsettlements.cfg` (created on first run):
 | Party / OutOfCombatRegenPerSecond | 2 | Member health regen after 10s without damage (0 disables) |
 | Party / StanceHotkey | G | Toggle party follow/hold (client-side) |
 | Party / FallbackHotkey | H | Order a protected fall-back (client-side) |
+| Party / FocusFireHotkey | Y | Order the party onto the enemy under your crosshair (client-side) |
 
 Location counts only affect world generation, so changing them has no effect
 on already-generated terrain.
@@ -422,6 +438,9 @@ To keep iteration bearable, temporarily set `WorkIntervalSeconds = 10` and
 | Innkeeper feast | Order a *Mead Hall*, set an Innkeeper, `spawn MeadHealthMinor` into a chest, wait a tick — morale up, Rested refreshed |
 | Families | Two housed settlers at 60+ morale, `skiptime` a few nights — expect a wedding message; talk (`T`) shows "Married to …" |
 | Seer forewarning | Assign a seer (`spawn VS_Seer`, recruit, assign), raid chance 1.0 — the raid announces itself a night early |
+| Bounty board | `vs_spawn village`, `E` on the board by the plaza to get a posting; `spawn Wood 20` covers most deliveries |
+| Saga & epithets | `E` on your banner → Saga button; after 3 raids (`setkey`-free: chance 1.0 + `skiptime`) settlers gain epithets |
+| Rally + focus-fire | Build the Rally Standard, `E` to send the party there; aim at an enemy and press `Y` to focus-fire |
 
 If a feature is silently missing, check `BepInEx/LogOutput.log` — every vanilla
 prefab the mod cannot find is logged as a `not found, skipped` warning rather
@@ -452,13 +471,15 @@ VikingSettlements/
 │   ├── VillageHeart.cs         # wild village reputation anchor
 │   └── RaiderDespawn.cs        # cleans up unbeaten raiders
 ├── Party/
-│   ├── PartySystem.cs          # roster, hotkeys, traversal stow/unstow
-│   ├── PartyMember.cs          # stances, regen, auto-retreat
+│   ├── PartySystem.cs          # roster, hotkeys, focus-fire, traversal stow/unstow
+│   ├── PartyMember.cs          # stances, regen, auto-retreat, rally orders
+│   ├── RallyPoint.cs           # the plantable Rally Standard piece behavior
 │   └── PartyPatches.cs         # the permadeath-contract damage patch
 ├── Settlements/
 │   ├── PlayerSettlement.cs     # banner behavior: population, tiers, raid rolls, captives
 │   ├── SettlementPieces.cs     # buildable banner + supply chest pieces
 │   ├── SettlementPanel.cs      # the banner management UI
+│   ├── SagaPanel.cs            # the settlement chronicle UI
 │   ├── Blueprints.cs           # orderable builder blueprints
 │   ├── ConstructionSite.cs     # material tracking + build completion
 │   ├── BuildChest.cs           # the builders' supply chest
@@ -471,6 +492,7 @@ VikingSettlements/
 │   ├── RaidSpawner.cs          # rival clan war parties + warlords
 │   ├── ClanNames.cs            # the eight named clans + broken-clan keys
 │   ├── Abduction.cs            # captive records, rescues and deadlines
+│   ├── BountyBoard.cs          # wild-village bounty postings
 │   ├── CampTotem.cs            # camp-clear keys + clan hover
 │   └── WarlordFall.cs          # peace days + clan breaking on warlord death
 ├── World/

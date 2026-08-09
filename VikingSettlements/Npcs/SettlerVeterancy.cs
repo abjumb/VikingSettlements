@@ -13,7 +13,17 @@ namespace VikingSettlements.Npcs
     public class SettlerVeterancy : MonoBehaviour
     {
         public const string XpKey = "vs_xp";
+
+        /// <summary>Raids this settler's settlement has weathered with them in it.</summary>
+        public const string RaidsKey = "vs_raids";
+        private const int EpithetAtRaids = 3;
+
         private const string LastServiceDayKey = "vs_xpday";
+
+        private static readonly string[] Epithets =
+        {
+            "$vs_ep1", "$vs_ep2", "$vs_ep3", "$vs_ep4", "$vs_ep5", "$vs_ep6",
+        };
 
         private const int MaxLevel = 3; // vanilla displays two stars
         private const int ServiceXp = 1;
@@ -125,6 +135,26 @@ namespace VikingSettlements.Npcs
                 player.Message(MessageHud.MessageType.TopLeft,
                     Localization.instance.Localize($"{_character.m_name} $vs_levelup"));
             }
+        }
+
+        /// <summary>
+        /// The saga epithet of a settler who has stood through three raids:
+        /// " the Unbroken" and kin, chosen deterministically from the name so
+        /// it never changes once earned. Empty until earned.
+        /// </summary>
+        internal static string EpithetToken(ZNetView view, Character character)
+        {
+            if (view == null || !view.IsValid() || character == null)
+            {
+                return "";
+            }
+            if (view.GetZDO().GetInt(RaidsKey) < EpithetAtRaids)
+            {
+                return "";
+            }
+            var name = character.m_name ?? "";
+            var index = (int)((uint)name.GetHashCode() % (uint)Epithets.Length);
+            return " " + Epithets[index];
         }
 
         /// <summary>Rank tag for hover texts, empty for unproven settlers.</summary>

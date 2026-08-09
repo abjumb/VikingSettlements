@@ -37,16 +37,17 @@ namespace VikingSettlements.Raids
             {
                 return;
             }
+            // A warlord is his clan's spine: his death breaks the clan for
+            // good, permanently ending its raids (the nightly roll checks).
+            var clanIndex = _nview.GetZDO().GetInt(ClanNames.ClanKey, -1);
+
             var settlement = PlayerSettlement.FindNearest(transform.position, 80f);
             if (settlement != null)
             {
                 settlement.GrantPeace(
                     EnvMan.instance.GetCurrentDay() + ModConfig.WarlordPeaceDays.Value);
+                settlement.RecordSaga($"{ClanNames.Token(clanIndex)} $vs_saga_warlord");
             }
-
-            // A warlord is his clan's spine: his death breaks the clan for
-            // good, permanently ending its raids (the nightly roll checks).
-            var clanIndex = _nview.GetZDO().GetInt(ClanNames.ClanKey, -1);
             var shattered = clanIndex >= 0 && !ClanNames.IsBroken(clanIndex);
             if (shattered)
             {
